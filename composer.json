@@ -1,0 +1,22 @@
+{
+  "name": "sys-001/tgbotapi-gen",
+  "description": "Utility to extract scheme from Telegram Bot API webpage.",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "TGBotApi\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^7.2",
+    "ext-json": "*",
+    "nette/php-generator": "^3.3",
+    "paquettg/php-html-parser": "^2.0"
+  },
+  "authors": [
+    {
+      "name": "sys-001",
+      "email": "honfu7891@etlgr.com"
+    }
+  ]
+}

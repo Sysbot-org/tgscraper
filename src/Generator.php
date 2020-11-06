@@ -8,7 +8,6 @@ class Generator
 {
 
     private const EMPTY_FIELDS = [
-        'deleteWebhook',
         'getWebhookInfo',
         'getMe',
         'InputFile',
@@ -17,6 +16,7 @@ class Generator
         'InputMessageContent',
         'PassportElementError',
         'CallbackGame',
+        'getMyCommands',
         'logOut',
         'close'
     ];

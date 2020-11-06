@@ -16,7 +16,9 @@ class Generator
         'InlineQueryResult',
         'InputMessageContent',
         'PassportElementError',
-        'CallbackGame'
+        'CallbackGame',
+        'logOut',
+        'close'
     ];
 
     private const BOOL_RETURNS = [

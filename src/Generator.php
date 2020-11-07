@@ -8,7 +8,6 @@ class Generator
 {
 
     private const EMPTY_FIELDS = [
-        'deleteWebhook',
         'getWebhookInfo',
         'getMe',
         'InputFile',
@@ -16,7 +15,10 @@ class Generator
         'InlineQueryResult',
         'InputMessageContent',
         'PassportElementError',
-        'CallbackGame'
+        'CallbackGame',
+        'getMyCommands',
+        'logOut',
+        'close'
     ];
 
     private const BOOL_RETURNS = [

@@ -1,6 +1,7 @@
 {
   "name": "sysbot/tgscraper",
   "description": "Utility to extract scheme from Telegram Bot API webpage.",
+  "license": "LGPL-3.0-or-later",
   "require": {
     "php": ">=8.0",
     "ext-json": "*",

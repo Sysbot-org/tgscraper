@@ -1,101 +1,140 @@
 <?php
 
-namespace TGBotApi;
+namespace TgScraper;
 
+use Exception;
+use JsonException;
 use PHPHtmlParser\Dom;
+use PHPHtmlParser\Exceptions\{ChildNotFoundException,
+    CircularException,
+    CurlException,
+    NotLoadedException,
+    ParentNotFoundException,
+    StrictException
+};
 
 class Generator
 {
-
-    private const EMPTY_FIELDS = [
-        'getWebhookInfo',
-        'getMe',
-        'InputFile',
-        'InputMedia',
-        'InlineQueryResult',
-        'InputMessageContent',
-        'PassportElementError',
-        'CallbackGame',
-        'getMyCommands',
-        'logOut',
-        'close'
-    ];
 
     private const BOOL_RETURNS = [
         'answerShippingQuery',
         'answerPreCheckoutQuery'
     ];
 
-    /**
-     * @param string $target_directory
-     * @param string $namespace_prefix
-     * @return bool
-     * @throws \Exception
-     */
-    public static function toClasses(string $target_directory = '', string $namespace_prefix = ''): bool
+    public const BOT_API_URL = 'https://core.telegram.org/bots/api';
+
+    public function __construct(private string $url = self::BOT_API_URL)
     {
-        $target_directory = self::getTargetDirectory($target_directory);
-        mkdir($target_directory . '/Methods', 0755);
-        mkdir($target_directory . '/Types', 0755);
+    }
+
+    /**
+     * @param string $directory
+     * @param string $namespace
+     * @param string|null $scheme
+     * @return bool
+     */
+    public function toStubs(string $directory = '', string $namespace = '', string $scheme = null): bool
+    {
         try {
-            $stub_provider = new StubProvider($namespace_prefix);
-            $code = $stub_provider->generateCode(self::extractScheme());
-            foreach ($code['methods'] as $class_name => $method) {
-                file_put_contents($target_directory . '/Methods/' . $class_name . '.php', $method);
+            $directory = self::getTargetDirectory($directory);
+        } catch (Exception $e) {
+            echo 'Unable to use target directory:' . $e->getMessage();
+            return false;
+        }
+        mkdir($directory . '/Types', 0755);
+        try {
+            if (!empty($scheme)) {
+                try {
+                    $data = json_decode($scheme, true, flags: JSON_THROW_ON_ERROR);
+                } catch (JsonException $e) {
+                    $data = null;
+                }
             }
+            $data = $data ?? self::extractScheme();
+            $creator = new StubCreator($data, $namespace);
+            $code = $creator->generateCode();
             foreach ($code['types'] as $class_name => $type) {
-                file_put_contents($target_directory . '/Types/' . $class_name . '.php', $type);
+                $filename = sprintf('%s/Types/%s.php', $directory, $class_name);
+                file_put_contents($filename, $type);
             }
-        } catch (\Exception $e) {
+            file_put_contents($directory . '/API.php', $code['api']);
+        } catch (Exception $e) {
+            echo $e->getMessage();
             return false;
         }
         return true;
     }
 
+    /**
+     * @param string $target_directory
+     * @return string
+     * @throws Exception
+     */
     private static function getTargetDirectory(string $target_directory): string
     {
-        mkdir($target_directory, 0755);
-        $target_directory = realpath($target_directory);
-        if (false == $target_directory) {
-            $target_directory = __DIR__ . '/generated';
-            if (!file_exists($target_directory)) {
-                mkdir($target_directory, 0755);
+        $target_path = realpath($target_directory);
+        if (false == $target_path) {
+            if (!mkdir($target_directory)) {
+                $target_path = __DIR__ . '/../generated';
+                if (!file_exists($target_path)) {
+                    mkdir($target_path, 0755);
+                }
             }
+        }
+        if (realpath($target_path) == false) {
+            throw new Exception('Could not create target directory');
         }
         return $target_directory;
     }
 
     /**
      * @return array
-     * @throws \PHPHtmlParser\Exceptions\ChildNotFoundException
-     * @throws \PHPHtmlParser\Exceptions\CircularException
-     * @throws \PHPHtmlParser\Exceptions\CurlException
-     * @throws \PHPHtmlParser\Exceptions\NotLoadedException
-     * @throws \PHPHtmlParser\Exceptions\ParentNotFoundException
-     * @throws \PHPHtmlParser\Exceptions\StrictException
+     * @throws ChildNotFoundException
+     * @throws CircularException
+     * @throws CurlException
+     * @throws NotLoadedException
+     * @throws ParentNotFoundException
+     * @throws StrictException
      */
-    private static function extractScheme(): array
+    private function extractScheme(): array
     {
         $dom = new Dom;
-        $dom->loadFromURL('https://core.telegram.org/bots/api');
+        $dom->loadFromURL($this->url);
         $elements = $dom->find('h4');
-        $i = 0;
         $data = [];
+        /* @var Dom\AbstractNode $element */
         foreach ($elements as $element) {
-            if (false === strpos($name = $element->text, ' ')) {
+            if (!str_contains($name = $element->text, ' ')) {
                 $is_method = self::isMethod($name);
                 $path = $is_method ? 'methods' : 'types';
-                $empty = in_array($name, self::EMPTY_FIELDS);
-                /* @var Dom $fields_table */
-                $fields_table = $dom->find('table')[$i];
-                $unparsed_fields = $fields_table->find('tbody')->find('tr');
-                /* @var Dom\AbstractNode $element */
-                /** @noinspection PhpUndefinedFieldInspection */
-                $data[$path][] = self::generateElement($name, $element->nextSibling()->nextSibling()->innerHtml,
-                    ($empty ? null : $unparsed_fields), $is_method);
-                if (!$empty) {
-                    $i++;
+                $temp = $element;
+                $description = '';
+                $table = null;
+                while (true) {
+                    try {
+                        $element = $element->nextSibling();
+                    } catch (ChildNotFoundException $e) {
+                        break;
+                    }
+                    $tag = $element->tag->name() ?? null;
+                    if (empty($temp->text()) or empty($tag) or $tag == 'text') {
+                        continue;
+                    } elseif (str_starts_with($tag, 'h')) {
+                        break;
+                    } elseif ($tag == 'p') {
+                        $description .= PHP_EOL . $element->innerHtml();
+                    } elseif ($tag == 'table') {
+                        $table = $element->find('tbody')->find('tr');
+                        break;
+                    }
                 }
+                /* @var Dom\AbstractNode $element */
+                $data[$path][] = self::generateElement(
+                    $name,
+                    trim($description),
+                    $table,
+                    $is_method
+                );
             }
         }
         return $data;
@@ -103,8 +142,7 @@ class Generator
 
     private static function isMethod(string $name): bool
     {
-        $first_letter = substr($name, 0, 1);
-        return (strtolower($first_letter) == $first_letter);
+        return lcfirst($name) == $name;
     }
 
     /**
@@ -113,11 +151,11 @@ class Generator
      * @param Dom\Collection|null $unparsed_fields
      * @param bool $is_method
      * @return array
-     * @throws \PHPHtmlParser\Exceptions\ChildNotFoundException
-     * @throws \PHPHtmlParser\Exceptions\CircularException
-     * @throws \PHPHtmlParser\Exceptions\CurlException
-     * @throws \PHPHtmlParser\Exceptions\NotLoadedException
-     * @throws \PHPHtmlParser\Exceptions\StrictException
+     * @throws ChildNotFoundException
+     * @throws CircularException
+     * @throws CurlException
+     * @throws NotLoadedException
+     * @throws StrictException
      */
     private static function generateElement(
         string $name,
@@ -149,8 +187,8 @@ class Generator
      * @param Dom\Collection|null $fields
      * @param bool $is_method
      * @return array
-     * @throws \PHPHtmlParser\Exceptions\ChildNotFoundException
-     * @throws \PHPHtmlParser\Exceptions\NotLoadedException
+     * @throws ChildNotFoundException
+     * @throws NotLoadedException
      */
     private static function parseFields(?Dom\Collection $fields, bool $is_method): array
     {
@@ -159,20 +197,27 @@ class Generator
         foreach ($fields as $field) {
             /* @var Dom $field */
             $field_data = $field->find('td');
+            $name = $field_data[0]->text;
+            if (empty($name)) {
+                continue;
+            }
             $parsed_data = [
-                'name' => $field_data[0]->text,
+                'name' => $name,
                 'type' => strip_tags($field_data[1]->innerHtml)
             ];
+            $parsed_data['types'] = self::parseFieldTypes($parsed_data['type']);
+            unset($parsed_data['type']);
             if ($is_method) {
-                $parsed_data['required'] = ($field_data[2]->text == 'Yes');
-                $parsed_data['types'] = self::parseMethodFieldTypes($parsed_data['type']);
-                unset($parsed_data['type']);
-                $parsed_data['description'] = htmlspecialchars_decode(strip_tags($field_data[3]->innerHtml ?? $field_data[3]->text ?? ''),
-                    ENT_QUOTES);
+                $parsed_data['required'] = $field_data[2]->text == 'Yes';
+                $parsed_data['description'] = htmlspecialchars_decode(
+                    strip_tags($field_data[3]->innerHtml ?? $field_data[3]->text ?? ''),
+                    ENT_QUOTES
+                );
             } else {
-                $parsed_data['type'] = self::parseObjectFieldType($parsed_data['type']);
-                $parsed_data['description'] = htmlspecialchars_decode(strip_tags($field_data[2]->innerHtml),
-                    ENT_QUOTES);
+                $parsed_data['description'] = htmlspecialchars_decode(
+                    strip_tags($field_data[2]->innerHtml),
+                    ENT_QUOTES
+                );
             }
             $parsed_fields[] = $parsed_data;
         }
@@ -183,47 +228,57 @@ class Generator
      * @param string $raw_type
      * @return array
      */
-    private static function parseMethodFieldTypes(string $raw_type): array
+    private static function parseFieldTypes(string $raw_type): array
     {
-        $types = explode(' or ', $raw_type);
+        $types = [];
+        foreach (explode(' or ', $raw_type) as $raw_or_type) {
+            if (stripos($raw_or_type, 'array') === 0) {
+                $types[] = str_replace(' and', ',', $raw_or_type);
+                continue;
+            }
+            foreach (explode(' and ', $raw_or_type) as $unparsed_type) {
+                $types[] = $unparsed_type;
+            }
+        }
         $parsed_types = [];
         foreach ($types as $type) {
             $type = trim(str_replace(['number', 'of'], '', $type));
             $multiples_count = substr_count(strtolower($type), 'array');
-            $parsed_types[] = trim(str_replace(['Array', 'Integer', 'String', 'Boolean', 'Float'],
-                    ['', 'int', 'string', 'bool', 'float'], $type)) . str_repeat('[]', $multiples_count);
+            $parsed_type = trim(
+                str_replace(
+                    ['Array', 'Integer', 'String', 'Boolean', 'Float', 'True'],
+                    ['', 'int', 'string', 'bool', 'float', 'bool'],
+                    $type
+                )
+            );
+            for ($i = 0; $i < $multiples_count; $i++) {
+                $parsed_type = sprintf('Array<%s>', $parsed_type);
+            }
+            $parsed_types[] = $parsed_type;
         }
         return $parsed_types;
     }
 
     /**
-     * @param string $raw_type
-     * @return string
-     */
-    private static function parseObjectFieldType(string $raw_type): string
-    {
-        $type = trim(str_replace(['number', 'of'], '', $raw_type));
-        $multiples_count = substr_count(strtolower($type), 'array');
-        return trim(str_replace(['Array', 'Integer', 'String', 'Boolean', 'Float'],
-                ['', 'int', 'string', 'bool', 'float'], $type)) . str_repeat('[]', $multiples_count);
-    }
-
-    /**
      * @param string $description
      * @return array
-     * @throws \PHPHtmlParser\Exceptions\ChildNotFoundException
-     * @throws \PHPHtmlParser\Exceptions\CircularException
-     * @throws \PHPHtmlParser\Exceptions\CurlException
-     * @throws \PHPHtmlParser\Exceptions\NotLoadedException
-     * @throws \PHPHtmlParser\Exceptions\StrictException
+     * @throws ChildNotFoundException
+     * @throws CircularException
+     * @throws CurlException
+     * @throws NotLoadedException
+     * @throws StrictException
+     * @noinspection PhpUndefinedFieldInspection
      */
     private static function parseReturnTypes(string $description): array
     {
         $return_types = [];
         $phrases = explode('.', $description);
-        $phrases = array_filter($phrases, function ($phrase) {
-            return (false !== stripos($phrase, 'returns') or false !== stripos($phrase, 'is returned'));
-        });
+        $phrases = array_filter(
+            $phrases,
+            function ($phrase) {
+                return (false !== stripos($phrase, 'returns') or false !== stripos($phrase, 'is returned'));
+            }
+        );
         foreach ($phrases as $phrase) {
             $dom = new Dom;
             $dom->load($phrase);
@@ -231,11 +286,16 @@ class Generator
             $em = $dom->find('em');
             foreach ($a as $element) {
                 if ($element->text == 'Messages') {
-                    $return_types[] = 'Message[]';
+                    $return_types[] = 'Array<Message>';
                     continue;
                 }
+
                 $multiples_count = substr_count(strtolower($phrase), 'array');
-                $return_types[] = $element->text . str_repeat('[]', $multiples_count);
+                $return_type = $element->text;
+                for ($i = 0; $i < $multiples_count; $i++) {
+                    $return_type = sprintf('Array<%s>', $return_type);
+                }
+                $return_types[] = $return_type;
             }
             foreach ($em as $element) {
                 if (in_array($element->text, ['False', 'force', 'Array'])) {
@@ -251,16 +311,16 @@ class Generator
     /**
      * @param int $options
      * @return string
-     * @throws \PHPHtmlParser\Exceptions\ChildNotFoundException
-     * @throws \PHPHtmlParser\Exceptions\CircularException
-     * @throws \PHPHtmlParser\Exceptions\CurlException
-     * @throws \PHPHtmlParser\Exceptions\NotLoadedException
-     * @throws \PHPHtmlParser\Exceptions\ParentNotFoundException
-     * @throws \PHPHtmlParser\Exceptions\StrictException
+     * @throws ChildNotFoundException
+     * @throws CircularException
+     * @throws CurlException
+     * @throws NotLoadedException
+     * @throws ParentNotFoundException
+     * @throws StrictException
      */
-    public static function toJson(int $options = 0): string
+    public function toJson(int $options = 0): string
     {
-        $scheme = self::extractScheme();
+        $scheme = $this->extractScheme();
         return json_encode($scheme, $options);
     }
 

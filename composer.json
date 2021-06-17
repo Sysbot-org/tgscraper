@@ -1,22 +1,29 @@
 {
-  "name": "sys-001/tgbotapi-gen",
+  "name": "sysbot/tgscraper",
   "description": "Utility to extract scheme from Telegram Bot API webpage.",
-  "type": "project",
+  "require": {
+    "php": ">=8.0",
+    "ext-json": "*",
+    "nette/php-generator": "^3.5",
+    "paquettg/php-html-parser": "^2.2"
+  },
   "autoload": {
     "psr-4": {
-      "TGBotApi\\": "src/"
+      "TgScraper\\": "src/"
     }
   },
-  "require": {
-    "php": "^7.2",
-    "ext-json": "*",
-    "nette/php-generator": "^3.3",
-    "paquettg/php-html-parser": "^2.0"
-  },
+  "bin": [
+    "bin/tgscraper"
+  ],
   "authors": [
     {
       "name": "sys-001",
-      "email": "honfu7891@etlgr.com"
+      "email": "sys@sys001.ml",
+      "homepage": "https://sys001.ml",
+      "role": "Developer"
     }
-  ]
+  ],
+  "support": {
+    "issues": "https://github.com/Sysbot-org/tgscraper/issues"
+  }
 }

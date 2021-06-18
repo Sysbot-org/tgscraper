@@ -215,10 +215,9 @@ class Generator
                     ENT_QUOTES
                 );
             } else {
-                $parsedData['description'] = htmlspecialchars_decode(
-                    strip_tags($fieldData[2]->innerHtml),
-                    ENT_QUOTES
-                );
+                $description = htmlspecialchars_decode(strip_tags($fieldData[2]->innerHtml), ENT_QUOTES);
+                $parsedData['optional'] = str_starts_with($description, 'Optional.');
+                $parsedData['description'] = $description;
             }
             $parsedFields[] = $parsedData;
         }

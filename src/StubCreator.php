@@ -41,6 +41,11 @@ class StubCreator
         $this->namespace = $namespace;
     }
 
+    private static function toCamelCase(string $str): string
+    {
+        return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $str))));
+    }
+
     /**
      * @param array $fieldTypes
      * @param PhpNamespace $phpNamespace
@@ -107,13 +112,23 @@ class StubCreator
         $response = $phpNamespace->addClass('Response')
             ->setType('class');
         $response->addProperty('ok')
-            ->setPublic();
+            ->setPublic()
+            ->setType(Type::BOOL);
         $response->addProperty('result')
-            ->setPublic();
+            ->setPublic()
+            ->setType(Type::MIXED)
+            ->setNullable(true)
+            ->setValue(null);
         $response->addProperty('error_code')
-            ->setPublic();
+            ->setPublic()
+            ->setType(Type::INT)
+            ->setNullable(true)
+            ->setValue(null);
         $response->addProperty('description')
-            ->setPublic();
+            ->setPublic()
+            ->setType(Type::STRING)
+            ->setNullable(true)
+            ->setValue(null);
         return [
             'Response' => $file
         ];
@@ -136,11 +151,17 @@ class StubCreator
                     $field['types'],
                     $phpNamespace
                 );
-                $type_property = $typeClass->addProperty($field['name'])
+                $fieldName = self::toCamelCase($field['name']);
+                $typeProperty = $typeClass->addProperty($fieldName)
                     ->setPublic()
                     ->setType($fieldTypes);
+                if ($field['optional']) {
+                    $typeProperty->setNullable(true)
+                        ->setValue(null);
+                    $fieldComments .= '|null';
+                }
                 if (!empty($fieldComments)) {
-                    $type_property->addComment($fieldComments);
+                    $typeProperty->addComment($fieldComments);
                 }
             }
             $types[$type['name']] = $file;
@@ -187,7 +208,8 @@ class StubCreator
             );
             foreach ($fields as $field) {
                 $types = $this->parseApiFieldTypes($field['types'], $phpNamespace)['types'];
-                $parameter = $function->addParameter($field['name'])
+                $fieldName = self::toCamelCase($field['name']);
+                $parameter = $function->addParameter($fieldName)
                     ->setType($types);
                 if (!$field['required']) {
                     $parameter->setNullable()

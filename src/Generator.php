@@ -38,7 +38,7 @@ class Generator
         try {
             $directory = self::getTargetDirectory($directory);
         } catch (Exception $e) {
-            echo 'Unable to use target directory:' . $e->getMessage();
+            echo 'Unable to use target directory:' . $e->getMessage() . PHP_EOL;
             return false;
         }
         mkdir($directory . '/Types', 0755);
@@ -53,38 +53,39 @@ class Generator
             $data = $data ?? self::extractScheme();
             $creator = new StubCreator($data, $namespace);
             $code = $creator->generateCode();
-            foreach ($code['types'] as $class_name => $type) {
-                $filename = sprintf('%s/Types/%s.php', $directory, $class_name);
+            foreach ($code['types'] as $className => $type) {
+                $filename = sprintf('%s/Types/%s.php', $directory, $className);
                 file_put_contents($filename, $type);
             }
             file_put_contents($directory . '/API.php', $code['api']);
         } catch (Exception $e) {
-            echo $e->getMessage();
+            var_dump($e);
+            echo $e->getMessage() . PHP_EOL;
             return false;
         }
         return true;
     }
 
     /**
-     * @param string $target_directory
+     * @param string $path
      * @return string
      * @throws Exception
      */
-    private static function getTargetDirectory(string $target_directory): string
+    private static function getTargetDirectory(string $path): string
     {
-        $target_path = realpath($target_directory);
-        if (false == $target_path) {
-            if (!mkdir($target_directory)) {
-                $target_path = __DIR__ . '/../generated';
-                if (!file_exists($target_path)) {
-                    mkdir($target_path, 0755);
+        $path = realpath($path);
+        if (false == $path) {
+            if (!mkdir($path)) {
+                $path = __DIR__ . '/../generated';
+                if (!file_exists($path)) {
+                    mkdir($path, 0755);
                 }
             }
         }
-        if (realpath($target_path) == false) {
+        if (realpath($path) == false) {
             throw new Exception('Could not create target directory');
         }
-        return $target_directory;
+        return $path;
     }
 
     /**
@@ -105,8 +106,8 @@ class Generator
         /* @var Dom\AbstractNode $element */
         foreach ($elements as $element) {
             if (!str_contains($name = $element->text, ' ')) {
-                $is_method = self::isMethod($name);
-                $path = $is_method ? 'methods' : 'types';
+                $isMethod = self::isMethod($name);
+                $path = $isMethod ? 'methods' : 'types';
                 $temp = $element;
                 $description = '';
                 $table = null;
@@ -133,7 +134,7 @@ class Generator
                     $name,
                     trim($description),
                     $table,
-                    $is_method
+                    $isMethod
                 );
             }
         }
@@ -148,8 +149,8 @@ class Generator
     /**
      * @param string $name
      * @param string $description
-     * @param Dom\Collection|null $unparsed_fields
-     * @param bool $is_method
+     * @param Dom\Collection|null $unparsedFields
+     * @param bool $isMethod
      * @return array
      * @throws ChildNotFoundException
      * @throws CircularException
@@ -160,103 +161,103 @@ class Generator
     private static function generateElement(
         string $name,
         string $description,
-        ?Dom\Collection $unparsed_fields,
-        bool $is_method
+        ?Dom\Collection $unparsedFields,
+        bool $isMethod
     ): array {
-        $fields = self::parseFields($unparsed_fields, $is_method);
-        if (!$is_method) {
+        $fields = self::parseFields($unparsedFields, $isMethod);
+        if (!$isMethod) {
             return [
                 'name' => $name,
                 'description' => htmlspecialchars_decode(strip_tags($description), ENT_QUOTES),
                 'fields' => $fields
             ];
         }
-        $return_types = self::parseReturnTypes($description);
-        if (empty($return_types) and in_array($name, self::BOOL_RETURNS)) {
-            $return_types[] = 'bool';
+        $returnTypes = self::parseReturnTypes($description);
+        if (empty($returnTypes) and in_array($name, self::BOOL_RETURNS)) {
+            $returnTypes[] = 'bool';
         }
         return [
             'name' => $name,
             'description' => htmlspecialchars_decode(strip_tags($description), ENT_QUOTES),
             'fields' => $fields,
-            'return_types' => $return_types
+            'return_types' => $returnTypes
         ];
     }
 
     /**
      * @param Dom\Collection|null $fields
-     * @param bool $is_method
+     * @param bool $isMethod
      * @return array
      * @throws ChildNotFoundException
      * @throws NotLoadedException
      */
-    private static function parseFields(?Dom\Collection $fields, bool $is_method): array
+    private static function parseFields(?Dom\Collection $fields, bool $isMethod): array
     {
-        $parsed_fields = [];
+        $parsedFields = [];
         $fields = $fields ?? [];
         foreach ($fields as $field) {
             /* @var Dom $field */
-            $field_data = $field->find('td');
-            $name = $field_data[0]->text;
+            $fieldData = $field->find('td');
+            $name = $fieldData[0]->text;
             if (empty($name)) {
                 continue;
             }
-            $parsed_data = [
+            $parsedData = [
                 'name' => $name,
-                'type' => strip_tags($field_data[1]->innerHtml)
+                'type' => strip_tags($fieldData[1]->innerHtml)
             ];
-            $parsed_data['types'] = self::parseFieldTypes($parsed_data['type']);
-            unset($parsed_data['type']);
-            if ($is_method) {
-                $parsed_data['required'] = $field_data[2]->text == 'Yes';
-                $parsed_data['description'] = htmlspecialchars_decode(
-                    strip_tags($field_data[3]->innerHtml ?? $field_data[3]->text ?? ''),
+            $parsedData['types'] = self::parseFieldTypes($parsedData['type']);
+            unset($parsedData['type']);
+            if ($isMethod) {
+                $parsedData['required'] = $fieldData[2]->text == 'Yes';
+                $parsedData['description'] = htmlspecialchars_decode(
+                    strip_tags($fieldData[3]->innerHtml ?? $fieldData[3]->text ?? ''),
                     ENT_QUOTES
                 );
             } else {
-                $parsed_data['description'] = htmlspecialchars_decode(
-                    strip_tags($field_data[2]->innerHtml),
+                $parsedData['description'] = htmlspecialchars_decode(
+                    strip_tags($fieldData[2]->innerHtml),
                     ENT_QUOTES
                 );
             }
-            $parsed_fields[] = $parsed_data;
+            $parsedFields[] = $parsedData;
         }
-        return $parsed_fields;
+        return $parsedFields;
     }
 
     /**
-     * @param string $raw_type
+     * @param string $rawType
      * @return array
      */
-    private static function parseFieldTypes(string $raw_type): array
+    private static function parseFieldTypes(string $rawType): array
     {
         $types = [];
-        foreach (explode(' or ', $raw_type) as $raw_or_type) {
-            if (stripos($raw_or_type, 'array') === 0) {
-                $types[] = str_replace(' and', ',', $raw_or_type);
+        foreach (explode(' or ', $rawType) as $rawOrType) {
+            if (stripos($rawOrType, 'array') === 0) {
+                $types[] = str_replace(' and', ',', $rawOrType);
                 continue;
             }
-            foreach (explode(' and ', $raw_or_type) as $unparsed_type) {
-                $types[] = $unparsed_type;
+            foreach (explode(' and ', $rawOrType) as $unparsedType) {
+                $types[] = $unparsedType;
             }
         }
-        $parsed_types = [];
+        $parsedTypes = [];
         foreach ($types as $type) {
             $type = trim(str_replace(['number', 'of'], '', $type));
-            $multiples_count = substr_count(strtolower($type), 'array');
-            $parsed_type = trim(
+            $multiplesCount = substr_count(strtolower($type), 'array');
+            $parsedType = trim(
                 str_replace(
                     ['Array', 'Integer', 'String', 'Boolean', 'Float', 'True'],
                     ['', 'int', 'string', 'bool', 'float', 'bool'],
                     $type
                 )
             );
-            for ($i = 0; $i < $multiples_count; $i++) {
-                $parsed_type = sprintf('Array<%s>', $parsed_type);
+            for ($i = 0; $i < $multiplesCount; $i++) {
+                $parsedType = sprintf('Array<%s>', $parsedType);
             }
-            $parsed_types[] = $parsed_type;
+            $parsedTypes[] = $parsedType;
         }
-        return $parsed_types;
+        return $parsedTypes;
     }
 
     /**
@@ -271,7 +272,7 @@ class Generator
      */
     private static function parseReturnTypes(string $description): array
     {
-        $return_types = [];
+        $returnTypes = [];
         $phrases = explode('.', $description);
         $phrases = array_filter(
             $phrases,
@@ -286,26 +287,26 @@ class Generator
             $em = $dom->find('em');
             foreach ($a as $element) {
                 if ($element->text == 'Messages') {
-                    $return_types[] = 'Array<Message>';
+                    $returnTypes[] = 'Array<Message>';
                     continue;
                 }
 
-                $multiples_count = substr_count(strtolower($phrase), 'array');
-                $return_type = $element->text;
-                for ($i = 0; $i < $multiples_count; $i++) {
-                    $return_type = sprintf('Array<%s>', $return_type);
+                $multiplesCount = substr_count(strtolower($phrase), 'array');
+                $returnType = $element->text;
+                for ($i = 0; $i < $multiplesCount; $i++) {
+                    $returnType = sprintf('Array<%s>', $returnType);
                 }
-                $return_types[] = $return_type;
+                $returnTypes[] = $returnType;
             }
             foreach ($em as $element) {
                 if (in_array($element->text, ['False', 'force', 'Array'])) {
                     continue;
                 }
                 $type = str_replace(['True', 'Int', 'String'], ['bool', 'int', 'string'], $element->text);
-                $return_types[] = $type;
+                $returnTypes[] = $type;
             }
         }
-        return $return_types;
+        return $returnTypes;
     }
 
     /**

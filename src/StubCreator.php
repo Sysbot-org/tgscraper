@@ -43,6 +43,7 @@ class StubCreator
 
     /**
      * @param array $fieldTypes
+     * @param PhpNamespace $phpNamespace
      * @return array
      */
     private function parseFieldTypes(array $fieldTypes, PhpNamespace $phpNamespace): array

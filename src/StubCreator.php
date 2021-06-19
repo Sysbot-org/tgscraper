@@ -180,9 +180,6 @@ class StubCreator
         $phpNamespace = $file->addNamespace($this->namespace);
         $apiClass = $phpNamespace->addClass('API')
             ->setTrait();
-        $apiClass->addMethod('__construct')
-            ->setPublic()
-            ->setAbstract();
         $sendRequest = $apiClass->addMethod('sendRequest')
             ->setPublic()
             ->setAbstract()

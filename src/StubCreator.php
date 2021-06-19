@@ -177,23 +177,20 @@ class StubCreator
         $file = new PhpFile;
         $file->addComment('@noinspection PhpUnused');
         $file->addComment('@noinspection PhpUnusedParameterInspection');
-        $file->addComment('@noinspection PhpIncompatibleReturnTypeInspection');
-        $file->addComment('@noinspection PhpVoidFunctionResultUsedInspection');
         $phpNamespace = $file->addNamespace($this->namespace);
         $apiClass = $phpNamespace->addClass('API')
-            ->setType('class');
+            ->setTrait();
         $apiClass->addMethod('__construct')
             ->setPublic()
-            ->addPromotedParameter('client')
-            ->setType('\GuzzleHttp\Client')
-            ->setPrivate();
+            ->setAbstract();
         $sendRequest = $apiClass->addMethod('sendRequest')
-            ->setPublic();
+            ->setPublic()
+            ->setAbstract()
+            ->setReturnType(Type::MIXED);
         $sendRequest->addParameter('method')
             ->setType(Type::STRING);
         $sendRequest->addParameter('args')
             ->setType(Type::ARRAY);
-        $sendRequest->addBody('//TODO: add your logic here');
         foreach ($this->scheme['methods'] as $method) {
             $function = $apiClass->addMethod($method['name'])
                 ->setPublic()

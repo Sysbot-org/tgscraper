@@ -47,7 +47,7 @@ if (is_dir($output)) {
                 echo '> Extracting JSON scheme.' . PHP_EOL;
                 $data = $generator->toJson();
             } catch (Exception $e) {
-                echo '> ERROR: Unable to extract scheme:' . $e->getMessage() . PHP_EOL;
+                echo '> ERROR: Unable to extract scheme: ' . $e->getMessage() . PHP_EOL;
                 exit(1);
             }
         } else {
@@ -65,7 +65,7 @@ if (is_dir($output)) {
         echo '> Extracting JSON scheme.' . PHP_EOL;
         $data = $generator->toJson();
     } catch (Exception $e) {
-        echo '> ERROR: Unable to extract scheme:' . $e->getMessage() . PHP_EOL;
+        echo '> ERROR: Unable to extract scheme: ' . $e->getMessage() . PHP_EOL;
         exit(1);
     }
     echo sprintf('> Outputting PHP stubs to %s.%s', realpath($output), PHP_EOL);

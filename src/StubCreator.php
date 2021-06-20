@@ -119,7 +119,7 @@ class StubCreator
             ->setType(Type::MIXED)
             ->setNullable(true)
             ->setValue(null);
-        $response->addProperty('error_code')
+        $response->addProperty('errorCode')
             ->setPublic()
             ->setType(Type::INT)
             ->setNullable(true)

@@ -5,13 +5,14 @@ namespace TgScraper;
 use Exception;
 use JsonException;
 use PHPHtmlParser\Dom;
-use PHPHtmlParser\Exceptions\{ChildNotFoundException,
-    CircularException,
-    CurlException,
-    NotLoadedException,
-    ParentNotFoundException,
-    StrictException
-};
+use PHPHtmlParser\Exceptions\ChildNotFoundException;
+use PHPHtmlParser\Exceptions\CircularException;
+use PHPHtmlParser\Exceptions\ContentLengthException;
+use PHPHtmlParser\Exceptions\LogicalException;
+use PHPHtmlParser\Exceptions\NotLoadedException;
+use PHPHtmlParser\Exceptions\ParentNotFoundException;
+use PHPHtmlParser\Exceptions\StrictException;
+use Psr\Http\Client\ClientExceptionInterface;
 
 class Generator
 {
@@ -32,6 +33,7 @@ class Generator
      * @param string $namespace
      * @param string|null $scheme
      * @return bool
+     * @throws ClientExceptionInterface
      */
     public function toStubs(string $directory = '', string $namespace = '', string $scheme = null): bool
     {
@@ -46,11 +48,11 @@ class Generator
             if (!empty($scheme)) {
                 try {
                     $data = json_decode($scheme, true, flags: JSON_THROW_ON_ERROR);
-                } catch (JsonException $e) {
+                } /** @noinspection PhpRedundantCatchClauseInspection */ catch (JsonException) {
                     $data = null;
                 }
             }
-            $data = $data ?? self::extractScheme();
+            $data = $data ?? $this->extractScheme();
             $creator = new StubCreator($data, $namespace);
             $code = $creator->generateCode();
             foreach ($code['types'] as $className => $type) {
@@ -59,7 +61,6 @@ class Generator
             }
             file_put_contents($directory . '/API.php', $code['api']);
         } catch (Exception $e) {
-            var_dump($e);
             echo $e->getMessage() . PHP_EOL;
             return false;
         }
@@ -74,7 +75,7 @@ class Generator
     private static function getTargetDirectory(string $path): string
     {
         $path = realpath($path);
-        if (false == $path) {
+        if (false === $path) {
             if (!mkdir($path)) {
                 $path = __DIR__ . '/../generated';
                 if (!file_exists($path)) {
@@ -82,7 +83,7 @@ class Generator
                 }
             }
         }
-        if (realpath($path) == false) {
+        if (realpath($path) === false) {
             throw new Exception('Could not create target directory');
         }
         return $path;
@@ -92,10 +93,12 @@ class Generator
      * @return array
      * @throws ChildNotFoundException
      * @throws CircularException
-     * @throws CurlException
+     * @throws ContentLengthException
+     * @throws LogicalException
      * @throws NotLoadedException
      * @throws ParentNotFoundException
      * @throws StrictException
+     * @throws ClientExceptionInterface
      */
     private function extractScheme(): array
     {
@@ -103,7 +106,7 @@ class Generator
         $dom->loadFromURL($this->url);
         $elements = $dom->find('h4');
         $data = [];
-        /* @var Dom\AbstractNode $element */
+        /* @var Dom\Node\AbstractNode $element */
         foreach ($elements as $element) {
             if (!str_contains($name = $element->text, ' ')) {
                 $isMethod = self::isMethod($name);
@@ -114,7 +117,7 @@ class Generator
                 while (true) {
                     try {
                         $element = $element->nextSibling();
-                    } catch (ChildNotFoundException $e) {
+                    } catch (ChildNotFoundException) {
                         break;
                     }
                     $tag = $element->tag->name() ?? null;
@@ -129,7 +132,7 @@ class Generator
                         break;
                     }
                 }
-                /* @var Dom\AbstractNode $element */
+                /* @var Dom\Node\AbstractNode $element */
                 $data[$path][] = self::generateElement(
                     $name,
                     trim($description),
@@ -149,19 +152,20 @@ class Generator
     /**
      * @param string $name
      * @param string $description
-     * @param Dom\Collection|null $unparsedFields
+     * @param Dom\Node\Collection|null $unparsedFields
      * @param bool $isMethod
      * @return array
      * @throws ChildNotFoundException
      * @throws CircularException
-     * @throws CurlException
+     * @throws ContentLengthException
+     * @throws LogicalException
      * @throws NotLoadedException
      * @throws StrictException
      */
     private static function generateElement(
         string $name,
         string $description,
-        ?Dom\Collection $unparsedFields,
+        ?Dom\Node\Collection $unparsedFields,
         bool $isMethod
     ): array {
         $fields = self::parseFields($unparsedFields, $isMethod);
@@ -185,13 +189,13 @@ class Generator
     }
 
     /**
-     * @param Dom\Collection|null $fields
+     * @param Dom\Node\Collection|null $fields
      * @param bool $isMethod
      * @return array
      * @throws ChildNotFoundException
      * @throws NotLoadedException
      */
-    private static function parseFields(?Dom\Collection $fields, bool $isMethod): array
+    private static function parseFields(?Dom\Node\Collection $fields, bool $isMethod): array
     {
         $parsedFields = [];
         $fields = $fields ?? [];
@@ -264,9 +268,10 @@ class Generator
      * @return array
      * @throws ChildNotFoundException
      * @throws CircularException
-     * @throws CurlException
      * @throws NotLoadedException
      * @throws StrictException
+     * @throws ContentLengthException
+     * @throws LogicalException
      * @noinspection PhpUndefinedFieldInspection
      */
     private static function parseReturnTypes(string $description): array
@@ -281,7 +286,7 @@ class Generator
         );
         foreach ($phrases as $phrase) {
             $dom = new Dom;
-            $dom->load($phrase);
+            $dom->loadStr($phrase);
             $a = $dom->find('a');
             $em = $dom->find('em');
             foreach ($a as $element) {
@@ -313,7 +318,9 @@ class Generator
      * @return string
      * @throws ChildNotFoundException
      * @throws CircularException
-     * @throws CurlException
+     * @throws ClientExceptionInterface
+     * @throws ContentLengthException
+     * @throws LogicalException
      * @throws NotLoadedException
      * @throws ParentNotFoundException
      * @throws StrictException

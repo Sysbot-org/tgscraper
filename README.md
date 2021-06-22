@@ -3,6 +3,8 @@
 [![License](http://poser.pugx.org/sysbot/tgscraper/license)](https://packagist.org/packages/sysbot/tgscraper)
 ![Required PHP Version](https://img.shields.io/badge/php-%E2%89%A58.0-brightgreen)
 [![Latest Stable Version](http://poser.pugx.org/sysbot/tgscraper/v)](https://packagist.org/packages/sysbot/tgscraper)
+![Dependencies](https://img.shields.io/librariesio/github/Sysbot-org/tgscraper)
+![Code Quality](https://img.shields.io/scrutinizer/quality/g/Sysbot-org/tgscraper)
 
 A PHP library used to extract JSON data (and auto-generate PHP classes)
 from [Telegram bot API documentation page](https://core.telegram.org/bots/api).

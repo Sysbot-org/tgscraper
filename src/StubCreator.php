@@ -6,6 +6,8 @@ namespace TgScraper;
 
 
 use InvalidArgumentException;
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 use Nette\PhpGenerator\Helpers;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
@@ -51,6 +53,7 @@ class StubCreator
      * @param PhpNamespace $phpNamespace
      * @return array
      */
+    #[Pure] #[ArrayShape(['types' => "string", 'comments' => "string"])]
     private function parseFieldTypes(array $fieldTypes, PhpNamespace $phpNamespace): array
     {
         $types = [];
@@ -78,6 +81,7 @@ class StubCreator
      * @param PhpNamespace $phpNamespace
      * @return array
      */
+    #[ArrayShape(['types' => "string", 'comments' => "string"])]
     private function parseApiFieldTypes(array $apiTypes, PhpNamespace $phpNamespace): array
     {
         $types = [];
@@ -105,6 +109,7 @@ class StubCreator
      * @param string $namespace
      * @return PhpFile[]
      */
+    #[ArrayShape(['Response' => "\Nette\PhpGenerator\PhpFile"])]
     private function generateDefaultTypes(string $namespace): array
     {
         $file = new PhpFile;
@@ -219,6 +224,7 @@ class StubCreator
     /**
      * @return array
      */
+    #[ArrayShape(['types' => "\Nette\PhpGenerator\PhpFile[]", 'api' => "string"])]
     public function generateCode(): array
     {
         return [

@@ -46,7 +46,7 @@ if (is_dir($output)) {
             try {
                 echo '> Extracting JSON scheme.' . PHP_EOL;
                 $data = $generator->toJson();
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 echo '> ERROR: Unable to extract scheme: ' . $e->getMessage() . PHP_EOL;
                 exit(1);
             }
@@ -54,6 +54,7 @@ if (is_dir($output)) {
             echo sprintf('> Loaded data from "%s".%s', $scheme, PHP_EOL);
         }
         echo sprintf('> Outputting PHP stubs to %s.%s', realpath($output), PHP_EOL);
+        /** @noinspection PhpUnhandledExceptionInspection */
         $result = $generator->toStubs($output, $namespace, $data);
         if (!$result) {
             echo '> ERROR: unable to create stubs.' . PHP_EOL;
@@ -64,11 +65,12 @@ if (is_dir($output)) {
     try {
         echo '> Extracting JSON scheme.' . PHP_EOL;
         $data = $generator->toJson();
-    } catch (Exception $e) {
+    } catch (Throwable $e) {
         echo '> ERROR: Unable to extract scheme: ' . $e->getMessage() . PHP_EOL;
         exit(1);
     }
     echo sprintf('> Outputting PHP stubs to %s.%s', realpath($output), PHP_EOL);
+    /** @noinspection PhpUnhandledExceptionInspection */
     $result = $generator->toStubs($output, $namespace, $data);
     if (!$result) {
         echo '> ERROR: unable to create stubs.' . PHP_EOL;
@@ -82,7 +84,7 @@ echo sprintf('> Outputting JSON schema to %s.%s', realpath($output), PHP_EOL);
 
 try {
     $data = $generator->toJson(JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-} catch (Exception $e) {
+} catch (Throwable $e) {
     echo '> ERROR: Unable to generate scheme:' . $e->getMessage() . PHP_EOL;
     exit(1);
 }

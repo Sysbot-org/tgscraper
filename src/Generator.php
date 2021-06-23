@@ -13,6 +13,7 @@ use PHPHtmlParser\Exceptions\NotLoadedException;
 use PHPHtmlParser\Exceptions\ParentNotFoundException;
 use PHPHtmlParser\Exceptions\StrictException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class Generator
 {
@@ -329,6 +330,22 @@ class Generator
     {
         $scheme = $this->extractScheme();
         return json_encode($scheme, $options);
+    }
+
+    /**
+     * @throws ChildNotFoundException
+     * @throws CircularException
+     * @throws ParentNotFoundException
+     * @throws StrictException
+     * @throws ClientExceptionInterface
+     * @throws NotLoadedException
+     * @throws ContentLengthException
+     * @throws LogicalException
+     */
+    public function toYaml(int $inline = 6, int $indent = 4, int $flags = 0): string
+    {
+        $scheme = $this->extractScheme();
+        return Yaml::dump($scheme, $inline, $indent, $flags);
     }
 
 }

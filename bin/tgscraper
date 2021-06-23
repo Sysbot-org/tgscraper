@@ -1,4 +1,4 @@
-#!/usr/bin/env php8.0
+#!/usr/bin/env php
 <?php
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -12,10 +12,10 @@ if (array_key_exists('h', $args)) {
     echo 'Usage: tgscraper -o <output> [-u <url>] [-n <namespace>] [-s <scheme>]' . PHP_EOL . PHP_EOL;
     echo 'Options:' . PHP_EOL;
     echo ' -n <namespace>    namespace to use (for PHP stubs only)' . PHP_EOL;
-    echo ' -o <output>       output file/directory (the directory must exist) for JSON schema or PHP stubs' . PHP_EOL;
+    echo ' -o <output>       output file/directory (the directory must exist) for JSON/YAML schema or PHP stubs' . PHP_EOL;
     echo ' -s <scheme>       path to custom scheme to use (for PHP stubs only)' . PHP_EOL;
     echo ' -u <url>          URL to use for fetching bot API data' . PHP_EOL . PHP_EOL;
-    echo 'Note: based on the "-o" value, the script will automatically detect whether to output a JSON schema or the PHP stubs.' . PHP_EOL;
+    echo 'Note: based on the "-o" value, the script will automatically detect whether to output a JSON/YAML schema or the PHP stubs.' . PHP_EOL;
     exit;
 }
 
@@ -80,6 +80,29 @@ if (is_dir($output)) {
 
 echo sprintf('> Using "%s" as URL.%s', $url, PHP_EOL);
 touch($output);
+
+$extension = pathinfo($output, PATHINFO_EXTENSION);
+
+if (in_array($extension, ['yml', 'yaml'])) {
+    echo sprintf('> Outputting YAML schema to %s.%s', realpath($output), PHP_EOL);
+
+    try {
+        $data = $generator->toYaml();
+    } catch (Throwable $e) {
+        echo '> ERROR: Unable to generate scheme:' . $e->getMessage() . PHP_EOL;
+        exit(1);
+    }
+
+    $error = file_put_contents($output, $data) === false;
+
+    if ($error) {
+        echo '> ERROR: unable to write to file.' . PHP_EOL;
+    }
+
+    exit($error);
+}
+
+
 echo sprintf('> Outputting JSON schema to %s.%s', realpath($output), PHP_EOL);
 
 try {

@@ -6,7 +6,8 @@
     "php": ">=8.0",
     "ext-json": "*",
     "nette/php-generator": "^3.5",
-    "paquettg/php-html-parser": "^3.1"
+    "paquettg/php-html-parser": "^3.1",
+    "symfony/yaml": "^5.3"
   },
   "autoload": {
     "psr-4": {

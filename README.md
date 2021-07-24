@@ -54,7 +54,7 @@ Extract the latest schema in YAML format:
 
 ### Stubs
 
-TGScraper can also generate class stubs that you can use in your library. A sample implementation is available in the [Sysbot API module](https://github.com/Sysbot-org/Sysbot-api).
+TGScraper can also generate class stubs that you can use in your library. A sample implementation is available in the [Sysbot Telegram module](https://github.com/Sysbot-org/Sysbot-tg).
 
 Create stubs in the `out/` directory using `Sysbot\Api` as namespace prefix:
 

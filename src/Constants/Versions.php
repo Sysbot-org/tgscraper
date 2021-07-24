@@ -39,7 +39,7 @@ class Versions
     public const V490 = 'https://web.archive.org/web/20200611131321/https://core.telegram.org/bots/api';
     public const V500 = 'https://web.archive.org/web/20201104151640/https://core.telegram.org/bots/api';
     public const V510 = 'https://web.archive.org/web/20210315055600/https://core.telegram.org/bots/api';
-    public const V520 = 'https://web.archive.org/web/20210428145432/https://core.telegram.org/bots/api';
+    public const V520 = 'https://web.archive.org/web/20210428195636/https://core.telegram.org/bots/api';
     public const V530 = 'https://web.archive.org/web/20210626142851/https://core.telegram.org/bots/api';
     public const LATEST = 'https://core.telegram.org/bots/api';
 

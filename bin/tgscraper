@@ -1,121 +1,22 @@
 #!/usr/bin/env php
 <?php
 
+use Composer\InstalledVersions;
+use Symfony\Component\Console\Application;
+use TgScraper\Commands\CreateStubsCommand;
+use TgScraper\Commands\ExportSchemaCommand;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use TgScraper\Generator;
+$application = new Application('TGScraper', InstalledVersions::getVersion('sysbot/tgscraper'));
 
-$args = getopt('o:u:n:hs:');
-
-
-if (array_key_exists('h', $args)) {
-    echo 'Usage: tgscraper -o <output> [-u <url>] [-n <namespace>] [-s <scheme>]' . PHP_EOL . PHP_EOL;
-    echo 'Options:' . PHP_EOL;
-    echo ' -n <namespace>    namespace to use (for PHP stubs only)' . PHP_EOL;
-    echo ' -o <output>       output file/directory (the directory must exist) for JSON/YAML schema or PHP stubs' . PHP_EOL;
-    echo ' -s <scheme>       path to custom scheme to use (for PHP stubs only)' . PHP_EOL;
-    echo ' -u <url>          URL to use for fetching bot API data' . PHP_EOL . PHP_EOL;
-    echo 'Note: based on the "-o" value, the script will automatically detect whether to output a JSON/YAML schema or the PHP stubs.' . PHP_EOL;
-    exit;
-}
-
-$output = $args['o'] ?? null;
-$namespace = $args['n'] ?? 'Generated';
-$url = $args['u'] ?? Generator::BOT_API_URL;
-$scheme = $args['s'] ?? null;
-
-if (empty($output)) {
-    fwrite(STDERR, 'ERROR: "-o" option missing!' . PHP_EOL . PHP_EOL);
-    fwrite(STDERR, 'Use "tgscraper -h" for help.' . PHP_EOL);
-    exit(1);
-}
-
-if (!empty($url) and !filter_var($url, FILTER_VALIDATE_URL)) {
-    echo '> WARNING: URL not valid, the default one will be used.' . PHP_EOL;
-    $url = Generator::BOT_API_URL;
-}
-
-$generator = new Generator($url);
-$data = null;
-if (is_dir($output)) {
-    if (!empty($scheme)) {
-        $data = file_get_contents($scheme);
-        if (false === $data) {
-            echo sprintf('> WARNING: Cannot read data from "%s", URL will be used instead.%s', $scheme, PHP_EOL);
-            echo sprintf('> Using "%s" as URL.%s', $url, PHP_EOL);
-            try {
-                echo '> Extracting JSON scheme.' . PHP_EOL;
-                $data = $generator->toJson();
-            } catch (Throwable $e) {
-                echo '> ERROR: Unable to extract scheme: ' . $e->getMessage() . PHP_EOL;
-                exit(1);
-            }
-        } else {
-            echo sprintf('> Loaded data from "%s".%s', $scheme, PHP_EOL);
-        }
-        echo sprintf('> Outputting PHP stubs to %s.%s', realpath($output), PHP_EOL);
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $result = $generator->toStubs($output, $namespace, $data);
-        if (!$result) {
-            echo '> ERROR: unable to create stubs.' . PHP_EOL;
-        }
-        exit(!$result);
-    }
-    echo sprintf('> Using "%s" as URL.%s', $url, PHP_EOL);
-    try {
-        echo '> Extracting JSON scheme.' . PHP_EOL;
-        $data = $generator->toJson();
-    } catch (Throwable $e) {
-        echo '> ERROR: Unable to extract scheme: ' . $e->getMessage() . PHP_EOL;
-        exit(1);
-    }
-    echo sprintf('> Outputting PHP stubs to %s.%s', realpath($output), PHP_EOL);
-    /** @noinspection PhpUnhandledExceptionInspection */
-    $result = $generator->toStubs($output, $namespace, $data);
-    if (!$result) {
-        echo '> ERROR: unable to create stubs.' . PHP_EOL;
-    }
-    exit(!$result);
-}
-
-echo sprintf('> Using "%s" as URL.%s', $url, PHP_EOL);
-touch($output);
-
-$extension = pathinfo($output, PATHINFO_EXTENSION);
-
-if (in_array($extension, ['yml', 'yaml'])) {
-    echo sprintf('> Outputting YAML schema to %s.%s', realpath($output), PHP_EOL);
-
-    try {
-        $data = $generator->toYaml();
-    } catch (Throwable $e) {
-        echo '> ERROR: Unable to generate scheme:' . $e->getMessage() . PHP_EOL;
-        exit(1);
-    }
-
-    $error = file_put_contents($output, $data) === false;
-
-    if ($error) {
-        echo '> ERROR: unable to write to file.' . PHP_EOL;
-    }
-
-    exit($error);
-}
-
-
-echo sprintf('> Outputting JSON schema to %s.%s', realpath($output), PHP_EOL);
+$application->add(new CreateStubsCommand());
+$application->add(new ExportSchemaCommand());
 
 try {
-    $data = $generator->toJson(JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-} catch (Throwable $e) {
-    echo '> ERROR: Unable to generate scheme:' . $e->getMessage() . PHP_EOL;
-    exit(1);
+    $exitCode = $application->run();
+} catch (Exception $e) {
+    echo $e->getMessage() . PHP_EOL;
 }
 
-$error = file_put_contents($output, $data) === false;
-
-if ($error) {
-    echo '> ERROR: unable to write to file.' . PHP_EOL;
-}
-
-exit($error);
+exit($exitCode ?? 1);

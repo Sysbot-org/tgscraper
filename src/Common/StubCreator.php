@@ -2,12 +2,11 @@
 /** @noinspection PhpInternalEntityUsedInspection */
 
 
-namespace TgScraper;
+namespace TgScraper\Common;
 
 
 use InvalidArgumentException;
 use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
 use Nette\PhpGenerator\Helpers;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
@@ -15,7 +14,7 @@ use Nette\PhpGenerator\Type;
 
 /**
  * Class StubCreator
- * @package TgScraper
+ * @package TgScraper\Common
  */
 class StubCreator
 {
@@ -27,10 +26,10 @@ class StubCreator
 
     /**
      * StubCreator constructor.
-     * @param array $scheme
+     * @param array $schema
      * @param string $namespace
      */
-    public function __construct(private array $scheme, string $namespace = '')
+    public function __construct(private array $schema, string $namespace = '')
     {
         if (str_ends_with($namespace, '\\')) {
             $namespace = substr($namespace, 0, -1);
@@ -39,6 +38,9 @@ class StubCreator
             if (!Helpers::isNamespaceIdentifier($namespace)) {
                 throw new InvalidArgumentException('Namespace invalid');
             }
+        }
+        if (!is_array($this->schema['methods']) or !is_array($this->schema['types'])) {
+            throw new InvalidArgumentException('Schema invalid');
         }
         $this->namespace = $namespace;
     }
@@ -53,9 +55,11 @@ class StubCreator
      * @param PhpNamespace $phpNamespace
      * @return array
      */
-    #[Pure] #[ArrayShape(['types' => "string", 'comments' => "string"])]
-    private function parseFieldTypes(array $fieldTypes, PhpNamespace $phpNamespace): array
-    {
+    #[ArrayShape(['types' => "string", 'comments' => "string"])]
+    private function parseFieldTypes(
+        array $fieldTypes,
+        PhpNamespace $phpNamespace
+    ): array {
         $types = [];
         $comments = [];
         foreach ($fieldTypes as $fieldType) {
@@ -82,8 +86,10 @@ class StubCreator
      * @return array
      */
     #[ArrayShape(['types' => "string", 'comments' => "string"])]
-    private function parseApiFieldTypes(array $apiTypes, PhpNamespace $phpNamespace): array
-    {
+    private function parseApiFieldTypes(
+        array $apiTypes,
+        PhpNamespace $phpNamespace
+    ): array {
         $types = [];
         $comments = [];
         foreach ($apiTypes as $apiType) {
@@ -110,8 +116,9 @@ class StubCreator
      * @return PhpFile[]
      */
     #[ArrayShape(['Response' => "\Nette\PhpGenerator\PhpFile"])]
-    private function generateDefaultTypes(string $namespace): array
-    {
+    private function generateDefaultTypes(
+        string $namespace
+    ): array {
         $file = new PhpFile;
         $phpNamespace = $file->addNamespace($namespace);
         $response = $phpNamespace->addClass('Response')
@@ -146,7 +153,7 @@ class StubCreator
     {
         $namespace = $this->namespace . '\\Types';
         $types = $this->generateDefaultTypes($namespace);
-        foreach ($this->scheme['types'] as $type) {
+        foreach ($this->schema['types'] as $type) {
             $file = new PhpFile;
             $phpNamespace = $file->addNamespace($namespace);
             $typeClass = $phpNamespace->addClass($type['name'])
@@ -193,7 +200,7 @@ class StubCreator
             ->setType(Type::STRING);
         $sendRequest->addParameter('args')
             ->setType(Type::ARRAY);
-        foreach ($this->scheme['methods'] as $method) {
+        foreach ($this->schema['methods'] as $method) {
             $function = $apiClass->addMethod($method['name'])
                 ->setPublic()
                 ->addBody('$args = get_defined_vars();')

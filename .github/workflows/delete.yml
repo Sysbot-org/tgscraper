@@ -13,5 +13,8 @@ jobs:
       - name: Delete oldest package
         uses: actions/delete-package-versions@v1
         with:
+          owner: 'sysbot-org'
+          repo: 'tgscraper'
           package-name: 'tgscraper'
           num-old-versions-to-delete: 1
+          token: ${{ secrets.PAT }}

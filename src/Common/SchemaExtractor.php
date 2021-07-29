@@ -47,7 +47,7 @@ class SchemaExtractor
      * @throws ChildNotFoundException
      */
     #[ArrayShape(['description' => "string", 'table' => "mixed", 'extended_by' => "array"])]
-    private function parseNode(Dom\Node\AbstractNode $node): ?array
+    private static function parseNode(Dom\Node\AbstractNode $node): ?array
     {
         $description = '';
         $table = null;

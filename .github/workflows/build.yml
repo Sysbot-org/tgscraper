@@ -1,0 +1,22 @@
+name: Build
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    name: Build package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Docker image
+        uses: docker/build-push-action@v1
+        with:
+          registry: ghcr.io
+          username: sysbot-org
+          password: ${{ secrets.PAT }}
+          repository: sysbot-org/tgscraper
+          tags: latest

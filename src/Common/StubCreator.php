@@ -24,6 +24,14 @@ class StubCreator
      * @var string
      */
     private string $namespace;
+    /**
+     * @var array
+     */
+    private array $abstractClasses = [];
+    /**
+     * @var array
+     */
+    private array $extendedClasses = [];
 
     /**
      * StubCreator constructor.
@@ -43,6 +51,16 @@ class StubCreator
         if (!is_array($this->schema['methods']) or !is_array($this->schema['types'])) {
             throw new InvalidArgumentException('Schema invalid');
         }
+        foreach ($this->schema['types'] as $type) {
+            if (!empty($type['extended_by'])) {
+                $this->abstractClasses[] = $type['name'];
+                foreach ($type['extended_by'] as $extendedType) {
+                    $this->extendedClasses[$extendedType] = $type['name'];
+                }
+            }
+        }
+        print_r($this->extendedClasses);
+        print_r($this->abstractClasses);
         $this->namespace = $namespace;
     }
 
@@ -125,7 +143,7 @@ class StubCreator
     ): array {
         $interfaceFile = new PhpFile;
         $interfaceNamespace = $interfaceFile->addNamespace($namespace);
-        $interface = $interfaceNamespace->addInterface('TypeInterface');
+        $interfaceNamespace->addInterface('TypeInterface');
         $responseFile = new PhpFile;
         $responseNamespace = $responseFile->addNamespace($namespace);
         $response = $responseNamespace->addClass('Response')
@@ -167,7 +185,14 @@ class StubCreator
             $phpNamespace = $file->addNamespace($namespace);
             $typeClass = $phpNamespace->addClass($type['name'])
                 ->setType('class');
-            $typeClass->addImplement($namespace . '\\TypeInterface');
+            if (in_array($type['name'], $this->abstractClasses)) {
+                $typeClass->setAbstract();
+            }
+            if (array_key_exists($type['name'], $this->extendedClasses)) {
+                $typeClass->addExtend($namespace . '\\' . $this->extendedClasses[$type['name']]);
+            } else {
+                $typeClass->addImplement($namespace . '\\TypeInterface');
+            }
             foreach ($type['fields'] as $field) {
                 ['types' => $fieldTypes, 'comments' => $fieldComments] = $this->parseFieldTypes(
                     $field['types'],

@@ -1,0 +1,17 @@
+name: Delete
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    name: Delete old packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete oldest package
+        uses: actions/delete-package-versions@v1
+        with:
+          package-name: tgscraper
+          num-old-versions-to-delete: 1

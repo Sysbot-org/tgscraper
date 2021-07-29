@@ -1,5 +1,6 @@
 composer.phar
 /vendor/
-.idea/
+/.idea/
+/.git/
 LICENSE
 README.md

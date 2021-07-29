@@ -13,5 +13,5 @@ jobs:
       - name: Delete oldest package
         uses: actions/delete-package-versions@v1
         with:
-          package-name: tgscraper
+          package-name: 'tgscraper'
           num-old-versions-to-delete: 1

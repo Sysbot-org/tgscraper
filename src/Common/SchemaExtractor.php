@@ -4,6 +4,7 @@
 namespace TgScraper\Common;
 
 
+use JetBrains\PhpStorm\ArrayShape;
 use PHPHtmlParser\Dom;
 use PHPHtmlParser\Exceptions\ChildNotFoundException;
 use PHPHtmlParser\Exceptions\CircularException;
@@ -42,6 +43,40 @@ class SchemaExtractor
     }
 
     /**
+     * @throws ParentNotFoundException
+     * @throws ChildNotFoundException
+     */
+    #[ArrayShape(['description' => "string", 'table' => "mixed", 'extended_by' => "array"])]
+    private function parseNode(Dom\Node\AbstractNode $node): ?array
+    {
+        $description = '';
+        $table = null;
+        $extendedBy = [];
+        $tag = '';
+        $sibling = $node;
+        while (!str_starts_with($tag, 'h')) {
+            $sibling = $sibling->nextSibling();
+            $tag = $sibling?->tag?->name();
+            if (empty($node->text()) or empty($tag) or $tag == 'text') {
+                continue;
+            } elseif ($tag == 'p') {
+                $description .= PHP_EOL . $sibling->innerHtml();
+            } elseif ($tag == 'ul') {
+                $items = $sibling->find('li');
+                /* @var Dom\Node\AbstractNode $item */
+                foreach ($items as $item) {
+                    $extendedBy[] = $item->innerText;
+                }
+                break;
+            } elseif ($tag == 'table') {
+                $table = $sibling->find('tbody')->find('tr');
+                break;
+            }
+        }
+        return ['description' => $description, 'table' => $table, 'extended_by' => $extendedBy];
+    }
+
+    /**
      * @return array
      * @throws ChildNotFoundException
      * @throws CircularException
@@ -74,32 +109,12 @@ class SchemaExtractor
             if (!str_contains($name = $element->text, ' ')) {
                 $isMethod = lcfirst($name) == $name;
                 $path = $isMethod ? 'methods' : 'types';
-                $temp = $element;
-                $description = '';
-                $table = null;
-                while (true) {
-                    try {
-                        $element = $element->nextSibling();
-                    } catch (ChildNotFoundException) {
-                        break;
-                    }
-                    $tag = $element->tag->name() ?? null;
-                    if (empty($temp->text()) or empty($tag) or $tag == 'text') {
-                        continue;
-                    } elseif (str_starts_with($tag, 'h')) {
-                        break;
-                    } elseif ($tag == 'p') {
-                        $description .= PHP_EOL . $element->innerHtml();
-                    } elseif ($tag == 'table') {
-                        $table = $element->find('tbody')->find('tr');
-                        break;
-                    }
-                }
-                /* @var Dom\Node\AbstractNode $element */
+                ['description' => $description, 'table' => $table, 'extended_by' => $extendedBy] = self::parseNode($element);
                 $data[$path][] = self::generateElement(
                     $name,
                     trim($description),
                     $table,
+                    $extendedBy,
                     $isMethod
                 );
             }
@@ -111,6 +126,7 @@ class SchemaExtractor
      * @param string $name
      * @param string $description
      * @param Dom\Node\Collection|null $unparsedFields
+     * @param array $extendedBy
      * @param bool $isMethod
      * @return array
      * @throws ChildNotFoundException
@@ -124,13 +140,15 @@ class SchemaExtractor
         string $name,
         string $description,
         ?Dom\Node\Collection $unparsedFields,
+        array $extendedBy,
         bool $isMethod
     ): array {
         $fields = self::parseFields($unparsedFields, $isMethod);
         $result = [
             'name' => $name,
             'description' => htmlspecialchars_decode(strip_tags($description), ENT_QUOTES),
-            'fields' => $fields
+            'fields' => $fields,
+            'extended_by' => $extendedBy
         ];
         if ($isMethod) {
             $returnTypes = self::parseReturnTypes($description);

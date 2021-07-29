@@ -19,6 +19,7 @@ use Nette\PhpGenerator\Type;
 class StubCreator
 {
 
+
     /**
      * @var string
      */
@@ -115,13 +116,19 @@ class StubCreator
      * @param string $namespace
      * @return PhpFile[]
      */
-    #[ArrayShape(['Response' => "\Nette\PhpGenerator\PhpFile"])]
+    #[ArrayShape([
+        'Response' => "\Nette\PhpGenerator\PhpFile",
+        'TypeInterface' => "\Nette\PhpGenerator\ClassType"
+    ])]
     private function generateDefaultTypes(
         string $namespace
     ): array {
-        $file = new PhpFile;
-        $phpNamespace = $file->addNamespace($namespace);
-        $response = $phpNamespace->addClass('Response')
+        $interfaceFile = new PhpFile;
+        $interfaceNamespace = $interfaceFile->addNamespace($namespace);
+        $interface = $interfaceNamespace->addInterface('TypeInterface');
+        $responseFile = new PhpFile;
+        $responseNamespace = $responseFile->addNamespace($namespace);
+        $response = $responseNamespace->addClass('Response')
             ->setType('class');
         $response->addProperty('ok')
             ->setPublic()
@@ -141,8 +148,10 @@ class StubCreator
             ->setType(Type::STRING)
             ->setNullable(true)
             ->setValue(null);
+        $response->addImplement($namespace . '\\TypeInterface');
         return [
-            'Response' => $file
+            'Response' => $responseFile,
+            'TypeInterface' => $interfaceFile
         ];
     }
 
@@ -158,6 +167,7 @@ class StubCreator
             $phpNamespace = $file->addNamespace($namespace);
             $typeClass = $phpNamespace->addClass($type['name'])
                 ->setType('class');
+            $typeClass->addImplement($namespace . '\\TypeInterface');
             foreach ($type['fields'] as $field) {
                 ['types' => $fieldTypes, 'comments' => $fieldComments] = $this->parseFieldTypes(
                     $field['types'],

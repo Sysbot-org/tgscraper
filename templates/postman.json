@@ -1,0 +1,15 @@
+{
+  "info": {
+    "name": "Telegram Bot API",
+    "description": "Auto-generated Postman collection by TGScraper.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": {
+    "key": "token",
+    "description": "Bot's unique authentication token, given by @BotFather.",
+    "type": "string",
+    "value": "1234:AAbbcc"
+  },
+  "item": []
+}

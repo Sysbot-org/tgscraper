@@ -33,13 +33,33 @@ class SchemaExtractor
         'answerPreCheckoutQuery'
     ];
 
+    private Dom $dom;
+
+    private string $version;
+
     /**
      * SchemaExtractor constructor.
      * @param LoggerInterface $logger
      * @param string $url
+     * @throws ChildNotFoundException
+     * @throws CircularException
+     * @throws ClientExceptionInterface
+     * @throws ContentLengthException
+     * @throws LogicalException
+     * @throws StrictException
+     * @throws Throwable
      */
     public function __construct(private LoggerInterface $logger, private string $url = Versions::LATEST)
     {
+        $this->dom = new Dom();
+        try {
+            $this->dom->loadFromURL($this->url);
+        } catch (Throwable $e) {
+            $this->logger->critical(sprintf('Unable to load data from URL "%s": %s', $this->url, $e->getMessage()));
+            throw $e;
+        }
+        $this->version = $this->parseVersion();
+        $this->logger->info('Bot API version: ' . $this->version);
     }
 
     /**
@@ -76,6 +96,28 @@ class SchemaExtractor
         return ['description' => $description, 'table' => $table, 'extended_by' => $extendedBy];
     }
 
+    private function parseVersion(): string
+    {
+        /** @var Dom\Node\AbstractNode $element */
+        $element = $this->dom->find('h3')[0];
+        $tag = '';
+        while ($tag != 'p') {
+            try {
+                $element = $element->nextSibling();
+            } catch (ChildNotFoundException | ParentNotFoundException) {
+                continue;
+            }
+            $tag = $element->tag->name();
+        }
+        $versionNumbers = explode('.', str_replace('Bot API ', '', $element->innerText));
+        return sprintf(
+            '%s.%s.%s',
+            $versionNumbers[0] ?? '1',
+            $versionNumbers[1] ?? '0',
+            $versionNumbers[2] ?? '0'
+        );
+    }
+
     /**
      * @return array
      * @throws ChildNotFoundException
@@ -88,28 +130,24 @@ class SchemaExtractor
      * @throws ClientExceptionInterface
      * @throws Throwable
      */
+    #[ArrayShape(['version' => "string", 'methods' => "array", 'types' => "array"])]
     public function extract(): array
     {
-        $dom = new Dom;
         try {
-            $dom->loadFromURL($this->url);
+            $elements = $this->dom->find('h4');
         } catch (Throwable $e) {
             $this->logger->critical(sprintf('Unable to load data from URL "%s": %s', $this->url, $e->getMessage()));
             throw $e;
         }
-        try {
-            $elements = $dom->find('h4');
-        } catch (Throwable $e) {
-            $this->logger->critical(sprintf('Unable to load data from URL "%s": %s', $this->url, $e->getMessage()));
-            throw $e;
-        }
-        $data = [];
+        $data = ['version' => $this->version];
         /* @var Dom\Node\AbstractNode $element */
         foreach ($elements as $element) {
             if (!str_contains($name = $element->text, ' ')) {
                 $isMethod = lcfirst($name) == $name;
                 $path = $isMethod ? 'methods' : 'types';
-                ['description' => $description, 'table' => $table, 'extended_by' => $extendedBy] = self::parseNode($element);
+                ['description' => $description, 'table' => $table, 'extended_by' => $extendedBy] = self::parseNode(
+                    $element
+                );
                 $data[$path][] = self::generateElement(
                     $name,
                     trim($description),

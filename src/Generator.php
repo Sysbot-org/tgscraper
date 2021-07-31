@@ -2,6 +2,7 @@
 
 namespace TgScraper;
 
+use BadMethodCallException;
 use Exception;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\ArrayShape;
@@ -26,6 +27,11 @@ use Throwable;
  */
 class Generator
 {
+
+    /**
+     * Path to templates directory.
+     */
+    public const TEMPLATES_DIRECTORY = __DIR__ . '/../templates';
 
     /**
      * @var array
@@ -53,8 +59,8 @@ class Generator
         ?array $schema = null
     ) {
         if (empty($schema)) {
-            $extractor = new SchemaExtractor($this->logger, $this->url);
             try {
+                $extractor = new SchemaExtractor($this->logger, $this->url);
                 $this->logger->info('Schema not provided, extracting from URL.');
                 $schema = $extractor->extract();
             } catch (Throwable $e) {
@@ -179,6 +185,14 @@ class Generator
         return Yaml::dump($this->schema, $inline, $indent, $flags);
     }
 
+    /**
+     * @return string
+     */
+    public function toOpenApi(): string
+    {
+        throw new BadMethodCallException('Not implemented');
+    }
+
 
     /**
      * Thanks to davtur19 (https://github.com/davtur19/TuriBotGen/blob/master/postman.php)
@@ -189,24 +203,16 @@ class Generator
     public function toPostman(
         int $options = 0
     ): string {
-        $result = [
-            'info' => [
-                'name' => 'Telegram Bot API',
-                'schema' => 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json'
-            ],
-            'variable' => [
-                'key' => 'token',
-                'value' => '1234:AAbbcc',
-                'type' => 'string'
-            ]
-        ];
+        $template = file_get_contents(self::TEMPLATES_DIRECTORY . '/postman.json');
+        $result = json_decode($template, true);
+        $result['info']['version'] = $this->schema['version'];
         foreach ($this->schema['methods'] as $method) {
             $formData = [];
             if (!empty($method['fields'])) {
                 foreach ($method['fields'] as $field) {
                     $formData[] = [
                         'key' => $field['name'],
-                        'value' => '',
+                        'disabled' => !$field['required'],
                         'description' => sprintf(
                             '%s. %s',
                             $field['required'] ? 'Required' : 'Optional',

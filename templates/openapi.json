@@ -1,0 +1,144 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Telegram Bot API",
+    "description": "Auto-generated OpenAPI schema by TGScraper.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.telegram.org/bot{token}",
+      "variables": {
+        "token": {
+          "default": "1234:AAbbcc",
+          "description": "Bot's unique authentication token, given by @BotFather."
+        }
+      }
+    }
+  ],
+  "externalDocs": {
+    "description": "Official Telegram Bot API documentation",
+    "url": "https://core.telegram.org/bots/api"
+  },
+  "components": {
+    "responses": {
+      "BadRequest": {
+        "description": "Bad request, you have provided malformed data.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "The authorization token is invalid or it has been revoked.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "This action is forbidden.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "The specified resource was not found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "There is a conflict with another instance using webhook or polling.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "TooManyRequests": {
+        "description": "You're doing too many requests, retry after a while.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Response": {
+        "type": "object",
+        "required": [
+          "ok"
+        ],
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Success": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response"
+          },
+          {
+            "type": "object",
+            "required": [
+              "result"
+            ],
+            "properties": {
+              "result": {
+                "type": "object"
+              }
+            }
+          }
+        ]
+      },
+      "Error": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Response"
+          },
+          {
+            "type": "object",
+            "required": [
+              "error_code",
+              "description"
+            ],
+            "properties": {
+              "error_code": {
+                "type": "integer"
+              },
+              "description": {
+                "type": "string"
+              },
+              "parameters": {
+                "$ref": "#/components/schemas/ResponseParameters"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "paths": {}
+}

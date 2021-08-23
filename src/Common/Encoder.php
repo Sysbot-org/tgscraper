@@ -27,7 +27,7 @@ class Encoder
      * @param int $flags
      * @return string
      */
-    public static function toYaml(mixed $data, int $inline = 12, int $indent = 4, int $flags = 0): string
+    public static function toYaml(mixed $data, int $inline = 16, int $indent = 4, int $flags = 0): string
     {
         return Yaml::dump($data, $inline, $indent, $flags);
     }

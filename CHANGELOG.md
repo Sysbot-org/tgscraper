@@ -14,13 +14,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New `Versions::STABLE` constant: it will automatically return the latest stable version instead of the live version (useful for the cache package).
 - Added the JSON schema specification for the custom format provided by TGScraper.
 - Added this changelog.
+- Added a workflow to automatically generate the bot API schema every day.
 
 ### Changed
 - The `Generator` class has now been renamed `TgScraper`.
 - The `required` property in method fields has been replaced by the new `optional` property, for the sake of consistency.
 - You now need a schema in order to instantiate the `TgScraper` class (don't worry, you can use the new methods `TgScraper::fromUrl` and `TgScraper::fromVersion`).
 - The `Versions` class constants have been replaced with an actual version string. If you still need the URLs, use the new class constant `Versions::URLS`.
-- TGScraper will now only return arrays. If you still need JSON or YAML encoding, please use the new `Encoder` class.  
+- TGScraper will now only return arrays. If you still need JSON or YAML encoding, please use the new `Encoder` class.
+- Default inline value for YAML has been changed to 16.
 
 ### Fixed
 - Minor improvements to `StubCreator`.

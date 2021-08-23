@@ -19,7 +19,13 @@ Interested in recent changes? Have a look [here](CHANGELOG.md)!
 Install the library with composer:
 
 ```bash 
-  $ composer require sysbot/tgscraper
+  $ composer require sysbot/tgscraper --prefer-stable
+```
+
+(Optional) Install the cache package:
+
+```bash 
+  $ composer require sysbot/tgscraper-cache
 ```
 
 ## Using from command line
@@ -56,7 +62,17 @@ Extract the latest schema in YAML format:
 
 ### OpenAPI
 
-Work in progress.
+Extract the latest OpenAPI schema in JSON format:
+
+```bash 
+  $ vendor/bin/tgscraper app:export-schema --openapi botapi_openapi.json
+```
+
+Or, if you prefer YAML:
+
+```bash 
+  $ vendor/bin/tgscraper app:export-schema --openapi --yaml botapi_openapi.yaml
+```
 
 ### Stubs
 

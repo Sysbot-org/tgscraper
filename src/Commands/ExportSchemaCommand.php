@@ -53,7 +53,7 @@ class ExportSchemaCommand extends Command
                 InputOption::VALUE_NONE,
                 'Generate a human-readable file (overrides "--inline" and "--indent")'
             )
-            ->addOption('inline', null, InputOption::VALUE_REQUIRED, '(YAML only) Inline level', 12)
+            ->addOption('inline', null, InputOption::VALUE_REQUIRED, '(YAML only) Inline level', 16)
             ->addOption('indent', null, InputOption::VALUE_REQUIRED, '(YAML only) Indent level', 4)
             ->addOption('layer', 'l', InputOption::VALUE_REQUIRED, 'Bot API version to use', Versions::LATEST)
             ->addOption(
@@ -99,7 +99,7 @@ class ExportSchemaCommand extends Command
         $readable = $input->getOption('readable');
         $options = $input->getOption('options');
         $useYaml = $input->getOption('yaml');
-        $inline = $readable ? 12 : $input->getOption('inline');
+        $inline = $readable ? 16 : $input->getOption('inline');
         $indent = $readable ? 4 : $input->getOption('indent');
         $output->writeln('Saving schema to file...');
         if ($input->getOption('openapi')) {
@@ -107,7 +107,7 @@ class ExportSchemaCommand extends Command
             if ($useYaml) {
                 return $this->saveFile($logger, $output, $destination, Encoder::toYaml($data, $inline, $indent, $options));
             }
-            return $this->saveFile($logger, $output, $destination, Encoder::toJson($data, $options, $readable));
+            return $this->saveFile($logger, $output, $destination, Encoder::toJson($data, $options | JSON_UNESCAPED_SLASHES, $readable));
         }
         if ($input->getOption('postman')) {
             $data = $generator->toPostman();

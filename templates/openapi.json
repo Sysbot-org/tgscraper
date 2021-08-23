@@ -17,7 +17,7 @@
     }
   ],
   "externalDocs": {
-    "description": "Official Telegram Bot API documentation",
+    "description": "Official Telegram Bot API documentation.",
     "url": "https://core.telegram.org/bots/api"
   },
   "components": {
@@ -81,11 +81,32 @@
             }
           }
         }
+      },
+      "ServerError": {
+        "description": "The bot API is experiencing some issues, try again later.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "UnknownError": {
+        "description": "An unknown error occurred.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
       }
     },
     "schemas": {
       "Response": {
         "type": "object",
+        "description": "Represents the default response object.",
         "required": [
           "ok"
         ],
@@ -96,6 +117,7 @@
         }
       },
       "Success": {
+        "description": "Request was successful, the result is returned.",
         "allOf": [
           {
             "$ref": "#/components/schemas/Response"
@@ -114,6 +136,7 @@
         ]
       },
       "Error": {
+        "description": "Request was unsuccessful, so an error occurred.",
         "allOf": [
           {
             "$ref": "#/components/schemas/Response"

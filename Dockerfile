@@ -3,9 +3,8 @@ FROM composer:latest AS tgscraper
 MAINTAINER Sys <sys@sys001.ml>
 
 WORKDIR /app
-COPY . .
-RUN composer install
-WORKDIR /artifacts
-VOLUME /artifacts
+RUN composer require sysbot/tgscraper sysbot/tgscraper-cache --no-progress --no-interaction --no-ansi --prefer-stable --optimize-autoloader
+WORKDIR /out
+VOLUME /out
 
-ENTRYPOINT ["php", "/app/bin/tgscraper"]
+ENTRYPOINT ["php", "/app/vendor/bin/tgscraper"]

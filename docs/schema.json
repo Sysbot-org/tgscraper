@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Schema for TGScraper custom Bot API format",
+  "description": "This schema should help you understanding the custom format used by TGScraper.",
+  "type": "object",
+  "required": [
+    "version",
+    "methods",
+    "types"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "methods": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Method"
+      }
+    },
+    "types": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Type"
+      }
+    }
+  },
+  "definitions": {
+    "Method": {
+      "type": "object",
+      "required": [
+        "name",
+        "description",
+        "fields",
+        "return_types"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Field"
+          }
+        },
+        "return_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Field": {
+      "type": "object",
+      "required": [
+        "name",
+        "types",
+        "optional",
+        "description"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Type": {
+      "type": "object",
+      "required": [
+        "name",
+        "description",
+        "fields",
+        "extended_by"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Field"
+          }
+        },
+        "extended_by": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

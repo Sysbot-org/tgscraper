@@ -2,10 +2,10 @@
 
 namespace TgScraper;
 
-use BadMethodCallException;
 use Exception;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\ArrayShape;
+use JsonException;
 use PHPHtmlParser\Exceptions\ChildNotFoundException;
 use PHPHtmlParser\Exceptions\CircularException;
 use PHPHtmlParser\Exceptions\ContentLengthException;
@@ -16,16 +16,17 @@ use PHPHtmlParser\Exceptions\StrictException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Yaml\Yaml;
+use TgScraper\Common\OpenApiGenerator;
 use TgScraper\Common\SchemaExtractor;
 use TgScraper\Common\StubCreator;
 use TgScraper\Constants\Versions;
 use Throwable;
 
 /**
- * Class Generator
+ * Class TgScraper
  * @package TgScraper
  */
-class Generator
+class TgScraper
 {
 
     /**
@@ -34,56 +35,90 @@ class Generator
     public const TEMPLATES_DIRECTORY = __DIR__ . '/../templates';
 
     /**
+     * @var string
+     */
+    private string $version;
+    /**
      * @var array
      */
-    private array $schema;
+    private array $types;
+    /**
+     * @var array
+     */
+    private array $methods;
 
     /**
-     * Generator constructor.
+     * TgScraper constructor.
      * @param LoggerInterface $logger
-     * @param string $url
-     * @param array|null $schema
-     * @throws ChildNotFoundException
-     * @throws CircularException
-     * @throws ClientExceptionInterface
-     * @throws ContentLengthException
-     * @throws LogicalException
-     * @throws NotLoadedException
-     * @throws ParentNotFoundException
-     * @throws StrictException
-     * @throws Throwable
+     * @param array $schema
      */
-    public function __construct(
-        private LoggerInterface $logger,
-        private string $url = Versions::LATEST,
-        ?array $schema = null
-    ) {
-        if (empty($schema)) {
-            try {
-                $extractor = new SchemaExtractor($this->logger, $this->url);
-                $this->logger->info('Schema not provided, extracting from URL.');
-                $schema = $extractor->extract();
-            } catch (Throwable $e) {
-                $this->logger->critical(
-                    'An exception occurred while trying to extract the schema: ' . $e->getMessage()
-                );
-                throw $e;
-            }
+    public function __construct(private LoggerInterface $logger, array $schema)
+    {
+        if (!self::validateSchema($schema)) {
+            throw new InvalidArgumentException('Invalid schema provided');
         }
-        /** @var array $schema */
-        $this->schema = $schema;
+        $this->version = $schema['version'] ?? '1.0.0';
+        $this->types = $schema['types'];
+        $this->methods = $schema['methods'];
     }
 
     /**
+     * @param LoggerInterface $logger
+     * @param string $url
+     * @return static
      * @throws ChildNotFoundException
      * @throws CircularException
-     * @throws ParentNotFoundException
-     * @throws StrictException
      * @throws ClientExceptionInterface
-     * @throws NotLoadedException
      * @throws ContentLengthException
      * @throws LogicalException
+     * @throws NotLoadedException
+     * @throws ParentNotFoundException
+     * @throws StrictException
      * @throws Throwable
+     */
+    public static function fromUrl(LoggerInterface $logger, string $url): self
+    {
+        $extractor = SchemaExtractor::fromUrl($logger, $url);
+        $schema = $extractor->extract();
+        return new self($logger, $schema);
+    }
+
+    /**
+     * @param LoggerInterface $logger
+     * @param string $version
+     * @return static
+     * @throws ChildNotFoundException
+     * @throws CircularException
+     * @throws ClientExceptionInterface
+     * @throws ContentLengthException
+     * @throws LogicalException
+     * @throws NotLoadedException
+     * @throws ParentNotFoundException
+     * @throws StrictException
+     * @throws Throwable
+     */
+    public static function fromVersion(LoggerInterface $logger, string $version = Versions::LATEST): self
+    {
+        $extractor = SchemaExtractor::fromVersion($logger, $version);
+        $schema = $extractor->extract();
+        return new self($logger, $schema);
+    }
+
+    /**
+     * @param array $schema
+     * @return bool
+     */
+    public static function validateSchema(array $schema): bool
+    {
+        return array_key_exists('version', $schema) and is_string($schema['version']) and
+            array_key_exists('types', $schema) and is_array($schema['types']) and
+            array_key_exists('methods', $schema) and is_array($schema['methods']);
+    }
+
+    /**
+     * @param LoggerInterface $logger
+     * @param string $yaml
+     * @return TgScraper
      */
     public static function fromYaml(LoggerInterface $logger, string $yaml): self
     {
@@ -92,15 +127,10 @@ class Generator
     }
 
     /**
-     * @throws ChildNotFoundException
-     * @throws ParentNotFoundException
-     * @throws CircularException
-     * @throws StrictException
-     * @throws ClientExceptionInterface
-     * @throws NotLoadedException
-     * @throws ContentLengthException
-     * @throws LogicalException
-     * @throws Throwable
+     * @param LoggerInterface $logger
+     * @param string $json
+     * @return TgScraper
+     * @throws JsonException
      */
     public static function fromJson(LoggerInterface $logger, string $json): self
     {
@@ -124,8 +154,12 @@ class Generator
             );
             throw $e;
         }
+        $typesDir = $directory . '/Types';
+        if (!file_exists($typesDir)) {
+            mkdir($typesDir, 0755);
+        }
         try {
-            $creator = new StubCreator($this->schema, $namespace);
+            $creator = new StubCreator($this->toArray(), $namespace);
         } catch (InvalidArgumentException $e) {
             $this->logger->critical(
                 'An exception occurred while trying to parse the schema: ' . $e->getMessage()
@@ -146,12 +180,12 @@ class Generator
      * @return string
      * @throws Exception
      */
-    private static function getTargetDirectory(string $path): string
+    public static function getTargetDirectory(string $path): string
     {
         $result = realpath($path);
         if (false === $result) {
             if (!mkdir($path)) {
-                $path = __DIR__ . '/../generated';
+                $path = getcwd() . '/gen';
                 if (!file_exists($path)) {
                     mkdir($path, 0755);
                 }
@@ -161,61 +195,60 @@ class Generator
         if (false === $result) {
             throw new Exception('Could not create target directory');
         }
-        @mkdir($result . '/Types', 0755);
         return $result;
     }
 
     /**
-     * @param int $options
-     * @return string
+     * @return array
      */
-    public function toJson(int $options = 0): string
+    #[ArrayShape([
+        'version' => "string",
+        'types' => "array",
+        'methods' => "array"
+    ])] public function toArray(): array
     {
-        return json_encode($this->schema, $options);
+        return [
+            'version' => $this->version,
+            'types' => $this->types,
+            'methods' => $this->methods
+        ];
     }
 
     /**
-     * @param int $inline
-     * @param int $indent
-     * @param int $flags
-     * @return string
+     * @return array
      */
-    public function toYaml(int $inline = 6, int $indent = 4, int $flags = 0): string
+    public function toOpenApi(): array
     {
-        return Yaml::dump($this->schema, $inline, $indent, $flags);
-    }
-
-    /**
-     * @return string
-     */
-    public function toOpenApi(): string
-    {
-        throw new BadMethodCallException('Not implemented');
+        $openapiTemplate = file_get_contents(self::TEMPLATES_DIRECTORY . '/openapi.json');
+        $openapiData = json_decode($openapiTemplate, true);
+        $responsesTemplate = file_get_contents(self::TEMPLATES_DIRECTORY . '/responses.json');
+        $responses = json_decode($responsesTemplate, true);
+        $openapi = new OpenApiGenerator($responses, $openapiData, $this->types, $this->methods);
+        $openapi->setVersion($this->version);
+        return $openapi->getData();
     }
 
 
     /**
      * Thanks to davtur19 (https://github.com/davtur19/TuriBotGen/blob/master/postman.php)
-     * @param int $options
-     * @return string
+     * @return array
      */
     #[ArrayShape(['info' => "string[]", 'variable' => "string[]", 'item' => "array[]"])]
-    public function toPostman(
-        int $options = 0
-    ): string {
+    public function toPostman(): array
+    {
         $template = file_get_contents(self::TEMPLATES_DIRECTORY . '/postman.json');
         $result = json_decode($template, true);
-        $result['info']['version'] = $this->schema['version'];
-        foreach ($this->schema['methods'] as $method) {
+        $result['info']['version'] = $this->version;
+        foreach ($this->methods as $method) {
             $formData = [];
             if (!empty($method['fields'])) {
                 foreach ($method['fields'] as $field) {
                     $formData[] = [
                         'key' => $field['name'],
-                        'disabled' => !$field['required'],
+                        'disabled' => $field['optional'],
                         'description' => sprintf(
                             '%s. %s',
-                            $field['required'] ? 'Required' : 'Optional',
+                            $field['optional'] ? 'Optional' : 'Required',
                             $field['description']
                         ),
                         'type' => 'text'
@@ -247,7 +280,7 @@ class Generator
                 ]
             ];
         }
-        return json_encode($result, $options);
+        return $result;
     }
 
 }

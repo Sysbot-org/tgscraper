@@ -4,7 +4,10 @@
 namespace TgScraper\Common;
 
 
+use Composer\InstalledVersions;
+use InvalidArgumentException;
 use JetBrains\PhpStorm\ArrayShape;
+use OutOfBoundsException;
 use PHPHtmlParser\Dom;
 use PHPHtmlParser\Exceptions\ChildNotFoundException;
 use PHPHtmlParser\Exceptions\CircularException;
@@ -33,33 +36,96 @@ class SchemaExtractor
         'answerPreCheckoutQuery'
     ];
 
-    private Dom $dom;
-
+    /**
+     * @var string
+     */
     private string $version;
 
     /**
      * SchemaExtractor constructor.
      * @param LoggerInterface $logger
+     * @param Dom $dom
+     * @throws ChildNotFoundException
+     * @throws NotLoadedException
+     */
+    public function __construct(private LoggerInterface $logger, private Dom $dom)
+    {
+        $this->version = $this->parseVersion();
+        $this->logger->info('Bot API version: ' . $this->version);
+    }
+
+
+    /**
+     * @param LoggerInterface $logger
+     * @param string $version
+     * @return SchemaExtractor
+     * @throws OutOfBoundsException
+     * @throws Throwable
+     */
+    public static function fromVersion(LoggerInterface $logger, string $version = Versions::LATEST): SchemaExtractor
+    {
+        if (InstalledVersions::isInstalled('sysbot/tgscraper-cache') and class_exists('\TgScraper\Cache\CacheLoader')) {
+            $logger->info('Cache package detected, searching for a cached version.');
+            try {
+                $path = \TgScraper\Cache\CacheLoader::getCachedVersion($version);
+                $logger->info('Cached version found.');
+                return self::fromFile($logger, $path);
+            } catch (OutOfBoundsException) {
+                $logger->info('Cached version not found, continuing with URL.');
+            }
+        }
+        $url = Versions::getUrlFromText($version);
+        $logger->info(sprintf('Using URL: %s', $url));
+        return self::fromUrl($logger, $url);
+    }
+
+    /**
+     * @param LoggerInterface $logger
+     * @param string $path
+     * @return SchemaExtractor
+     * @throws Throwable
+     */
+    public static function fromFile(LoggerInterface $logger, string $path): SchemaExtractor
+    {
+        $dom = new Dom;
+        if (!file_exists($path)) {
+            throw new InvalidArgumentException('File not found');
+        }
+        $path = realpath($path);
+        try {
+            $logger->info(sprintf('Loading data from file "%s".', $path));
+            $dom->loadFromFile($path);
+            $logger->info('Data loaded.');
+        } catch (Throwable $e) {
+            $logger->critical(sprintf('Unable to load data from "%s": %s', $path, $e->getMessage()));
+            throw $e;
+        }
+        return new self($logger, $dom);
+    }
+
+    /**
+     * @param LoggerInterface $logger
      * @param string $url
+     * @return SchemaExtractor
      * @throws ChildNotFoundException
      * @throws CircularException
      * @throws ClientExceptionInterface
      * @throws ContentLengthException
      * @throws LogicalException
      * @throws StrictException
-     * @throws Throwable
+     * @throws NotLoadedException
      */
-    public function __construct(private LoggerInterface $logger, private string $url = Versions::LATEST)
+    public static function fromUrl(LoggerInterface $logger, string $url): SchemaExtractor
     {
-        $this->dom = new Dom();
+        $dom = new Dom;
         try {
-            $this->dom->loadFromURL($this->url);
+            $dom->loadFromURL($url);
         } catch (Throwable $e) {
-            $this->logger->critical(sprintf('Unable to load data from URL "%s": %s', $this->url, $e->getMessage()));
+            $logger->critical(sprintf('Unable to load data from URL "%s": %s', $url, $e->getMessage()));
             throw $e;
         }
-        $this->version = $this->parseVersion();
-        $this->logger->info('Bot API version: ' . $this->version);
+        $logger->info(sprintf('Data loaded from "%s".', $url));
+        return new self($logger, $dom);
     }
 
     /**
@@ -96,6 +162,10 @@ class SchemaExtractor
         return ['description' => $description, 'table' => $table, 'extended_by' => $extendedBy];
     }
 
+    /**
+     * @throws ChildNotFoundException
+     * @throws NotLoadedException
+     */
     private function parseVersion(): string
     {
         /** @var Dom\Node\AbstractNode $element */
@@ -120,14 +190,6 @@ class SchemaExtractor
 
     /**
      * @return array
-     * @throws ChildNotFoundException
-     * @throws CircularException
-     * @throws ContentLengthException
-     * @throws LogicalException
-     * @throws NotLoadedException
-     * @throws ParentNotFoundException
-     * @throws StrictException
-     * @throws ClientExceptionInterface
      * @throws Throwable
      */
     #[ArrayShape(['version' => "string", 'methods' => "array", 'types' => "array"])]
@@ -136,7 +198,7 @@ class SchemaExtractor
         try {
             $elements = $this->dom->find('h4');
         } catch (Throwable $e) {
-            $this->logger->critical(sprintf('Unable to load data from URL "%s": %s', $this->url, $e->getMessage()));
+            $this->logger->critical(sprintf('Unable to parse data: %s', $e->getMessage()));
             throw $e;
         }
         $data = ['version' => $this->version];
@@ -185,8 +247,7 @@ class SchemaExtractor
         $result = [
             'name' => $name,
             'description' => htmlspecialchars_decode(strip_tags($description), ENT_QUOTES),
-            'fields' => $fields,
-            'extended_by' => $extendedBy
+            'fields' => $fields
         ];
         if ($isMethod) {
             $returnTypes = self::parseReturnTypes($description);
@@ -196,6 +257,7 @@ class SchemaExtractor
             $result['return_types'] = $returnTypes;
             return $result;
         }
+        $result['extended_by'] = $extendedBy;
         return $result;
     }
 
@@ -203,15 +265,13 @@ class SchemaExtractor
      * @param Dom\Node\Collection|null $fields
      * @param bool $isMethod
      * @return array
-     * @throws ChildNotFoundException
-     * @throws NotLoadedException
      */
     private static function parseFields(?Dom\Node\Collection $fields, bool $isMethod): array
     {
         $parsedFields = [];
         $fields = $fields ?? [];
         foreach ($fields as $field) {
-            /* @var Dom $field */
+            /* @var Dom\Node\AbstractNode $fieldData */
             $fieldData = $field->find('td');
             $name = $fieldData[0]->text;
             if (empty($name)) {
@@ -224,7 +284,7 @@ class SchemaExtractor
             $parsedData['types'] = self::parseFieldTypes($parsedData['type']);
             unset($parsedData['type']);
             if ($isMethod) {
-                $parsedData['required'] = $fieldData[2]->text == 'Yes';
+                $parsedData['optional'] = $fieldData[2]->text != 'Yes';
                 $parsedData['description'] = htmlspecialchars_decode(
                     strip_tags($fieldData[3]->innerHtml ?? $fieldData[3]->text ?? ''),
                     ENT_QUOTES

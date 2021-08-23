@@ -11,6 +11,7 @@ use Nette\PhpGenerator\Helpers;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\Type;
+use TgScraper\TgScraper;
 
 /**
  * Class StubCreator
@@ -48,9 +49,18 @@ class StubCreator
                 throw new InvalidArgumentException('Namespace invalid');
             }
         }
-        if (!is_array($this->schema['methods']) or !is_array($this->schema['types'])) {
+        if (!TgScraper::validateSchema($this->schema)) {
             throw new InvalidArgumentException('Schema invalid');
         }
+        $this->getExtendedTypes();
+        $this->namespace = $namespace;
+    }
+
+    /**
+     * Builds the abstract and the extended class lists.
+     */
+    private function getExtendedTypes()
+    {
         foreach ($this->schema['types'] as $type) {
             if (!empty($type['extended_by'])) {
                 $this->abstractClasses[] = $type['name'];
@@ -59,11 +69,12 @@ class StubCreator
                 }
             }
         }
-        print_r($this->extendedClasses);
-        print_r($this->abstractClasses);
-        $this->namespace = $namespace;
     }
 
+    /**
+     * @param string $str
+     * @return string
+     */
     private static function toCamelCase(string $str): string
     {
         return lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $str))));
@@ -74,11 +85,12 @@ class StubCreator
      * @param PhpNamespace $phpNamespace
      * @return array
      */
-    #[ArrayShape(['types' => "string", 'comments' => "string"])]
-    private function parseFieldTypes(
-        array $fieldTypes,
-        PhpNamespace $phpNamespace
-    ): array {
+    #[ArrayShape([
+        'types' => "string",
+        'comments' => "string"
+    ])]
+    private function parseFieldTypes(array $fieldTypes, PhpNamespace $phpNamespace): array
+    {
         $types = [];
         $comments = [];
         foreach ($fieldTypes as $fieldType) {
@@ -104,11 +116,12 @@ class StubCreator
      * @param PhpNamespace $phpNamespace
      * @return array
      */
-    #[ArrayShape(['types' => "string", 'comments' => "string"])]
-    private function parseApiFieldTypes(
-        array $apiTypes,
-        PhpNamespace $phpNamespace
-    ): array {
+    #[ArrayShape([
+        'types' => "string",
+        'comments' => "string"
+    ])]
+    private function parseApiFieldTypes(array $apiTypes, PhpNamespace $phpNamespace): array
+    {
         $types = [];
         $comments = [];
         foreach ($apiTypes as $apiType) {
@@ -138,9 +151,8 @@ class StubCreator
         'Response' => "\Nette\PhpGenerator\PhpFile",
         'TypeInterface' => "\Nette\PhpGenerator\ClassType"
     ])]
-    private function generateDefaultTypes(
-        string $namespace
-    ): array {
+    private function generateDefaultTypes(string $namespace): array
+    {
         $interfaceFile = new PhpFile;
         $interfaceNamespace = $interfaceFile->addNamespace($namespace);
         $interfaceNamespace->addInterface('TypeInterface');
@@ -244,7 +256,7 @@ class StubCreator
             usort(
                 $fields,
                 function ($a, $b) {
-                    return $b['required'] - $a['required'];
+                    return $a['optional'] - $b['optional'];
                 }
             );
             foreach ($fields as $field) {
@@ -252,7 +264,7 @@ class StubCreator
                 $fieldName = self::toCamelCase($field['name']);
                 $parameter = $function->addParameter($fieldName)
                     ->setType($types);
-                if (!$field['required']) {
+                if ($field['optional']) {
                     $parameter->setNullable()
                         ->setDefaultValue(null);
                 }
@@ -266,7 +278,10 @@ class StubCreator
     /**
      * @return array
      */
-    #[ArrayShape(['types' => "\Nette\PhpGenerator\PhpFile[]", 'api' => "string"])]
+    #[ArrayShape([
+        'types' => "\Nette\PhpGenerator\PhpFile[]",
+        'api' => "string"
+    ])]
     public function generateCode(): array
     {
         return [

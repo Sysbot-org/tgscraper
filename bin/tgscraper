@@ -6,7 +6,17 @@ use Symfony\Component\Console\Application;
 use TgScraper\Commands\CreateStubsCommand;
 use TgScraper\Commands\ExportSchemaCommand;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+$autoloadFiles = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php'
+];
+
+foreach ($autoloadFiles as $autoloadFile) {
+    if (file_exists($autoloadFile)) {
+        require_once $autoloadFile;
+        break;
+    }
+}
 
 $application = new Application('TGScraper', InstalledVersions::getVersion('sysbot/tgscraper'));
 

@@ -12,6 +12,9 @@
     "symfony/console": "^5.3",
     "symfony/yaml": "^5.3"
   },
+  "suggest": {
+    "sysbot/tgscraper-cache": "To speed up schema fetching and generation."
+  },
   "autoload": {
     "psr-4": {
       "TgScraper\\": "src/"

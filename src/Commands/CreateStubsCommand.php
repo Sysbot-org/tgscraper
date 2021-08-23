@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 use TgScraper\Constants\Versions;
-use TgScraper\Generator;
+use TgScraper\TgScraper;
 use Throwable;
 
 class CreateStubsCommand extends Command
@@ -44,21 +44,30 @@ class CreateStubsCommand extends Command
                 InputOption::VALUE_REQUIRED,
                 'Path to YAML file to use instead of fetching from URL (this option takes precedence over "--layer" and "--json")'
             )
-            ->addOption('layer', 'l', InputOption::VALUE_REQUIRED, 'Bot API version to use', 'latest');
+            ->addOption('layer', 'l', InputOption::VALUE_REQUIRED, 'Bot API version to use', 'latest')
+            ->addOption(
+                'prefer-stable',
+                null,
+                InputOption::VALUE_NONE,
+                'Prefer latest stable version (takes precedence over "--layer")'
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $logger = new ConsoleLogger($output);
-        $url = Versions::getVersionFromText($input->getOption('layer'));
+        $version = Versions::getVersionFromText($input->getOption('layer'));
+        if ($input->getOption('prefer-stable')) {
+            $version = Versions::STABLE;
+        }
         $yamlPath = $input->getOption('yaml');
         if (empty($yamlPath)) {
             $jsonPath = $input->getOption('json');
             if (empty($jsonPath)) {
-                $logger->info('Using URL: ' . $url);
+                $logger->info('Using version: ' . $version);
                 try {
-                    $output->writeln('Fetching data from URL...');
-                    $generator = new Generator($logger, $url);
+                    $output->writeln('Fetching data for version...');
+                    $generator = TgScraper::fromVersion($logger, $version);
                 } catch (Throwable) {
                     return Command::FAILURE;
                 }
@@ -70,7 +79,7 @@ class CreateStubsCommand extends Command
                 }
                 $logger->info('Using JSON schema: ' . $jsonPath);
                 /** @noinspection PhpUnhandledExceptionInspection */
-                $generator = Generator::fromJson($logger, $data);
+                $generator = TgScraper::fromJson($logger, $data);
             }
         } else {
             $data = file_get_contents($yamlPath);
@@ -80,7 +89,7 @@ class CreateStubsCommand extends Command
             }
             $logger->info('Using YAML schema: ' . $yamlPath);
             /** @noinspection PhpUnhandledExceptionInspection */
-            $generator = Generator::fromYaml($logger, $data);
+            $generator = TgScraper::fromYaml($logger, $data);
         }
         try {
             $output->writeln('Creating stubs...');

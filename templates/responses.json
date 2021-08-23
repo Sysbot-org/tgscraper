@@ -1,0 +1,46 @@
+{
+  "200": {
+    "description": "Request was successful, the result is returned.",
+    "content": {
+      "application/json": {
+        "schema": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/Success"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "result": {}
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "400": {
+    "$ref": "#/components/responses/BadRequest"
+  },
+  "401": {
+    "$ref": "#/components/responses/Unauthorized"
+  },
+  "403": {
+    "$ref": "#/components/responses/Forbidden"
+  },
+  "404": {
+    "$ref": "#/components/responses/NotFound"
+  },
+  "409": {
+    "$ref": "#/components/responses/Conflict"
+  },
+  "429": {
+    "$ref": "#/components/responses/TooManyRequests"
+  },
+  "5XX": {
+    "$ref": "#/components/responses/ServerError"
+  },
+  "default": {
+    "$ref": "#/components/responses/UnknownError"
+  }
+}

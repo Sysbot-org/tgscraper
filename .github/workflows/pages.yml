@@ -1,0 +1,34 @@
+name: GH Pages
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build files for GH Pages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Generate schemas
+        uses: addnab/docker-run-action@v3
+        with:
+          registry: ghcr.io
+          image: sysbot-org/tgscraper:latest
+          options: -v ${{ github.workspace }}:/out
+          run: |
+          'app:export-schema --readable botapi.json'
+          'app:export-schema --yaml --readable botapi.yaml'
+          'app:export-schema --postman --readable botapi_postman.json'
+          'app:export-schema --openapi --readable botapi_openapi.json'
+          'app:export-schema --yaml --openapi --readable botapi_openapi.yaml'
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ github.workspace }}
+          destination_dir: schemas
+          publish_branch: gh-pages
+          cname: tgscraper.sys001.ml
+          enable_jekyll: true

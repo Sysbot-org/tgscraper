@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+## [3.0.0] - 2021-08-23
 ### Added
 - Support for OpenAPI schema: you can now generate code in any language!
 - Support for the new [sysbot/tgscraper-cache](https://github.com/Sysbot-org/tgscraper-cache) package: if installed, TGScraper will be much faster (there is no need to always fetch the live webpages)!
@@ -127,7 +129,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - The parser is now more reliable, it no longer needs to be updated at every bot API release!
 
-[Unreleased]: https://github.com/Sysbot-org/tgscraper/compare/2.1...HEAD
+[Unreleased]: https://github.com/Sysbot-org/tgscraper/compare/3.0...HEAD
+[3.0.0]: https://github.com/Sysbot-org/tgscraper/compare/2.1...3.0
 [2.1.0]: https://github.com/Sysbot-org/tgscraper/compare/2.0.1...2.1
 [2.0.1]: https://github.com/Sysbot-org/tgscraper/compare/2.0...2.0.1
 [2.0.0]: https://github.com/Sysbot-org/tgscraper/compare/1.4...2.0

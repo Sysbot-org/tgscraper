@@ -15,7 +15,7 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           registry: ghcr.io
-          image: sysbot-org/tgscraper:latest
+          image: ghcr.io/sysbot-org/tgscraper:latest
           options: -v ${{ github.workspace }}:/out
           run: |
             'app:export-schema --readable botapi.json'

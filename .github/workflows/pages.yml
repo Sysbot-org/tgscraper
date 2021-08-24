@@ -13,8 +13,6 @@ jobs:
         uses: docker://ghcr.io/sysbot-org/tgscraper
         with:
           args: "app:export-schema --readable $HOME/botapi.json"
-        run: |
-          ls $HOME
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

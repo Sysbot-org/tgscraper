@@ -18,11 +18,11 @@ jobs:
           image: ghcr.io/sysbot-org/tgscraper:latest
           options: -v ${{ github.workspace }}:/out
           run: |
-            '/app/vendor/bin/tgscraper app:export-schema --readable botapi.json'
-            '/app/vendor/bin/tgscraper app:export-schema --yaml --readable botapi.yaml'
-            '/app/vendor/bin/tgscraper app:export-schema --postman --readable botapi_postman.json'
-            '/app/vendor/bin/tgscraper app:export-schema --openapi --readable botapi_openapi.json'
-            '/app/vendor/bin/tgscraper app:export-schema --yaml --openapi --readable botapi_openapi.yaml'
+            'php /app/vendor/bin/tgscraper app:export-schema --readable botapi.json'
+            'php /app/vendor/bin/tgscraper app:export-schema --yaml --readable botapi.yaml'
+            'php /app/vendor/bin/tgscraper app:export-schema --postman --readable botapi_postman.json'
+            'php /app/vendor/bin/tgscraper app:export-schema --openapi --readable botapi_openapi.json'
+            'php /app/vendor/bin/tgscraper app:export-schema --yaml --openapi --readable botapi_openapi.yaml'
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

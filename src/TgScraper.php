@@ -184,10 +184,10 @@ class TgScraper
     {
         $result = realpath($path);
         if (false === $result) {
-            if (!mkdir($path)) {
+            if (!mkdir($path, 0755, true)) {
                 $path = getcwd() . '/gen';
                 if (!file_exists($path)) {
-                    mkdir($path, 0755);
+                    mkdir($path, 0755, true);
                 }
             }
         }

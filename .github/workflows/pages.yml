@@ -9,10 +9,26 @@ jobs:
     name: Build files for GH Pages
     runs-on: ubuntu-latest
     steps:
-      - name: Generate schemas
+      - name: Generate botapi.json
         uses: docker://ghcr.io/sysbot-org/tgscraper
         with:
           args: "app:export-schema --readable /github/workspace/botapi.json"
+      - name: Generate botapi.yaml
+        uses: docker://ghcr.io/sysbot-org/tgscraper
+        with:
+          args: "app:export-schema --yaml --readable /github/workspace/botapi.yaml"
+      - name: Generate botapi_postman.json
+        uses: docker://ghcr.io/sysbot-org/tgscraper
+        with:
+          args: "app:export-schema --postman --readable /github/workspace/botapi_postman.json"
+      - name: Generate botapi_openapi.json
+        uses: docker://ghcr.io/sysbot-org/tgscraper
+        with:
+          args: "app:export-schema --openapi --readable /github/workspace/botapi_openapi.json"
+      - name: Generate botapi_openapi.yaml
+        uses: docker://ghcr.io/sysbot-org/tgscraper
+        with:
+          args: "app:export-schema --yaml --openapi --readable /github/workspace/botapi_openapi.yaml"
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

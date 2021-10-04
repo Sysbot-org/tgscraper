@@ -5364,7 +5364,7 @@ methods:
                 types:
                     - Array<MessageEntity>
                 optional: true
-                description: 'List of special entities that appear in message text, which can be specified instead of parse_mode'
+                description: 'A JSON-serialized list of special entities that appear in message text, which can be specified instead of parse_mode'
             -
                 name: disable_web_page_preview
                 types:
@@ -5473,7 +5473,7 @@ methods:
                 types:
                     - Array<MessageEntity>
                 optional: true
-                description: 'List of special entities that appear in the new caption, which can be specified instead of parse_mode'
+                description: 'A JSON-serialized list of special entities that appear in the new caption, which can be specified instead of parse_mode'
             -
                 name: disable_notification
                 types:
@@ -5538,7 +5538,7 @@ methods:
                 types:
                     - Array<MessageEntity>
                 optional: true
-                description: 'List of special entities that appear in the caption, which can be specified instead of parse_mode'
+                description: 'A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode'
             -
                 name: disable_notification
                 types:
@@ -5603,7 +5603,7 @@ methods:
                 types:
                     - Array<MessageEntity>
                 optional: true
-                description: 'List of special entities that appear in the caption, which can be specified instead of parse_mode'
+                description: 'A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode'
             -
                 name: duration
                 types:
@@ -5700,7 +5700,7 @@ methods:
                 types:
                     - Array<MessageEntity>
                 optional: true
-                description: 'List of special entities that appear in the caption, which can be specified instead of parse_mode'
+                description: 'A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode'
             -
                 name: disable_content_type_detection
                 types:
@@ -5796,7 +5796,7 @@ methods:
                 types:
                     - Array<MessageEntity>
                 optional: true
-                description: 'List of special entities that appear in the caption, which can be specified instead of parse_mode'
+                description: 'A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode'
             -
                 name: supports_streaming
                 types:
@@ -5892,7 +5892,7 @@ methods:
                 types:
                     - Array<MessageEntity>
                 optional: true
-                description: 'List of special entities that appear in the caption, which can be specified instead of parse_mode'
+                description: 'A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode'
             -
                 name: disable_notification
                 types:
@@ -5957,7 +5957,7 @@ methods:
                 types:
                     - Array<MessageEntity>
                 optional: true
-                description: 'List of special entities that appear in the caption, which can be specified instead of parse_mode'
+                description: 'A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode'
             -
                 name: duration
                 types:
@@ -6482,7 +6482,7 @@ methods:
                 types:
                     - Array<MessageEntity>
                 optional: true
-                description: 'List of special entities that appear in the poll explanation, which can be specified instead of parse_mode'
+                description: 'A JSON-serialized list of special entities that appear in the poll explanation, which can be specified instead of parse_mode'
             -
                 name: open_period
                 types:
@@ -6844,7 +6844,7 @@ methods:
                 types:
                     - ChatPermissions
                 optional: false
-                description: 'New default chat permissions'
+                description: 'A JSON-serialized object for new default chat permissions'
         return_types:
             - bool
     -
@@ -7301,7 +7301,7 @@ methods:
                 types:
                     - Array<MessageEntity>
                 optional: true
-                description: 'List of special entities that appear in message text, which can be specified instead of parse_mode'
+                description: 'A JSON-serialized list of special entities that appear in message text, which can be specified instead of parse_mode'
             -
                 name: disable_web_page_preview
                 types:
@@ -7357,7 +7357,7 @@ methods:
                 types:
                     - Array<MessageEntity>
                 optional: true
-                description: 'List of special entities that appear in the caption, which can be specified instead of parse_mode'
+                description: 'A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode'
             -
                 name: reply_markup
                 types:

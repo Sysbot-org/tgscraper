@@ -988,7 +988,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. File size"
+                    "description": "Optional. File size in bytes"
                 }
             ],
             "extended_by": []
@@ -1067,7 +1067,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. File size"
+                    "description": "Optional. File size in bytes"
                 }
             ],
             "extended_by": []
@@ -1138,7 +1138,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. File size"
+                    "description": "Optional. File size in bytes"
                 },
                 {
                     "name": "thumb",
@@ -1201,7 +1201,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. File size"
+                    "description": "Optional. File size in bytes"
                 }
             ],
             "extended_by": []
@@ -1280,7 +1280,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. File size"
+                    "description": "Optional. File size in bytes"
                 }
             ],
             "extended_by": []
@@ -1335,7 +1335,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. File size"
+                    "description": "Optional. File size in bytes"
                 }
             ],
             "extended_by": []
@@ -1382,7 +1382,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. File size"
+                    "description": "Optional. File size in bytes"
                 }
             ],
             "extended_by": []
@@ -1817,7 +1817,7 @@
                         "int"
                     ],
                     "optional": false,
-                    "description": "Voice chat duration; in seconds"
+                    "description": "Voice chat duration in seconds"
                 }
             ],
             "extended_by": []
@@ -1886,7 +1886,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. File size, if known"
+                    "description": "Optional. File size in bytes, if known"
                 },
                 {
                     "name": "file_path",
@@ -3178,7 +3178,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. Video duration"
+                    "description": "Optional. Video duration in seconds"
                 },
                 {
                     "name": "supports_streaming",
@@ -3266,7 +3266,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. Animation duration"
+                    "description": "Optional. Animation duration in seconds"
                 }
             ],
             "extended_by": []
@@ -3503,7 +3503,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. File size"
+                    "description": "Optional. File size in bytes"
                 }
             ],
             "extended_by": []
@@ -3805,7 +3805,7 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "A valid URL of the photo. Photo must be in jpeg format. Photo size must not exceed 5MB"
+                    "description": "A valid URL of the photo. Photo must be in JPEG format. Photo size must not exceed 5MB"
                 },
                 {
                     "name": "thumb_url",
@@ -3940,7 +3940,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. Duration of the GIF"
+                    "description": "Optional. Duration of the GIF in seconds"
                 },
                 {
                     "name": "thumb_url",
@@ -4059,7 +4059,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. Video duration"
+                    "description": "Optional. Video duration in seconds"
                 },
                 {
                     "name": "thumb_url",
@@ -4170,7 +4170,7 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "URL of the thumbnail (jpeg only) for the video"
+                    "description": "URL of the thumbnail (JPEG only) for the video"
                 },
                 {
                     "name": "title",
@@ -4535,7 +4535,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. URL of the thumbnail (jpeg only) for the file"
+                    "description": "Optional. URL of the thumbnail (JPEG only) for the file"
                 },
                 {
                     "name": "thumb_width",
@@ -6391,7 +6391,7 @@
                         "int"
                     ],
                     "optional": false,
-                    "description": "File size"
+                    "description": "File size in bytes"
                 },
                 {
                     "name": "file_date",

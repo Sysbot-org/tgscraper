@@ -1,4 +1,4 @@
-version: 5.3.0
+version: 5.4.0
 types:
     -
         name: Update
@@ -88,6 +88,12 @@ types:
                     - ChatMemberUpdated
                 optional: true
                 description: 'Optional. A chat member''s status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify “chat_member” in the list of allowed_updates to receive these updates.'
+            -
+                name: chat_join_request
+                types:
+                    - ChatJoinRequest
+                optional: true
+                description: 'Optional. A request to join the chat has been sent. The bot must have the can_invite_users administrator right in the chat to receive these updates.'
         extended_by: {  }
     -
         name: WebhookInfo
@@ -282,7 +288,7 @@ types:
                 types:
                     - int
                 optional: true
-                description: 'Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user. Returned only in getChat.'
+                description: 'Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user; in seconds. Returned only in getChat.'
             -
                 name: message_auto_delete_time
                 types:
@@ -1238,7 +1244,7 @@ types:
                 types:
                     - int
                 optional: true
-                description: 'Optional. Time relative to the message sending date, during which the location can be updated, in seconds. For active live locations only.'
+                description: 'Optional. Time relative to the message sending date, during which the location can be updated; in seconds. For active live locations only.'
             -
                 name: heading
                 types:
@@ -1331,7 +1337,7 @@ types:
                 types:
                     - int
                 optional: false
-                description: 'New auto-delete time for messages in the chat'
+                description: 'New auto-delete time for messages in the chat; in seconds'
         extended_by: {  }
     -
         name: VoiceChatScheduled
@@ -1718,6 +1724,12 @@ types:
                 optional: false
                 description: 'Creator of the link'
             -
+                name: creates_join_request
+                types:
+                    - bool
+                optional: false
+                description: 'True, if users joining the chat via the link need to be approved by chat administrators'
+            -
                 name: is_primary
                 types:
                     - bool
@@ -1730,6 +1742,12 @@ types:
                 optional: false
                 description: 'True, if the link is revoked'
             -
+                name: name
+                types:
+                    - string
+                optional: true
+                description: 'Optional. Invite link name'
+            -
                 name: expire_date
                 types:
                     - int
@@ -1741,6 +1759,12 @@ types:
                     - int
                 optional: true
                 description: 'Optional. Maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999'
+            -
+                name: pending_join_request_count
+                types:
+                    - int
+                optional: true
+                description: 'Optional. Number of pending join requests created using this link'
         extended_by: {  }
     -
         name: ChatMember
@@ -2051,6 +2075,41 @@ types:
                     - ChatInviteLink
                 optional: true
                 description: 'Optional. Chat invite link, which was used by the user to join the chat; for joining by invite link events only.'
+        extended_by: {  }
+    -
+        name: ChatJoinRequest
+        description: 'Represents a join request sent to a chat.'
+        fields:
+            -
+                name: chat
+                types:
+                    - Chat
+                optional: false
+                description: 'Chat to which the request was sent'
+            -
+                name: from
+                types:
+                    - User
+                optional: false
+                description: 'User that sent the join request'
+            -
+                name: date
+                types:
+                    - int
+                optional: false
+                description: 'Date the request was sent in Unix time'
+            -
+                name: bio
+                types:
+                    - string
+                optional: true
+                description: 'Optional. Bio of the user.'
+            -
+                name: invite_link
+                types:
+                    - ChatInviteLink
+                optional: true
+                description: 'Optional. Chat invite link that was used by the user to send the join request'
         extended_by: {  }
     -
         name: ChatPermissions
@@ -2549,7 +2608,7 @@ types:
                 types:
                     - bool
                 optional: true
-                description: 'Optional. Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always true, if the document is sent as part of an album.'
+                description: 'Optional. Disables automatic server-side content type detection for files uploaded using multipart/form-data. Always True, if the document is sent as part of an album.'
         extended_by: {  }
     -
         name: InputFile
@@ -6592,7 +6651,7 @@ methods:
                 types:
                     - string
                 optional: false
-                description: 'Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, find_location for location data, record_video_note or upload_video_note for video notes.'
+                description: 'Type of action to broadcast. Choose one, depending on what the user is about to receive: typing for text messages, upload_photo for photos, record_video or upload_video for videos, record_voice or upload_voice for voice notes, upload_document for general files, choose_sticker for stickers, find_location for location data, record_video_note or upload_video_note for video notes.'
         return_types:
             - bool
     -
@@ -6633,7 +6692,7 @@ methods:
             - File
     -
         name: banChatMember
-        description: 'Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.'
+        description: 'Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -6689,7 +6748,7 @@ methods:
             - bool
     -
         name: restrictChatMember
-        description: 'Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.'
+        description: 'Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -6720,7 +6779,7 @@ methods:
             - bool
     -
         name: promoteChatMember
-        description: 'Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote a user. Returns True on success.'
+        description: 'Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass False for all boolean parameters to demote a user. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -6830,7 +6889,7 @@ methods:
             - bool
     -
         name: setChatPermissions
-        description: 'Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members admin rights. Returns True on success.'
+        description: 'Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members administrator rights. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -6849,7 +6908,7 @@ methods:
             - bool
     -
         name: exportChatInviteLink
-        description: 'Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the new invite link as String on success.'
+        description: 'Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as String on success.'
         fields:
             -
                 name: chat_id
@@ -6862,7 +6921,7 @@ methods:
             - string
     -
         name: createChatInviteLink
-        description: 'Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. The link can be revoked using the method revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.'
+        description: 'Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.'
         fields:
             -
                 name: chat_id
@@ -6871,6 +6930,12 @@ methods:
                     - string
                 optional: false
                 description: 'Unique identifier for the target chat or username of the target channel (in the format @channelusername)'
+            -
+                name: name
+                types:
+                    - string
+                optional: true
+                description: 'Invite link name; 0-32 characters'
             -
                 name: expire_date
                 types:
@@ -6883,11 +6948,17 @@ methods:
                     - int
                 optional: true
                 description: 'Maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999'
+            -
+                name: creates_join_request
+                types:
+                    - bool
+                optional: true
+                description: 'True, if users joining the chat via the link need to be approved by chat administrators. If True, member_limit can''t be specified'
         return_types:
             - ChatInviteLink
     -
         name: editChatInviteLink
-        description: 'Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the edited invite link as a ChatInviteLink object.'
+        description: 'Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a ChatInviteLink object.'
         fields:
             -
                 name: chat_id
@@ -6903,6 +6974,12 @@ methods:
                 optional: false
                 description: 'The invite link to edit'
             -
+                name: name
+                types:
+                    - string
+                optional: true
+                description: 'Invite link name; 0-32 characters'
+            -
                 name: expire_date
                 types:
                     - int
@@ -6914,11 +6991,17 @@ methods:
                     - int
                 optional: true
                 description: 'Maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999'
+            -
+                name: creates_join_request
+                types:
+                    - bool
+                optional: true
+                description: 'True, if users joining the chat via the link need to be approved by chat administrators. If True, member_limit can''t be specified'
         return_types:
             - ChatInviteLink
     -
         name: revokeChatInviteLink
-        description: 'Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the revoked invite link as ChatInviteLink object.'
+        description: 'Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object.'
         fields:
             -
                 name: chat_id
@@ -6936,8 +7019,46 @@ methods:
         return_types:
             - ChatInviteLink
     -
+        name: approveChatJoinRequest
+        description: 'Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the can_invite_users administrator right. Returns True on success.'
+        fields:
+            -
+                name: chat_id
+                types:
+                    - int
+                    - string
+                optional: false
+                description: 'Unique identifier for the target chat or username of the target channel (in the format @channelusername)'
+            -
+                name: user_id
+                types:
+                    - int
+                optional: false
+                description: 'Unique identifier of the target user'
+        return_types:
+            - bool
+    -
+        name: declineChatJoinRequest
+        description: 'Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the can_invite_users administrator right. Returns True on success.'
+        fields:
+            -
+                name: chat_id
+                types:
+                    - int
+                    - string
+                optional: false
+                description: 'Unique identifier for the target chat or username of the target channel (in the format @channelusername)'
+            -
+                name: user_id
+                types:
+                    - int
+                optional: false
+                description: 'Unique identifier of the target user'
+        return_types:
+            - bool
+    -
         name: setChatPhoto
-        description: 'Use this method to set a new profile photo for the chat. Photos can''t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.'
+        description: 'Use this method to set a new profile photo for the chat. Photos can''t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -6956,7 +7077,7 @@ methods:
             - bool
     -
         name: deleteChatPhoto
-        description: 'Use this method to delete a chat photo. Photos can''t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.'
+        description: 'Use this method to delete a chat photo. Photos can''t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -6969,7 +7090,7 @@ methods:
             - bool
     -
         name: setChatTitle
-        description: 'Use this method to change the title of a chat. Titles can''t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.'
+        description: 'Use this method to change the title of a chat. Titles can''t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -6988,7 +7109,7 @@ methods:
             - bool
     -
         name: setChatDescription
-        description: 'Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.'
+        description: 'Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -7007,7 +7128,7 @@ methods:
             - bool
     -
         name: pinChatMessage
-        description: 'Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the ''can_pin_messages'' admin right in a supergroup or ''can_edit_messages'' admin right in a channel. Returns True on success.'
+        description: 'Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the ''can_pin_messages'' administrator right in a supergroup or ''can_edit_messages'' administrator right in a channel. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -7032,7 +7153,7 @@ methods:
             - bool
     -
         name: unpinChatMessage
-        description: 'Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the ''can_pin_messages'' admin right in a supergroup or ''can_edit_messages'' admin right in a channel. Returns True on success.'
+        description: 'Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the ''can_pin_messages'' administrator right in a supergroup or ''can_edit_messages'' administrator right in a channel. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -7051,7 +7172,7 @@ methods:
             - bool
     -
         name: unpinAllChatMessages
-        description: 'Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the ''can_pin_messages'' admin right in a supergroup or ''can_edit_messages'' admin right in a channel. Returns True on success.'
+        description: 'Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the ''can_pin_messages'' administrator right in a supergroup or ''can_edit_messages'' administrator right in a channel. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -7135,7 +7256,7 @@ methods:
             - ChatMember
     -
         name: setChatStickerSet
-        description: 'Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.'
+        description: 'Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -7154,7 +7275,7 @@ methods:
             - bool
     -
         name: deleteChatStickerSet
-        description: 'Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.'
+        description: 'Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -7186,7 +7307,7 @@ methods:
                 types:
                     - bool
                 optional: true
-                description: 'If true, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to false.'
+                description: 'If True, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to false.'
             -
                 name: url
                 types:

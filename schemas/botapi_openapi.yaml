@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
     title: 'Telegram Bot API'
     description: 'Auto-generated OpenAPI schema by TGScraper.'
-    version: 5.3.0
+    version: 5.4.0
 servers:
     -
         url: 'https://api.telegram.org/bot{token}'
@@ -134,6 +134,8 @@ components:
                     $ref: '#/components/schemas/ChatMemberUpdated'
                 chat_member:
                     $ref: '#/components/schemas/ChatMemberUpdated'
+                chat_join_request:
+                    $ref: '#/components/schemas/ChatJoinRequest'
             type: object
         WebhookInfo:
             description: 'Contains information about the current status of a webhook.'
@@ -919,6 +921,7 @@ components:
             required:
                 - invite_link
                 - creator
+                - creates_join_request
                 - is_primary
                 - is_revoked
             properties:
@@ -926,13 +929,19 @@ components:
                     type: string
                 creator:
                     $ref: '#/components/schemas/User'
+                creates_join_request:
+                    type: boolean
                 is_primary:
                     type: boolean
                 is_revoked:
                     type: boolean
+                name:
+                    type: string
                 expire_date:
                     type: integer
                 member_limit:
+                    type: integer
+                pending_join_request_count:
                     type: integer
             type: object
         ChatMember:
@@ -1108,6 +1117,24 @@ components:
                     $ref: '#/components/schemas/ChatMember'
                 new_chat_member:
                     $ref: '#/components/schemas/ChatMember'
+                invite_link:
+                    $ref: '#/components/schemas/ChatInviteLink'
+            type: object
+        ChatJoinRequest:
+            description: 'Represents a join request sent to a chat.'
+            required:
+                - chat
+                - from
+                - date
+            properties:
+                chat:
+                    $ref: '#/components/schemas/Chat'
+                from:
+                    $ref: '#/components/schemas/User'
+                date:
+                    type: integer
+                bio:
+                    type: string
                 invite_link:
                     $ref: '#/components/schemas/ChatInviteLink'
             type: object
@@ -6327,7 +6354,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /banChatMember:
-        description: 'Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.'
+        description: 'Use this method to ban a user in a group, a supergroup or a channel. In the case of supergroups and channels, the user will not be able to return to the chat on their own using invite links, etc., unless unbanned first. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.'
         post:
             requestBody:
                 required: true
@@ -6507,7 +6534,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /restrictChatMember:
-        description: 'Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.'
+        description: 'Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate administrator rights. Pass True for all permissions to lift restrictions from a user. Returns True on success.'
         post:
             requestBody:
                 required: true
@@ -6603,7 +6630,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /promoteChatMember:
-        description: 'Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Pass False for all boolean parameters to demote a user. Returns True on success.'
+        description: 'Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Pass False for all boolean parameters to demote a user. Returns True on success.'
         post:
             requestBody:
                 required: true
@@ -6840,7 +6867,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /setChatPermissions:
-        description: 'Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members admin rights. Returns True on success.'
+        description: 'Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the can_restrict_members administrator rights. Returns True on success.'
         post:
             requestBody:
                 required: true
@@ -6921,7 +6948,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /exportChatInviteLink:
-        description: 'Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the new invite link as String on success.'
+        description: 'Use this method to generate a new primary invite link for a chat; any previously generated primary link is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the new invite link as String on success.'
         post:
             requestBody:
                 required: true
@@ -6993,7 +7020,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /createChatInviteLink:
-        description: 'Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. The link can be revoked using the method revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.'
+        description: 'Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. The link can be revoked using the method revokeChatInviteLink. Returns the new invite link as ChatInviteLink object.'
         post:
             requestBody:
                 required: true
@@ -7010,10 +7037,14 @@ paths:
                                             type: integer
                                         -
                                             type: string
+                                name:
+                                    type: string
                                 expire_date:
                                     type: integer
                                 member_limit:
                                     type: integer
+                                creates_join_request:
+                                    type: boolean
                     application/x-www-form-urlencoded:
                         schema:
                             type: object
@@ -7026,10 +7057,14 @@ paths:
                                             type: integer
                                         -
                                             type: string
+                                name:
+                                    type: string
                                 expire_date:
                                     type: integer
                                 member_limit:
                                     type: integer
+                                creates_join_request:
+                                    type: boolean
                     multipart/form-data:
                         schema:
                             type: object
@@ -7042,10 +7077,14 @@ paths:
                                             type: integer
                                         -
                                             type: string
+                                name:
+                                    type: string
                                 expire_date:
                                     type: integer
                                 member_limit:
                                     type: integer
+                                creates_join_request:
+                                    type: boolean
             responses:
                 200:
                     description: 'Request was successful, the result is returned.'
@@ -7077,7 +7116,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /editChatInviteLink:
-        description: 'Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the edited invite link as a ChatInviteLink object.'
+        description: 'Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the edited invite link as a ChatInviteLink object.'
         post:
             requestBody:
                 required: true
@@ -7097,10 +7136,14 @@ paths:
                                             type: string
                                 invite_link:
                                     type: string
+                                name:
+                                    type: string
                                 expire_date:
                                     type: integer
                                 member_limit:
                                     type: integer
+                                creates_join_request:
+                                    type: boolean
                     application/x-www-form-urlencoded:
                         schema:
                             type: object
@@ -7116,10 +7159,14 @@ paths:
                                             type: string
                                 invite_link:
                                     type: string
+                                name:
+                                    type: string
                                 expire_date:
                                     type: integer
                                 member_limit:
                                     type: integer
+                                creates_join_request:
+                                    type: boolean
                     multipart/form-data:
                         schema:
                             type: object
@@ -7135,10 +7182,14 @@ paths:
                                             type: string
                                 invite_link:
                                     type: string
+                                name:
+                                    type: string
                                 expire_date:
                                     type: integer
                                 member_limit:
                                     type: integer
+                                creates_join_request:
+                                    type: boolean
             responses:
                 200:
                     description: 'Request was successful, the result is returned.'
@@ -7170,7 +7221,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /revokeChatInviteLink:
-        description: 'Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the revoked invite link as ChatInviteLink object.'
+        description: 'Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object.'
         post:
             requestBody:
                 required: true
@@ -7250,8 +7301,170 @@ paths:
                     $ref: '#/components/responses/ServerError'
                 default:
                     $ref: '#/components/responses/UnknownError'
+    /approveChatJoinRequest:
+        description: 'Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work and must have the can_invite_users administrator right. Returns True on success.'
+        post:
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            required:
+                                - chat_id
+                                - user_id
+                            properties:
+                                chat_id:
+                                    anyOf:
+                                        -
+                                            type: integer
+                                        -
+                                            type: string
+                                user_id:
+                                    type: integer
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            required:
+                                - chat_id
+                                - user_id
+                            properties:
+                                chat_id:
+                                    anyOf:
+                                        -
+                                            type: integer
+                                        -
+                                            type: string
+                                user_id:
+                                    type: integer
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            required:
+                                - chat_id
+                                - user_id
+                            properties:
+                                chat_id:
+                                    anyOf:
+                                        -
+                                            type: integer
+                                        -
+                                            type: string
+                                user_id:
+                                    type: integer
+            responses:
+                200:
+                    description: 'Request was successful, the result is returned.'
+                    content:
+                        application/json:
+                            schema:
+                                allOf:
+                                    -
+                                        $ref: '#/components/schemas/Success'
+                                    -
+                                        type: object
+                                        properties:
+                                            result:
+                                                type: boolean
+                400:
+                    $ref: '#/components/responses/BadRequest'
+                401:
+                    $ref: '#/components/responses/Unauthorized'
+                403:
+                    $ref: '#/components/responses/Forbidden'
+                404:
+                    $ref: '#/components/responses/NotFound'
+                409:
+                    $ref: '#/components/responses/Conflict'
+                429:
+                    $ref: '#/components/responses/TooManyRequests'
+                5XX:
+                    $ref: '#/components/responses/ServerError'
+                default:
+                    $ref: '#/components/responses/UnknownError'
+    /declineChatJoinRequest:
+        description: 'Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the can_invite_users administrator right. Returns True on success.'
+        post:
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            required:
+                                - chat_id
+                                - user_id
+                            properties:
+                                chat_id:
+                                    anyOf:
+                                        -
+                                            type: integer
+                                        -
+                                            type: string
+                                user_id:
+                                    type: integer
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            required:
+                                - chat_id
+                                - user_id
+                            properties:
+                                chat_id:
+                                    anyOf:
+                                        -
+                                            type: integer
+                                        -
+                                            type: string
+                                user_id:
+                                    type: integer
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            required:
+                                - chat_id
+                                - user_id
+                            properties:
+                                chat_id:
+                                    anyOf:
+                                        -
+                                            type: integer
+                                        -
+                                            type: string
+                                user_id:
+                                    type: integer
+            responses:
+                200:
+                    description: 'Request was successful, the result is returned.'
+                    content:
+                        application/json:
+                            schema:
+                                allOf:
+                                    -
+                                        $ref: '#/components/schemas/Success'
+                                    -
+                                        type: object
+                                        properties:
+                                            result:
+                                                type: boolean
+                400:
+                    $ref: '#/components/responses/BadRequest'
+                401:
+                    $ref: '#/components/responses/Unauthorized'
+                403:
+                    $ref: '#/components/responses/Forbidden'
+                404:
+                    $ref: '#/components/responses/NotFound'
+                409:
+                    $ref: '#/components/responses/Conflict'
+                429:
+                    $ref: '#/components/responses/TooManyRequests'
+                5XX:
+                    $ref: '#/components/responses/ServerError'
+                default:
+                    $ref: '#/components/responses/UnknownError'
     /setChatPhoto:
-        description: 'Use this method to set a new profile photo for the chat. Photos can''t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.'
+        description: 'Use this method to set a new profile photo for the chat. Photos can''t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.'
         post:
             requestBody:
                 required: true
@@ -7332,7 +7545,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /deleteChatPhoto:
-        description: 'Use this method to delete a chat photo. Photos can''t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.'
+        description: 'Use this method to delete a chat photo. Photos can''t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.'
         post:
             requestBody:
                 required: true
@@ -7404,7 +7617,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /setChatTitle:
-        description: 'Use this method to change the title of a chat. Titles can''t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.'
+        description: 'Use this method to change the title of a chat. Titles can''t be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.'
         post:
             requestBody:
                 required: true
@@ -7485,7 +7698,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /setChatDescription:
-        description: 'Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on success.'
+        description: 'Use this method to change the description of a group, a supergroup or a channel. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.'
         post:
             requestBody:
                 required: true
@@ -7563,7 +7776,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /pinChatMessage:
-        description: 'Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the ''can_pin_messages'' admin right in a supergroup or ''can_edit_messages'' admin right in a channel. Returns True on success.'
+        description: 'Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the ''can_pin_messages'' administrator right in a supergroup or ''can_edit_messages'' administrator right in a channel. Returns True on success.'
         post:
             requestBody:
                 required: true
@@ -7650,7 +7863,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /unpinChatMessage:
-        description: 'Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the ''can_pin_messages'' admin right in a supergroup or ''can_edit_messages'' admin right in a channel. Returns True on success.'
+        description: 'Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the ''can_pin_messages'' administrator right in a supergroup or ''can_edit_messages'' administrator right in a channel. Returns True on success.'
         post:
             requestBody:
                 required: true
@@ -7728,7 +7941,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /unpinAllChatMessages:
-        description: 'Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the ''can_pin_messages'' admin right in a supergroup or ''can_edit_messages'' admin right in a channel. Returns True on success.'
+        description: 'Use this method to clear the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the ''can_pin_messages'' administrator right in a supergroup or ''can_edit_messages'' administrator right in a channel. Returns True on success.'
         post:
             requestBody:
                 required: true
@@ -8171,7 +8384,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /setChatStickerSet:
-        description: 'Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.'
+        description: 'Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.'
         post:
             requestBody:
                 required: true
@@ -8252,7 +8465,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /deleteChatStickerSet:
-        description: 'Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.'
+        description: 'Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set optionally returned in getChat requests to check if the bot can use this method. Returns True on success.'
         post:
             requestBody:
                 required: true

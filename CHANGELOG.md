@@ -8,6 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.2] - 2021-11-08
+### Added
+- Support for bot API 5.4.0
+
+### Fixed
+- Fixed GitHub action arguments for schemas generation
+
+## [3.0.1]
+### Added
+- Initial support for publishing on GitHub Pages using a GitHub action
+
+### Fixed
+- Target folder can now be a nested folder
+
 ## [3.0.0] - 2021-08-23
 ### Added
 - Support for OpenAPI schema: you can now generate code in any language!

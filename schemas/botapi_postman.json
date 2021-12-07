@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "5.4.0"
+        "version": "5.5.0"
     },
     "variable": {
         "key": "token",
@@ -2151,6 +2151,86 @@
                     ]
                 },
                 "description": "Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns True on success."
+            }
+        },
+        {
+            "name": "banChatSenderChat",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "sender_chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier of the target sender chat",
+                            "type": "text"
+                        },
+                        {
+                            "key": "until_date",
+                            "disabled": true,
+                            "description": "Optional. Date when the sender chat will be unbanned, unix time. If the chat is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever.",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/banChatSenderChat",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "banChatSenderChat"
+                    ]
+                },
+                "description": "Use this method to ban a channel chat in a supergroup or a channel. The owner of the chat will not be able to send messages and join live streams on behalf of the chat, unless it is unbanned first. The bot must be an administrator in the supergroup or channel for this to work and must have the appropriate administrator rights. Returns True on success."
+            }
+        },
+        {
+            "name": "unbanChatSenderChat",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "sender_chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier of the target sender chat",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/unbanChatSenderChat",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "unbanChatSenderChat"
+                    ]
+                },
+                "description": "Use this method to unban a previously banned channel chat in a supergroup or channel. The bot must be an administrator for this to work and must have the appropriate administrator rights. Returns True on success."
             }
         },
         {

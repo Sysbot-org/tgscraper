@@ -8,19 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.3] - 2021-12-11
+### Added
+- Support for bot API 5.5.0.
+
+### Changed
+- Updated dependencies to their latest available version.
+
 ## [3.0.2] - 2021-11-08
 ### Added
-- Support for bot API 5.4.0
+- Support for bot API 5.4.0.
 
 ### Fixed
-- Fixed GitHub action arguments for schemas generation
+- Fixed GitHub action arguments for schemas generation.
 
 ## [3.0.1] - 2021-08-24
 ### Added
-- Initial support for publishing on GitHub Pages using a GitHub action
+- Initial support for publishing on GitHub Pages using a GitHub action.
 
 ### Fixed
-- Target folder can now be a nested folder
+- Target folder can now be a nested folder.
 
 ## [3.0.0] - 2021-08-23
 ### Added
@@ -143,7 +150,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - The parser is now more reliable, it no longer needs to be updated at every bot API release!
 
-[Unreleased]: https://github.com/Sysbot-org/tgscraper/compare/3.0.2...HEAD
+[Unreleased]: https://github.com/Sysbot-org/tgscraper/compare/3.0.3...HEAD
+[3.0.3]: https://github.com/Sysbot-org/tgscraper/compare/3.0.2...3.0.3
 [3.0.2]: https://github.com/Sysbot-org/tgscraper/compare/3.0.1...3.0.2
 [3.0.1]: https://github.com/Sysbot-org/tgscraper/compare/3.0...3.0.1
 [3.0.0]: https://github.com/Sysbot-org/tgscraper/compare/2.1...3.0

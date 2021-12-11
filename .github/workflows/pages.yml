@@ -1,7 +1,7 @@
 name: GH Pages
 on:
-  schedule:
-    - cron: '0 0 * * *'
+  repository_dispatch:
+    types: [on_update]
   workflow_dispatch:
 
 jobs:

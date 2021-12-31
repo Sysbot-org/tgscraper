@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "5.5.0"
+        "version": "5.6.0"
     },
     "variable": {
         "key": "token",
@@ -293,6 +293,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of sent messages from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_to_message_id",
                             "disabled": true,
                             "description": "Optional. If the message is a reply, ID of the original message",
@@ -351,6 +357,12 @@
                             "key": "disable_notification",
                             "disabled": true,
                             "description": "Optional. Sends the message silently. Users will receive a notification with no sound.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the forwarded message from forwarding and saving",
                             "type": "text"
                         },
                         {
@@ -424,6 +436,12 @@
                             "key": "disable_notification",
                             "disabled": true,
                             "description": "Optional. Sends the message silently. Users will receive a notification with no sound.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
                             "type": "text"
                         },
                         {
@@ -503,6 +521,12 @@
                             "key": "disable_notification",
                             "disabled": true,
                             "description": "Optional. Sends the message silently. Users will receive a notification with no sound.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
                             "type": "text"
                         },
                         {
@@ -609,6 +633,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_to_message_id",
                             "disabled": true,
                             "description": "Optional. If the message is a reply, ID of the original message",
@@ -697,6 +727,12 @@
                             "key": "disable_notification",
                             "disabled": true,
                             "description": "Optional. Sends the message silently. Users will receive a notification with no sound.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
                             "type": "text"
                         },
                         {
@@ -809,6 +845,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_to_message_id",
                             "disabled": true,
                             "description": "Optional. If the message is a reply, ID of the original message",
@@ -912,6 +954,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_to_message_id",
                             "disabled": true,
                             "description": "Optional. If the message is a reply, ID of the original message",
@@ -997,6 +1045,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_to_message_id",
                             "disabled": true,
                             "description": "Optional. If the message is a reply, ID of the original message",
@@ -1076,6 +1130,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_to_message_id",
                             "disabled": true,
                             "description": "Optional. If the message is a reply, ID of the original message",
@@ -1134,6 +1194,12 @@
                             "key": "disable_notification",
                             "disabled": true,
                             "description": "Optional. Sends messages silently. Users will receive a notification with no sound.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent messages from forwarding and saving",
                             "type": "text"
                         },
                         {
@@ -1219,6 +1285,12 @@
                             "key": "disable_notification",
                             "disabled": true,
                             "description": "Optional. Sends the message silently. Users will receive a notification with no sound.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
                             "type": "text"
                         },
                         {
@@ -1453,6 +1525,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_to_message_id",
                             "disabled": true,
                             "description": "Optional. If the message is a reply, ID of the original message",
@@ -1529,6 +1607,12 @@
                             "key": "disable_notification",
                             "disabled": true,
                             "description": "Optional. Sends the message silently. Users will receive a notification with no sound.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
                             "type": "text"
                         },
                         {
@@ -1659,6 +1743,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_to_message_id",
                             "disabled": true,
                             "description": "Optional. If the message is a reply, ID of the original message",
@@ -1717,6 +1807,12 @@
                             "key": "disable_notification",
                             "disabled": true,
                             "description": "Optional. Sends the message silently. Users will receive a notification with no sound.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding",
                             "type": "text"
                         },
                         {
@@ -3526,6 +3622,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_to_message_id",
                             "disabled": true,
                             "description": "Optional. If the message is a reply, ID of the original message",
@@ -4087,6 +4189,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_to_message_id",
                             "disabled": true,
                             "description": "Optional. If the message is a reply, ID of the original message",
@@ -4274,6 +4382,12 @@
                             "key": "disable_notification",
                             "disabled": true,
                             "description": "Optional. Sends the message silently. Users will receive a notification with no sound.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent message from forwarding and saving",
                             "type": "text"
                         },
                         {

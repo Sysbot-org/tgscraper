@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "5.5.0"
+        "version": "5.6.0"
     },
     "servers": [
         {
@@ -4836,6 +4836,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -4897,6 +4900,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -4956,6 +4962,9 @@
                                         "type": "boolean"
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -5073,6 +5082,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "message_id": {
                                         "type": "integer"
                                     }
@@ -5111,6 +5123,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "message_id": {
                                         "type": "integer"
                                     }
@@ -5147,6 +5162,9 @@
                                         ]
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "message_id": {
@@ -5260,6 +5278,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -5332,6 +5353,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -5402,6 +5426,9 @@
                                         }
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -5530,6 +5557,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -5598,6 +5628,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -5664,6 +5697,9 @@
                                         }
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -5811,6 +5847,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -5898,6 +5937,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -5983,6 +6025,9 @@
                                         ]
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -6124,6 +6169,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -6205,6 +6253,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -6284,6 +6335,9 @@
                                         "type": "boolean"
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -6434,6 +6488,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -6524,6 +6581,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -6612,6 +6672,9 @@
                                         "type": "boolean"
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -6759,6 +6822,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -6846,6 +6912,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -6931,6 +7000,9 @@
                                         }
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -7062,6 +7134,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -7133,6 +7208,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -7202,6 +7280,9 @@
                                         "type": "integer"
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -7334,6 +7415,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -7406,6 +7490,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -7476,6 +7563,9 @@
                                         ]
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -7601,6 +7691,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -7650,6 +7743,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -7697,6 +7793,9 @@
                                         }
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -7809,6 +7908,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -7874,6 +7976,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -7937,6 +8042,9 @@
                                         "type": "integer"
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -8412,6 +8520,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -8485,6 +8596,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -8556,6 +8670,9 @@
                                         "type": "string"
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -8675,6 +8792,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -8734,6 +8854,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -8791,6 +8914,9 @@
                                         "type": "string"
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -8940,6 +9066,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -9029,6 +9158,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -9116,6 +9248,9 @@
                                         "type": "boolean"
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -9224,6 +9359,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -9272,6 +9410,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -9318,6 +9459,9 @@
                                         "type": "string"
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -14944,6 +15088,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -15000,6 +15147,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -15054,6 +15204,9 @@
                                         ]
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -16307,6 +16460,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -16414,6 +16570,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -16519,6 +16678,9 @@
                                         "type": "boolean"
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {
@@ -16980,6 +17142,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -17009,6 +17174,9 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
+                                    "protect_content": {
+                                        "type": "boolean"
+                                    },
                                     "reply_to_message_id": {
                                         "type": "integer"
                                     },
@@ -17036,6 +17204,9 @@
                                         "type": "string"
                                     },
                                     "disable_notification": {
+                                        "type": "boolean"
+                                    },
+                                    "protect_content": {
                                         "type": "boolean"
                                     },
                                     "reply_to_message_id": {

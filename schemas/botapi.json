@@ -1,5 +1,5 @@
 {
-    "version": "5.5.0",
+    "version": "5.6.0",
     "types": [
         {
             "name": "Update",
@@ -471,7 +471,7 @@
                         "Chat"
                     ],
                     "optional": true,
-                    "description": "Optional. Sender of the message, sent on behalf of a chat. For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat."
+                    "description": "Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat."
                 },
                 {
                     "name": "date",
@@ -519,7 +519,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. For messages forwarded from channels, signature of the post author if present"
+                    "description": "Optional. For forwarded messages that were originally sent in channels or by an anonymous chat administrator, signature of the message sender if present"
                 },
                 {
                     "name": "forward_sender_name",
@@ -941,7 +941,7 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the entity. Can be “mention” (@username), “hashtag” (#hashtag), “cashtag” ($USD), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames)"
+                    "description": "Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag), “cashtag” ($USD), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames)"
                 },
                 {
                     "name": "offset",
@@ -2965,7 +2965,7 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Text of the command, 1-32 characters. Can contain only lowercase English letters, digits and underscores."
+                    "description": "Text of the command; 1-32 characters. Can contain only lowercase English letters, digits and underscores."
                 },
                 {
                     "name": "description",
@@ -2973,7 +2973,7 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Description of the command, 3-256 characters."
+                    "description": "Description of the command; 1-256 characters."
                 }
             ],
             "extended_by": []
@@ -7303,6 +7303,14 @@
                     "description": "Sends the message silently. Users will receive a notification with no sound."
                 },
                 {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of sent messages from forwarding and saving"
+                },
+                {
                     "name": "reply_to_message_id",
                     "types": [
                         "int"
@@ -7363,6 +7371,14 @@
                     ],
                     "optional": true,
                     "description": "Sends the message silently. Users will receive a notification with no sound."
+                },
+                {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the forwarded message from forwarding and saving"
                 },
                 {
                     "name": "message_id",
@@ -7438,6 +7454,14 @@
                     ],
                     "optional": true,
                     "description": "Sends the message silently. Users will receive a notification with no sound."
+                },
+                {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
                 },
                 {
                     "name": "reply_to_message_id",
@@ -7524,6 +7548,14 @@
                     ],
                     "optional": true,
                     "description": "Sends the message silently. Users will receive a notification with no sound."
+                },
+                {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
                 },
                 {
                     "name": "reply_to_message_id",
@@ -7645,6 +7677,14 @@
                     "description": "Sends the message silently. Users will receive a notification with no sound."
                 },
                 {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
+                },
+                {
                     "name": "reply_to_message_id",
                     "types": [
                         "int"
@@ -7746,6 +7786,14 @@
                     ],
                     "optional": true,
                     "description": "Sends the message silently. Users will receive a notification with no sound."
+                },
+                {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
                 },
                 {
                     "name": "reply_to_message_id",
@@ -7875,6 +7923,14 @@
                     "description": "Sends the message silently. Users will receive a notification with no sound."
                 },
                 {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
+                },
+                {
                     "name": "reply_to_message_id",
                     "types": [
                         "int"
@@ -7994,6 +8050,14 @@
                     "description": "Sends the message silently. Users will receive a notification with no sound."
                 },
                 {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
+                },
+                {
                     "name": "reply_to_message_id",
                     "types": [
                         "int"
@@ -8088,6 +8152,14 @@
                     "description": "Sends the message silently. Users will receive a notification with no sound."
                 },
                 {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
+                },
+                {
                     "name": "reply_to_message_id",
                     "types": [
                         "int"
@@ -8175,6 +8247,14 @@
                     "description": "Sends the message silently. Users will receive a notification with no sound."
                 },
                 {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
+                },
+                {
                     "name": "reply_to_message_id",
                     "types": [
                         "int"
@@ -8234,6 +8314,14 @@
                     ],
                     "optional": true,
                     "description": "Sends messages silently. Users will receive a notification with no sound."
+                },
+                {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent messages from forwarding and saving"
                 },
                 {
                     "name": "reply_to_message_id",
@@ -8324,6 +8412,14 @@
                     ],
                     "optional": true,
                     "description": "Sends the message silently. Users will receive a notification with no sound."
+                },
+                {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
                 },
                 {
                     "name": "reply_to_message_id",
@@ -8569,6 +8665,14 @@
                     "description": "Sends the message silently. Users will receive a notification with no sound."
                 },
                 {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
+                },
+                {
                     "name": "reply_to_message_id",
                     "types": [
                         "int"
@@ -8652,6 +8756,14 @@
                     ],
                     "optional": true,
                     "description": "Sends the message silently. Users will receive a notification with no sound."
+                },
+                {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
                 },
                 {
                     "name": "reply_to_message_id",
@@ -8803,6 +8915,14 @@
                     "description": "Sends the message silently. Users will receive a notification with no sound."
                 },
                 {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
+                },
+                {
                     "name": "reply_to_message_id",
                     "types": [
                         "int"
@@ -8862,6 +8982,14 @@
                     ],
                     "optional": true,
                     "description": "Sends the message silently. Users will receive a notification with no sound."
+                },
+                {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding"
                 },
                 {
                     "name": "reply_to_message_id",
@@ -10294,6 +10422,14 @@
                     "description": "Sends the message silently. Users will receive a notification with no sound."
                 },
                 {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
+                },
+                {
                     "name": "reply_to_message_id",
                     "types": [
                         "int"
@@ -10830,6 +10966,14 @@
                     "description": "Sends the message silently. Users will receive a notification with no sound."
                 },
                 {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
+                },
+                {
                     "name": "reply_to_message_id",
                     "types": [
                         "int"
@@ -10984,6 +11128,14 @@
                     ],
                     "optional": true,
                     "description": "Sends the message silently. Users will receive a notification with no sound."
+                },
+                {
+                    "name": "protect_content",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Protects the contents of the sent message from forwarding and saving"
                 },
                 {
                     "name": "reply_to_message_id",

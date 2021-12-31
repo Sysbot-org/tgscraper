@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
     title: 'Telegram Bot API'
     description: 'Auto-generated OpenAPI schema by TGScraper.'
-    version: 5.5.0
+    version: 5.6.0
 servers:
     -
         url: 'https://api.telegram.org/bot{token}'
@@ -3266,6 +3266,8 @@ paths:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -3305,6 +3307,8 @@ paths:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -3343,6 +3347,8 @@ paths:
                                 disable_web_page_preview:
                                     type: boolean
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -3416,6 +3422,8 @@ paths:
                                             type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 message_id:
                                     type: integer
                     application/x-www-form-urlencoded:
@@ -3440,6 +3448,8 @@ paths:
                                             type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 message_id:
                                     type: integer
                     multipart/form-data:
@@ -3463,6 +3473,8 @@ paths:
                                         -
                                             type: string
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 message_id:
                                     type: integer
@@ -3534,6 +3546,8 @@ paths:
                                         $ref: '#/components/schemas/MessageEntity'
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -3580,6 +3594,8 @@ paths:
                                         $ref: '#/components/schemas/MessageEntity'
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -3625,6 +3641,8 @@ paths:
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -3705,6 +3723,8 @@ paths:
                                         $ref: '#/components/schemas/MessageEntity'
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -3748,6 +3768,8 @@ paths:
                                         $ref: '#/components/schemas/MessageEntity'
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -3790,6 +3812,8 @@ paths:
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -3882,6 +3906,8 @@ paths:
                                             type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -3937,6 +3963,8 @@ paths:
                                             type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -3991,6 +4019,8 @@ paths:
                                         -
                                             type: string
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -4079,6 +4109,8 @@ paths:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -4130,6 +4162,8 @@ paths:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -4180,6 +4214,8 @@ paths:
                                 disable_content_type_detection:
                                     type: boolean
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -4274,6 +4310,8 @@ paths:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -4331,6 +4369,8 @@ paths:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -4387,6 +4427,8 @@ paths:
                                 supports_streaming:
                                     type: boolean
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -4479,6 +4521,8 @@ paths:
                                         $ref: '#/components/schemas/MessageEntity'
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -4534,6 +4578,8 @@ paths:
                                         $ref: '#/components/schemas/MessageEntity'
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -4588,6 +4634,8 @@ paths:
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -4670,6 +4718,8 @@ paths:
                                     type: integer
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -4715,6 +4765,8 @@ paths:
                                     type: integer
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -4759,6 +4811,8 @@ paths:
                                 duration:
                                     type: integer
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -4841,6 +4895,8 @@ paths:
                                             type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -4886,6 +4942,8 @@ paths:
                                             type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -4930,6 +4988,8 @@ paths:
                                         -
                                             type: string
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -5008,6 +5068,8 @@ paths:
                                                 $ref: '#/components/schemas/InputMediaVideo'
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -5039,6 +5101,8 @@ paths:
                                                 $ref: '#/components/schemas/InputMediaVideo'
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -5069,6 +5133,8 @@ paths:
                                             -
                                                 $ref: '#/components/schemas/InputMediaVideo'
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -5140,6 +5206,8 @@ paths:
                                     type: integer
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -5182,6 +5250,8 @@ paths:
                                     type: integer
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -5223,6 +5293,8 @@ paths:
                                 proximity_alert_radius:
                                     type: integer
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -5522,6 +5594,8 @@ paths:
                                     type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -5570,6 +5644,8 @@ paths:
                                     type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -5617,6 +5693,8 @@ paths:
                                 google_place_type:
                                     type: string
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -5692,6 +5770,8 @@ paths:
                                     type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -5730,6 +5810,8 @@ paths:
                                     type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -5767,6 +5849,8 @@ paths:
                                 vcard:
                                     type: string
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -5862,6 +5946,8 @@ paths:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -5920,6 +6006,8 @@ paths:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -5977,6 +6065,8 @@ paths:
                                 is_closed:
                                     type: boolean
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -6044,6 +6134,8 @@ paths:
                                     type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -6074,6 +6166,8 @@ paths:
                                     type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -6103,6 +6197,8 @@ paths:
                                 emoji:
                                     type: string
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -9605,6 +9701,8 @@ paths:
                                             type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -9640,6 +9738,8 @@ paths:
                                             type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -9674,6 +9774,8 @@ paths:
                                         -
                                             type: string
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -10472,6 +10574,8 @@ paths:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -10544,6 +10648,8 @@ paths:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -10615,6 +10721,8 @@ paths:
                                 is_flexible:
                                     type: boolean
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer
@@ -10908,6 +11016,8 @@ paths:
                                     type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -10927,6 +11037,8 @@ paths:
                                     type: string
                                 disable_notification:
                                     type: boolean
+                                protect_content:
+                                    type: boolean
                                 reply_to_message_id:
                                     type: integer
                                 allow_sending_without_reply:
@@ -10945,6 +11057,8 @@ paths:
                                 game_short_name:
                                     type: string
                                 disable_notification:
+                                    type: boolean
+                                protect_content:
                                     type: boolean
                                 reply_to_message_id:
                                     type: integer

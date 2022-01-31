@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "5.6.0"
+        "version": "5.7.0"
     },
     "servers": [
         {
@@ -2149,7 +2149,8 @@
                     "file_unique_id",
                     "width",
                     "height",
-                    "is_animated"
+                    "is_animated",
+                    "is_video"
                 ],
                 "properties": {
                     "file_id": {
@@ -2165,6 +2166,9 @@
                         "type": "integer"
                     },
                     "is_animated": {
+                        "type": "boolean"
+                    },
+                    "is_video": {
                         "type": "boolean"
                     },
                     "thumb": {
@@ -2191,6 +2195,7 @@
                     "name",
                     "title",
                     "is_animated",
+                    "is_video",
                     "contains_masks",
                     "stickers"
                 ],
@@ -2202,6 +2207,9 @@
                         "type": "string"
                     },
                     "is_animated": {
+                        "type": "boolean"
+                    },
+                    "is_video": {
                         "type": "boolean"
                     },
                     "contains_masks": {
@@ -15052,7 +15060,7 @@
             }
         },
         "/sendSticker": {
-            "description": "Use this method to send static .WEBP or animated .TGS stickers. On success, the sent Message is returned.",
+            "description": "Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -15493,7 +15501,7 @@
             }
         },
         "/createNewStickerSet": {
-            "description": "Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. You must use exactly one of the fields png_sticker or tgs_sticker. Returns True on success.",
+            "description": "Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -15528,6 +15536,9 @@
                                         ]
                                     },
                                     "tgs_sticker": {
+                                        "$ref": "#/components/schemas/InputFile"
+                                    },
+                                    "webm_sticker": {
                                         "$ref": "#/components/schemas/InputFile"
                                     },
                                     "emojis": {
@@ -15574,6 +15585,9 @@
                                     "tgs_sticker": {
                                         "$ref": "#/components/schemas/InputFile"
                                     },
+                                    "webm_sticker": {
+                                        "$ref": "#/components/schemas/InputFile"
+                                    },
                                     "emojis": {
                                         "type": "string"
                                     },
@@ -15616,6 +15630,9 @@
                                         ]
                                     },
                                     "tgs_sticker": {
+                                        "$ref": "#/components/schemas/InputFile"
+                                    },
+                                    "webm_sticker": {
                                         "$ref": "#/components/schemas/InputFile"
                                     },
                                     "emojis": {
@@ -15683,7 +15700,7 @@
             }
         },
         "/addStickerToSet": {
-            "description": "Use this method to add a new sticker to a set created by the bot. You must use exactly one of the fields png_sticker or tgs_sticker. Animated stickers can be added to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.",
+            "description": "Use this method to add a new sticker to a set created by the bot. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Animated stickers can be added to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -15714,6 +15731,9 @@
                                         ]
                                     },
                                     "tgs_sticker": {
+                                        "$ref": "#/components/schemas/InputFile"
+                                    },
+                                    "webm_sticker": {
                                         "$ref": "#/components/schemas/InputFile"
                                     },
                                     "emojis": {
@@ -15753,6 +15773,9 @@
                                     "tgs_sticker": {
                                         "$ref": "#/components/schemas/InputFile"
                                     },
+                                    "webm_sticker": {
+                                        "$ref": "#/components/schemas/InputFile"
+                                    },
                                     "emojis": {
                                         "type": "string"
                                     },
@@ -15788,6 +15811,9 @@
                                         ]
                                     },
                                     "tgs_sticker": {
+                                        "$ref": "#/components/schemas/InputFile"
+                                    },
+                                    "webm_sticker": {
                                         "$ref": "#/components/schemas/InputFile"
                                     },
                                     "emojis": {
@@ -16058,7 +16084,7 @@
             }
         },
         "/setStickerSetThumb": {
-            "description": "Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only. Returns True on success.",
+            "description": "Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only. Video thumbnails can be set only for video sticker sets only. Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,

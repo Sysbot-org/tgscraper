@@ -1,9 +1,11 @@
 #!/usr/bin/env php
 <?php
 
+
 use Composer\InstalledVersions;
 use Symfony\Component\Console\Application;
 use TgScraper\Commands\CreateStubsCommand;
+use TgScraper\Commands\DumpSchemasCommand;
 use TgScraper\Commands\ExportSchemaCommand;
 
 $autoloadFiles = [
@@ -22,10 +24,11 @@ $application = new Application('TGScraper', InstalledVersions::getVersion('sysbo
 
 $application->add(new CreateStubsCommand());
 $application->add(new ExportSchemaCommand());
+$application->add(new DumpSchemasCommand());
 
 try {
     $exitCode = $application->run();
-} catch (Exception $e) {
+} catch (Throwable $e) {
     echo $e->getMessage() . PHP_EOL;
 }
 

@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0] - 2022-04-15
+### Added
+- Support for bot API 5.6.0 and 5.7.0
+- New `app:dump-schemas` command, used to generate schemas for all bot API versions.
+- New `default` property for fields, it contains their default values when they're unspecified.
+
+### Changed
+- (**Breaking change**) Array format in custom schema has been changed from `Array<Foo, Bar, Baz>` to `Array<Foo|Bar|Baz>`.
+- Updated dependencies to their latest available version.
+
+### Fixed
+- Increased speed dramatically by replacing the DOM parser, it's a lot faster now!
+- Huge refactoring, improved code quality and readability.
+- Some minor bug fixes.
+
 ## [3.0.3] - 2021-12-11
 ### Added
 - Support for bot API 5.5.0.
@@ -150,7 +165,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - The parser is now more reliable, it no longer needs to be updated at every bot API release!
 
-[Unreleased]: https://github.com/Sysbot-org/tgscraper/compare/3.0.3...HEAD
+[Unreleased]: https://github.com/Sysbot-org/tgscraper/compare/4.0...HEAD
+[4.0.0]: https://github.com/Sysbot-org/tgscraper/compare/3.0.3...4.0
 [3.0.3]: https://github.com/Sysbot-org/tgscraper/compare/3.0.2...3.0.3
 [3.0.2]: https://github.com/Sysbot-org/tgscraper/compare/3.0.1...3.0.2
 [3.0.1]: https://github.com/Sysbot-org/tgscraper/compare/3.0...3.0.1

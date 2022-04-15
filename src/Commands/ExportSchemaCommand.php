@@ -5,7 +5,6 @@ namespace TgScraper\Commands;
 
 
 use Exception;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,6 +18,8 @@ use Throwable;
 
 class ExportSchemaCommand extends Command
 {
+
+    use Common;
 
     protected static $defaultName = 'app:export-schema';
 
@@ -64,17 +65,6 @@ class ExportSchemaCommand extends Command
             );
     }
 
-    private function saveFile(ConsoleLogger $logger, OutputInterface $output, string $destination, string $data): int
-    {
-        $result = file_put_contents($destination, $data);
-        if (false === $result) {
-            $logger->critical('Unable to save file to ' . $destination);
-            return Command::FAILURE;
-        }
-        $output->writeln('Done!');
-        return Command::SUCCESS;
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $logger = new ConsoleLogger($output);
@@ -86,7 +76,8 @@ class ExportSchemaCommand extends Command
         try {
             $output->writeln('Fetching data for version...');
             $generator = TgScraper::fromVersion($logger, $version);
-        } catch (Throwable) {
+        } catch (Throwable $e) {
+            $logger->critical((string)$e);
             return Command::FAILURE;
         }
         $output->writeln('Exporting schema from data...');
@@ -105,19 +96,19 @@ class ExportSchemaCommand extends Command
         if ($input->getOption('openapi')) {
             $data = $generator->toOpenApi();
             if ($useYaml) {
-                return $this->saveFile($logger, $output, $destination, Encoder::toYaml($data, $inline, $indent, $options));
+                return $this->saveFile($logger, $output, $destination, Encoder::toYaml($data, $inline, $indent, $options), log: false);
             }
-            return $this->saveFile($logger, $output, $destination, Encoder::toJson($data, $options | JSON_UNESCAPED_SLASHES, $readable));
+            return $this->saveFile($logger, $output, $destination, Encoder::toJson($data, $options | JSON_UNESCAPED_SLASHES, $readable), log: false);
         }
         if ($input->getOption('postman')) {
             $data = $generator->toPostman();
-            return $this->saveFile($logger, $output, $destination, Encoder::toJson($data, $options, $readable));
+            return $this->saveFile($logger, $output, $destination, Encoder::toJson($data, $options, $readable), log: false);
         }
         $data = $generator->toArray();
         if ($useYaml) {
-            return $this->saveFile($logger, $output, $destination, Encoder::toYaml($data, $inline, $indent, $options));
+            return $this->saveFile($logger, $output, $destination, Encoder::toYaml($data, $inline, $indent, $options), log: false);
         }
-        return $this->saveFile($logger, $output, $destination, Encoder::toJson($data, $options, $readable));
+        return $this->saveFile($logger, $output, $destination, Encoder::toJson($data, $options, $readable), log: false);
     }
 
 }

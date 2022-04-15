@@ -1,12 +1,12 @@
 <?php
+/** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
+
 /** @noinspection PhpInternalEntityUsedInspection */
 
 
 namespace TgScraper\Common;
 
-
 use InvalidArgumentException;
-use JetBrains\PhpStorm\ArrayShape;
 use Nette\PhpGenerator\Helpers;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
@@ -38,6 +38,7 @@ class StubCreator
      * StubCreator constructor.
      * @param array $schema
      * @param string $namespace
+     * @throws InvalidArgumentException
      */
     public function __construct(private array $schema, string $namespace = '')
     {
@@ -59,7 +60,7 @@ class StubCreator
     /**
      * Builds the abstract and the extended class lists.
      */
-    private function getExtendedTypes()
+    private function getExtendedTypes(): void
     {
         foreach ($this->schema['types'] as $type) {
             if (!empty($type['extended_by'])) {
@@ -85,10 +86,6 @@ class StubCreator
      * @param PhpNamespace $phpNamespace
      * @return array
      */
-    #[ArrayShape([
-        'types' => "string",
-        'comments' => "string"
-    ])]
     private function parseFieldTypes(array $fieldTypes, PhpNamespace $phpNamespace): array
     {
         $types = [];
@@ -116,10 +113,6 @@ class StubCreator
      * @param PhpNamespace $phpNamespace
      * @return array
      */
-    #[ArrayShape([
-        'types' => "string",
-        'comments' => "string"
-    ])]
     private function parseApiFieldTypes(array $apiTypes, PhpNamespace $phpNamespace): array
     {
         $types = [];
@@ -128,6 +121,17 @@ class StubCreator
             $comments[] = $apiType;
             if (str_starts_with($apiType, 'Array')) {
                 $types[] = 'array';
+                $text = $apiType;
+                while (preg_match('/Array<(.+)>/', $text, $matches) === 1) {
+                    $text = $matches[1];
+                }
+                $subTypes = explode('|', $text);
+                foreach ($subTypes as $subType) {
+                    if (ucfirst($subType) == $subType) {
+                        $subType = $this->namespace . '\\Types\\' . $subType;
+                        $phpNamespace->addUse($subType);
+                    }
+                }
                 continue;
             }
             if (ucfirst($apiType) == $apiType) {
@@ -136,7 +140,7 @@ class StubCreator
             }
             $types[] = $apiType;
         }
-        $comments = empty($comments) ? '' : sprintf('@var %s', implode('|', $comments));
+        $comments = empty($comments) ? '' : sprintf('@param %s', implode('|', $comments));
         return [
             'types' => implode('|', $types),
             'comments' => $comments
@@ -147,10 +151,6 @@ class StubCreator
      * @param string $namespace
      * @return PhpFile[]
      */
-    #[ArrayShape([
-        'Response' => "\Nette\PhpGenerator\PhpFile",
-        'TypeInterface' => "\Nette\PhpGenerator\ClassType"
-    ])]
     private function generateDefaultTypes(string $namespace): array
     {
         $interfaceFile = new PhpFile;
@@ -158,25 +158,30 @@ class StubCreator
         $interfaceNamespace->addInterface('TypeInterface');
         $responseFile = new PhpFile;
         $responseNamespace = $responseFile->addNamespace($namespace);
-        $response = $responseNamespace->addClass('Response')
-            ->setType('class');
+        $responseNamespace->addUse('stdClass');
+        $response = $responseNamespace->addClass('Response');
         $response->addProperty('ok')
             ->setPublic()
             ->setType(Type::BOOL);
         $response->addProperty('result')
             ->setPublic()
-            ->setType(Type::MIXED)
-            ->setNullable(true)
+            ->setType(sprintf('stdClass|%s\\TypeInterface|array|int|string|bool', $namespace))
+            ->setNullable()
             ->setValue(null);
         $response->addProperty('errorCode')
             ->setPublic()
             ->setType(Type::INT)
-            ->setNullable(true)
+            ->setNullable()
             ->setValue(null);
         $response->addProperty('description')
             ->setPublic()
             ->setType(Type::STRING)
-            ->setNullable(true)
+            ->setNullable()
+            ->setValue(null);
+        $response->addProperty('parameters')
+            ->setPublic()
+            ->setType(sprintf('stdClass|%s\\ResponseParameters', $namespace))
+            ->setNullable()
             ->setValue(null);
         $response->addImplement($namespace . '\\TypeInterface');
         return [
@@ -195,13 +200,12 @@ class StubCreator
         foreach ($this->schema['types'] as $type) {
             $file = new PhpFile;
             $phpNamespace = $file->addNamespace($namespace);
-            $typeClass = $phpNamespace->addClass($type['name'])
-                ->setType('class');
+            $typeClass = $phpNamespace->addClass($type['name']);
             if (in_array($type['name'], $this->abstractClasses)) {
                 $typeClass->setAbstract();
             }
             if (array_key_exists($type['name'], $this->extendedClasses)) {
-                $typeClass->addExtend($namespace . '\\' . $this->extendedClasses[$type['name']]);
+                $typeClass->setExtends($namespace . '\\' . $this->extendedClasses[$type['name']]);
             } else {
                 $typeClass->addImplement($namespace . '\\TypeInterface');
             }
@@ -214,12 +218,19 @@ class StubCreator
                 $typeProperty = $typeClass->addProperty($fieldName)
                     ->setPublic()
                     ->setType($fieldTypes);
+                $default = $field['default'] ?? null;
+                if (!empty($default)) {
+                    $typeProperty->setValue($default);
+                }
                 if ($field['optional']) {
-                    $typeProperty->setNullable(true)
-                        ->setValue(null);
+                    $typeProperty->setNullable();
+                    if (!$typeProperty->isInitialized()) {
+                        $typeProperty->setValue(null);
+                    }
                     $fieldComments .= '|null';
                 }
                 if (!empty($fieldComments)) {
+                    $fieldComments .= ' ' . $field['description'];
                     $typeProperty->addComment($fieldComments);
                 }
             }
@@ -229,16 +240,15 @@ class StubCreator
     }
 
     /**
-     * @return string
+     * @return PhpFile
      */
-    private function generateApi(): string
+    private function generateApi(): PhpFile
     {
         $file = new PhpFile;
         $file->addComment('@noinspection PhpUnused');
         $file->addComment('@noinspection PhpUnusedParameterInspection');
         $phpNamespace = $file->addNamespace($this->namespace);
-        $apiClass = $phpNamespace->addClass('API')
-            ->setTrait();
+        $apiClass = $phpNamespace->addTrait('API');
         $sendRequest = $apiClass->addMethod('sendRequest')
             ->setPublic()
             ->setAbstract()
@@ -252,6 +262,7 @@ class StubCreator
                 ->setPublic()
                 ->addBody('$args = get_defined_vars();')
                 ->addBody('return $this->sendRequest(__FUNCTION__, $args);');
+            $function->addComment($method['description']);
             $fields = $method['fields'];
             usort(
                 $fields,
@@ -260,28 +271,37 @@ class StubCreator
                 }
             );
             foreach ($fields as $field) {
-                $types = $this->parseApiFieldTypes($field['types'], $phpNamespace)['types'];
+                ['types' => $types, 'comments' => $comment] = $this->parseApiFieldTypes($field['types'], $phpNamespace);
                 $fieldName = self::toCamelCase($field['name']);
                 $parameter = $function->addParameter($fieldName)
                     ->setType($types);
-                if ($field['optional']) {
-                    $parameter->setNullable()
-                        ->setDefaultValue(null);
+                $default = $field['default'] ?? null;
+                if (!empty($default) and (!is_string($default) or lcfirst($default) == $default)) {
+                    $parameter->setDefaultValue($default);
                 }
+                if ($field['optional']) {
+                    $parameter->setNullable();
+                    if (!$parameter->hasDefaultValue()) {
+                        $parameter->setDefaultValue(null);
+                    }
+                    $comment .= '|null';
+                }
+                $comment .= sprintf(' $%s %s', $fieldName, $field['description']);
+                $function->addComment($comment);
             }
-            $returnTypes = $this->parseApiFieldTypes($method['return_types'], $phpNamespace)['types'];
+            ['types' => $returnTypes, 'comments' => $returnComment] = $this->parseApiFieldTypes(
+                $method['return_types'],
+                $phpNamespace
+            );
             $function->setReturnType($returnTypes);
+            $function->addComment(str_replace('param', 'return', $returnComment));
         }
         return $file;
     }
 
     /**
-     * @return array
+     * @return array{types: PhpFile[], api: PhpFile}
      */
-    #[ArrayShape([
-        'types' => "\Nette\PhpGenerator\PhpFile[]",
-        'api' => "string"
-    ])]
     public function generateCode(): array
     {
         return [

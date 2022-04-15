@@ -80,6 +80,9 @@ class OpenApiGenerator
                 $schema['required'][] = $name;
             }
             $schema['properties'][$name] = self::parsePropertyTypes($field['types']);
+            if (!empty($field['default'] ?? null)) {
+                $schema['properties'][$name]['default'] = $field['default'];
+            }
         }
         return $schema;
     }
@@ -116,7 +119,7 @@ class OpenApiGenerator
         if (preg_match('/Array<(.+)>/', $type, $matches) === 1) {
             return [
                 'type' => 'array',
-                'items' => self::parsePropertyTypes(explode(',', $matches[1]))
+                'items' => self::parsePropertyTypes(explode('|', $matches[1]))
             ];
         }
         return [];

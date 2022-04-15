@@ -3,17 +3,10 @@
 namespace TgScraper;
 
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\ArrayShape;
 use JsonException;
-use PHPHtmlParser\Exceptions\ChildNotFoundException;
-use PHPHtmlParser\Exceptions\CircularException;
-use PHPHtmlParser\Exceptions\ContentLengthException;
-use PHPHtmlParser\Exceptions\LogicalException;
-use PHPHtmlParser\Exceptions\NotLoadedException;
-use PHPHtmlParser\Exceptions\ParentNotFoundException;
-use PHPHtmlParser\Exceptions\StrictException;
-use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Yaml\Yaml;
 use TgScraper\Common\OpenApiGenerator;
@@ -65,15 +58,7 @@ class TgScraper
     /**
      * @param LoggerInterface $logger
      * @param string $url
-     * @return static
-     * @throws ChildNotFoundException
-     * @throws CircularException
-     * @throws ClientExceptionInterface
-     * @throws ContentLengthException
-     * @throws LogicalException
-     * @throws NotLoadedException
-     * @throws ParentNotFoundException
-     * @throws StrictException
+     * @return self
      * @throws Throwable
      */
     public static function fromUrl(LoggerInterface $logger, string $url): self
@@ -86,16 +71,9 @@ class TgScraper
     /**
      * @param LoggerInterface $logger
      * @param string $version
-     * @return static
-     * @throws ChildNotFoundException
-     * @throws CircularException
-     * @throws ClientExceptionInterface
-     * @throws ContentLengthException
-     * @throws LogicalException
-     * @throws NotLoadedException
-     * @throws ParentNotFoundException
-     * @throws StrictException
-     * @throws Throwable
+     * @return self
+     * @throws Exception
+     * @throws GuzzleException
      */
     public static function fromVersion(LoggerInterface $logger, string $version = Versions::LATEST): self
     {
@@ -243,7 +221,7 @@ class TgScraper
             $formData = [];
             if (!empty($method['fields'])) {
                 foreach ($method['fields'] as $field) {
-                    $formData[] = [
+                    $data = [
                         'key' => $field['name'],
                         'disabled' => $field['optional'],
                         'description' => sprintf(
@@ -253,6 +231,11 @@ class TgScraper
                         ),
                         'type' => 'text'
                     ];
+                    $default = $field['default'] ?? null;
+                    if (!empty($default)) {
+                        $data['value'] = (string)$default;
+                    }
+                    $formData[] = $data;
                 }
             }
             $result['item'][] = [

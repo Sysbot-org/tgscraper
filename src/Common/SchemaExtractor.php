@@ -7,7 +7,6 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
-use JetBrains\PhpStorm\ArrayShape;
 use OutOfBoundsException;
 use Psr\Log\LoggerInterface;
 use RuntimeException;

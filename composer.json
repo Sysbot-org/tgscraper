@@ -13,6 +13,11 @@
     "symfony/yaml": "^6.0",
     "voku/simple_html_dom": "^4.7"
   },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5",
+    "phpstan/phpstan": "^1.2",
+    "vimeo/psalm": "^4.15"
+  },
   "suggest": {
     "sysbot/tgscraper-cache": "To speed up schema fetching and generation."
   },

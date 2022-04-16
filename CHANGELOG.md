@@ -170,7 +170,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The parser is now more reliable, it no longer needs to be updated at every bot API release!
 
 [Unreleased]: https://github.com/Sysbot-org/tgscraper/compare/4.0.1...HEAD
-[4.0.0]: https://github.com/Sysbot-org/tgscraper/compare/4.0...4.0.1
+[4.0.1]: https://github.com/Sysbot-org/tgscraper/compare/4.0...4.0.1
 [4.0.0]: https://github.com/Sysbot-org/tgscraper/compare/3.0.3...4.0
 [3.0.3]: https://github.com/Sysbot-org/tgscraper/compare/3.0.2...3.0.3
 [3.0.2]: https://github.com/Sysbot-org/tgscraper/compare/3.0.1...3.0.2

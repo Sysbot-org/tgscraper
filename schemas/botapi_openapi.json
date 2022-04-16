@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "5.7.0"
+        "version": "6.0.0"
     },
     "servers": [
         {
@@ -241,6 +241,9 @@
                     "last_error_message": {
                         "type": "string"
                     },
+                    "last_synchronization_error_date": {
+                        "type": "integer"
+                    },
                     "max_connections": {
                         "type": "integer"
                     },
@@ -323,7 +326,8 @@
                         "type": "string"
                     },
                     "has_private_forwards": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": true
                     },
                     "description": {
                         "type": "string"
@@ -344,13 +348,15 @@
                         "type": "integer"
                     },
                     "has_protected_content": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": true
                     },
                     "sticker_set_name": {
                         "type": "string"
                     },
                     "can_set_sticker_set": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": true
                     },
                     "linked_chat_id": {
                         "type": "integer"
@@ -403,7 +409,8 @@
                         "type": "integer"
                     },
                     "is_automatic_forward": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": true
                     },
                     "reply_to_message": {
                         "$ref": "#/components/schemas/Message"
@@ -415,7 +422,8 @@
                         "type": "integer"
                     },
                     "has_protected_content": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": true
                     },
                     "media_group_id": {
                         "type": "string"
@@ -505,16 +513,20 @@
                         }
                     },
                     "delete_chat_photo": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": true
                     },
                     "group_chat_created": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": true
                     },
                     "supergroup_chat_created": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": true
                     },
                     "channel_chat_created": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": true
                     },
                     "message_auto_delete_timer_changed": {
                         "$ref": "#/components/schemas/MessageAutoDeleteTimerChanged"
@@ -543,17 +555,20 @@
                     "proximity_alert_triggered": {
                         "$ref": "#/components/schemas/ProximityAlertTriggered"
                     },
-                    "voice_chat_scheduled": {
-                        "$ref": "#/components/schemas/VoiceChatScheduled"
+                    "video_chat_scheduled": {
+                        "$ref": "#/components/schemas/VideoChatScheduled"
                     },
-                    "voice_chat_started": {
-                        "$ref": "#/components/schemas/VoiceChatStarted"
+                    "video_chat_started": {
+                        "$ref": "#/components/schemas/VideoChatStarted"
                     },
-                    "voice_chat_ended": {
-                        "$ref": "#/components/schemas/VoiceChatEnded"
+                    "video_chat_ended": {
+                        "$ref": "#/components/schemas/VideoChatEnded"
                     },
-                    "voice_chat_participants_invited": {
-                        "$ref": "#/components/schemas/VoiceChatParticipantsInvited"
+                    "video_chat_participants_invited": {
+                        "$ref": "#/components/schemas/VideoChatParticipantsInvited"
+                    },
+                    "web_app_data": {
+                        "$ref": "#/components/schemas/WebAppData"
                     },
                     "reply_markup": {
                         "$ref": "#/components/schemas/InlineKeyboardMarkup"
@@ -1032,6 +1047,22 @@
                 },
                 "type": "object"
             },
+            "WebAppData": {
+                "description": "Contains data sent from a Web App to the bot.",
+                "required": [
+                    "data",
+                    "button_text"
+                ],
+                "properties": {
+                    "data": {
+                        "type": "string"
+                    },
+                    "button_text": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "ProximityAlertTriggered": {
                 "description": "This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user.",
                 "required": [
@@ -1064,8 +1095,8 @@
                 },
                 "type": "object"
             },
-            "VoiceChatScheduled": {
-                "description": "This object represents a service message about a voice chat scheduled in the chat.",
+            "VideoChatScheduled": {
+                "description": "This object represents a service message about a video chat scheduled in the chat.",
                 "required": [
                     "start_date"
                 ],
@@ -1076,12 +1107,12 @@
                 },
                 "type": "object"
             },
-            "VoiceChatStarted": {
-                "description": "This object represents a service message about a voice chat started in the chat. Currently holds no information.",
+            "VideoChatStarted": {
+                "description": "This object represents a service message about a video chat started in the chat. Currently holds no information.",
                 "type": "object"
             },
-            "VoiceChatEnded": {
-                "description": "This object represents a service message about a voice chat ended in the chat.",
+            "VideoChatEnded": {
+                "description": "This object represents a service message about a video chat ended in the chat.",
                 "required": [
                     "duration"
                 ],
@@ -1092,8 +1123,11 @@
                 },
                 "type": "object"
             },
-            "VoiceChatParticipantsInvited": {
-                "description": "This object represents a service message about new members invited to a voice chat.",
+            "VideoChatParticipantsInvited": {
+                "description": "This object represents a service message about new members invited to a video chat.",
+                "required": [
+                    "users"
+                ],
                 "properties": {
                     "users": {
                         "type": "array",
@@ -1148,6 +1182,18 @@
                 },
                 "type": "object"
             },
+            "WebAppInfo": {
+                "description": "Contains information about a Web App.",
+                "required": [
+                    "url"
+                ],
+                "properties": {
+                    "url": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "ReplyKeyboardMarkup": {
                 "description": "This object represents a custom keyboard with reply options (see Introduction to bots for details and examples).",
                 "required": [
@@ -1179,7 +1225,7 @@
                 "type": "object"
             },
             "KeyboardButton": {
-                "description": "This object represents one button of the reply keyboard. For simple text buttons String can be used instead of this object to specify text of the button. Optional fields request_contact, request_location, and request_poll are mutually exclusive.",
+                "description": "This object represents one button of the reply keyboard. For simple text buttons String can be used instead of this object to specify text of the button. Optional fields web_app, request_contact, request_location, and request_poll are mutually exclusive.",
                 "required": [
                     "text"
                 ],
@@ -1195,6 +1241,9 @@
                     },
                     "request_poll": {
                         "$ref": "#/components/schemas/KeyboardButtonPollType"
+                    },
+                    "web_app": {
+                        "$ref": "#/components/schemas/WebAppInfo"
                     }
                 },
                 "type": "object"
@@ -1215,7 +1264,8 @@
                 ],
                 "properties": {
                     "remove_keyboard": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": true
                     },
                     "selective": {
                         "type": "boolean"
@@ -1253,11 +1303,14 @@
                     "url": {
                         "type": "string"
                     },
-                    "login_url": {
-                        "$ref": "#/components/schemas/LoginUrl"
-                    },
                     "callback_data": {
                         "type": "string"
+                    },
+                    "web_app": {
+                        "$ref": "#/components/schemas/WebAppInfo"
+                    },
+                    "login_url": {
+                        "$ref": "#/components/schemas/LoginUrl"
                     },
                     "switch_inline_query": {
                         "type": "string"
@@ -1334,7 +1387,8 @@
                 ],
                 "properties": {
                     "force_reply": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "default": true
                     },
                     "input_field_placeholder": {
                         "type": "string"
@@ -1409,6 +1463,55 @@
                 },
                 "type": "object"
             },
+            "ChatAdministratorRights": {
+                "description": "Represents the rights of an administrator in a chat.",
+                "required": [
+                    "is_anonymous",
+                    "can_manage_chat",
+                    "can_delete_messages",
+                    "can_manage_video_chats",
+                    "can_restrict_members",
+                    "can_promote_members",
+                    "can_change_info",
+                    "can_invite_users"
+                ],
+                "properties": {
+                    "is_anonymous": {
+                        "type": "boolean"
+                    },
+                    "can_manage_chat": {
+                        "type": "boolean"
+                    },
+                    "can_delete_messages": {
+                        "type": "boolean"
+                    },
+                    "can_manage_video_chats": {
+                        "type": "boolean"
+                    },
+                    "can_restrict_members": {
+                        "type": "boolean"
+                    },
+                    "can_promote_members": {
+                        "type": "boolean"
+                    },
+                    "can_change_info": {
+                        "type": "boolean"
+                    },
+                    "can_invite_users": {
+                        "type": "boolean"
+                    },
+                    "can_post_messages": {
+                        "type": "boolean"
+                    },
+                    "can_edit_messages": {
+                        "type": "boolean"
+                    },
+                    "can_pin_messages": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
             "ChatMember": {
                 "description": "This object contains information about one member of a chat. Currently, the following 6 types of chat members are supported:",
                 "anyOf": [
@@ -1464,7 +1567,7 @@
                     "is_anonymous",
                     "can_manage_chat",
                     "can_delete_messages",
-                    "can_manage_voice_chats",
+                    "can_manage_video_chats",
                     "can_restrict_members",
                     "can_promote_members",
                     "can_change_info",
@@ -1489,7 +1592,7 @@
                     "can_delete_messages": {
                         "type": "boolean"
                     },
-                    "can_manage_voice_chats": {
+                    "can_manage_video_chats": {
                         "type": "boolean"
                     },
                     "can_restrict_members": {
@@ -1779,7 +1882,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "default"
                     }
                 },
                 "type": "object"
@@ -1791,7 +1895,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "all_private_chats"
                     }
                 },
                 "type": "object"
@@ -1803,7 +1908,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "all_group_chats"
                     }
                 },
                 "type": "object"
@@ -1815,7 +1921,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "all_chat_administrators"
                     }
                 },
                 "type": "object"
@@ -1828,7 +1935,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "chat"
                     },
                     "chat_id": {
                         "anyOf": [
@@ -1851,7 +1959,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "chat_administrators"
                     },
                     "chat_id": {
                         "anyOf": [
@@ -1875,7 +1984,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "chat_member"
                     },
                     "chat_id": {
                         "anyOf": [
@@ -1889,6 +1999,67 @@
                     },
                     "user_id": {
                         "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "MenuButton": {
+                "description": "This object describes the bot's menu button in a private chat. It should be one of",
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/MenuButtonCommands"
+                    },
+                    {
+                        "$ref": "#/components/schemas/MenuButtonWebApp"
+                    },
+                    {
+                        "$ref": "#/components/schemas/MenuButtonDefault"
+                    }
+                ]
+            },
+            "MenuButtonCommands": {
+                "description": "Represents a menu button, which opens the bot's list of commands.",
+                "required": [
+                    "type"
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "default": "commands"
+                    }
+                },
+                "type": "object"
+            },
+            "MenuButtonWebApp": {
+                "description": "Represents a menu button, which launches a Web App.",
+                "required": [
+                    "type",
+                    "text",
+                    "web_app"
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "default": "web_app"
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "web_app": {
+                        "$ref": "#/components/schemas/WebAppInfo"
+                    }
+                },
+                "type": "object"
+            },
+            "MenuButtonDefault": {
+                "description": "Describes that no specific value for the menu button was set.",
+                "required": [
+                    "type"
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "default": "default"
                     }
                 },
                 "type": "object"
@@ -1933,7 +2104,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "photo"
                     },
                     "media": {
                         "type": "string"
@@ -1961,7 +2133,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "video"
                     },
                     "media": {
                         "type": "string"
@@ -2011,7 +2184,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "animation"
                     },
                     "media": {
                         "type": "string"
@@ -2058,7 +2232,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "audio"
                     },
                     "media": {
                         "type": "string"
@@ -2105,7 +2280,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "document"
                     },
                     "media": {
                         "type": "string"
@@ -2356,7 +2532,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "article"
                     },
                     "id": {
                         "type": "string"
@@ -2401,7 +2578,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "photo"
                     },
                     "id": {
                         "type": "string"
@@ -2455,7 +2633,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "gif"
                     },
                     "id": {
                         "type": "string"
@@ -2476,7 +2655,8 @@
                         "type": "string"
                     },
                     "thumb_mime_type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "image/jpeg"
                     },
                     "title": {
                         "type": "string"
@@ -2512,7 +2692,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "mpeg4_gif"
                     },
                     "id": {
                         "type": "string"
@@ -2533,7 +2714,8 @@
                         "type": "string"
                     },
                     "thumb_mime_type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "image/jpeg"
                     },
                     "title": {
                         "type": "string"
@@ -2571,7 +2753,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "video"
                     },
                     "id": {
                         "type": "string"
@@ -2631,7 +2814,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "audio"
                     },
                     "id": {
                         "type": "string"
@@ -2679,7 +2863,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "voice"
                     },
                     "id": {
                         "type": "string"
@@ -2725,7 +2910,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "document"
                     },
                     "id": {
                         "type": "string"
@@ -2783,7 +2969,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "location"
                     },
                     "id": {
                         "type": "string"
@@ -2839,7 +3026,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "venue"
                     },
                     "id": {
                         "type": "string"
@@ -2896,7 +3084,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "contact"
                     },
                     "id": {
                         "type": "string"
@@ -2940,7 +3129,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "game"
                     },
                     "id": {
                         "type": "string"
@@ -2963,7 +3153,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "photo"
                     },
                     "id": {
                         "type": "string"
@@ -3007,7 +3198,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "gif"
                     },
                     "id": {
                         "type": "string"
@@ -3048,7 +3240,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "mpeg4_gif"
                     },
                     "id": {
                         "type": "string"
@@ -3089,7 +3282,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "sticker"
                     },
                     "id": {
                         "type": "string"
@@ -3116,7 +3310,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "document"
                     },
                     "id": {
                         "type": "string"
@@ -3161,7 +3356,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "video"
                     },
                     "id": {
                         "type": "string"
@@ -3206,7 +3402,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "voice"
                     },
                     "id": {
                         "type": "string"
@@ -3247,7 +3444,8 @@
                 ],
                 "properties": {
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "audio"
                     },
                     "id": {
                         "type": "string"
@@ -3507,6 +3705,15 @@
                         "type": "string"
                     },
                     "query": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "SentWebAppMessage": {
+                "description": "Contains information about an inline message sent by a Web App on behalf of a user.",
+                "properties": {
+                    "inline_message_id": {
                         "type": "string"
                     }
                 },
@@ -3873,7 +4080,8 @@
                 ],
                 "properties": {
                     "source": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "data"
                     },
                     "type": {
                         "type": "string"
@@ -3900,7 +4108,8 @@
                 ],
                 "properties": {
                     "source": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "front_side"
                     },
                     "type": {
                         "type": "string"
@@ -3924,7 +4133,8 @@
                 ],
                 "properties": {
                     "source": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "reverse_side"
                     },
                     "type": {
                         "type": "string"
@@ -3948,7 +4158,8 @@
                 ],
                 "properties": {
                     "source": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "selfie"
                     },
                     "type": {
                         "type": "string"
@@ -3972,7 +4183,8 @@
                 ],
                 "properties": {
                     "source": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "file"
                     },
                     "type": {
                         "type": "string"
@@ -3996,7 +4208,8 @@
                 ],
                 "properties": {
                     "source": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "files"
                     },
                     "type": {
                         "type": "string"
@@ -4023,7 +4236,8 @@
                 ],
                 "properties": {
                     "source": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "translation_file"
                     },
                     "type": {
                         "type": "string"
@@ -4047,7 +4261,8 @@
                 ],
                 "properties": {
                     "source": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "translation_files"
                     },
                     "type": {
                         "type": "string"
@@ -4074,7 +4289,8 @@
                 ],
                 "properties": {
                     "source": {
-                        "type": "string"
+                        "type": "string",
+                        "default": "unspecified"
                     },
                     "type": {
                         "type": "string"
@@ -4163,7 +4379,8 @@
                                         "type": "integer"
                                     },
                                     "limit": {
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "default": 100
                                     },
                                     "timeout": {
                                         "type": "integer"
@@ -4185,7 +4402,8 @@
                                         "type": "integer"
                                     },
                                     "limit": {
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "default": 100
                                     },
                                     "timeout": {
                                         "type": "integer"
@@ -4207,7 +4425,8 @@
                                         "type": "integer"
                                     },
                                     "limit": {
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "default": 100
                                     },
                                     "timeout": {
                                         "type": "integer"
@@ -4299,7 +4518,8 @@
                                         "type": "string"
                                     },
                                     "max_connections": {
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "default": 40
                                     },
                                     "allowed_updates": {
                                         "type": "array",
@@ -4330,7 +4550,8 @@
                                         "type": "string"
                                     },
                                     "max_connections": {
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "default": 40
                                     },
                                     "allowed_updates": {
                                         "type": "array",
@@ -4361,7 +4582,8 @@
                                         "type": "string"
                                     },
                                     "max_connections": {
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "default": 40
                                     },
                                     "allowed_updates": {
                                         "type": "array",
@@ -9039,10 +9261,12 @@
                                         }
                                     },
                                     "is_anonymous": {
-                                        "type": "boolean"
+                                        "type": "boolean",
+                                        "default": true
                                     },
                                     "type": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "default": "regular"
                                     },
                                     "allows_multiple_answers": {
                                         "type": "boolean"
@@ -9131,10 +9355,12 @@
                                         }
                                     },
                                     "is_anonymous": {
-                                        "type": "boolean"
+                                        "type": "boolean",
+                                        "default": true
                                     },
                                     "type": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "default": "regular"
                                     },
                                     "allows_multiple_answers": {
                                         "type": "boolean"
@@ -9223,10 +9449,12 @@
                                         }
                                     },
                                     "is_anonymous": {
-                                        "type": "boolean"
+                                        "type": "boolean",
+                                        "default": true
                                     },
                                     "type": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "default": "regular"
                                     },
                                     "allows_multiple_answers": {
                                         "type": "boolean"
@@ -9362,7 +9590,8 @@
                                         ]
                                     },
                                     "emoji": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "default": "🎲"
                                     },
                                     "disable_notification": {
                                         "type": "boolean"
@@ -9413,7 +9642,8 @@
                                         ]
                                     },
                                     "emoji": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "default": "🎲"
                                     },
                                     "disable_notification": {
                                         "type": "boolean"
@@ -9464,7 +9694,8 @@
                                         ]
                                     },
                                     "emoji": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "default": "🎲"
                                     },
                                     "disable_notification": {
                                         "type": "boolean"
@@ -9699,7 +9930,8 @@
                                         "type": "integer"
                                     },
                                     "limit": {
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "default": 100
                                     }
                                 }
                             }
@@ -9718,7 +9950,8 @@
                                         "type": "integer"
                                     },
                                     "limit": {
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "default": 100
                                     }
                                 }
                             }
@@ -9737,7 +9970,8 @@
                                         "type": "integer"
                                     },
                                     "limit": {
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "default": 100
                                     }
                                 }
                             }
@@ -10371,7 +10605,7 @@
                                     "can_delete_messages": {
                                         "type": "boolean"
                                     },
-                                    "can_manage_voice_chats": {
+                                    "can_manage_video_chats": {
                                         "type": "boolean"
                                     },
                                     "can_restrict_members": {
@@ -10428,7 +10662,7 @@
                                     "can_delete_messages": {
                                         "type": "boolean"
                                     },
-                                    "can_manage_voice_chats": {
+                                    "can_manage_video_chats": {
                                         "type": "boolean"
                                     },
                                     "can_restrict_members": {
@@ -10485,7 +10719,7 @@
                                     "can_delete_messages": {
                                         "type": "boolean"
                                     },
-                                    "can_manage_voice_chats": {
+                                    "can_manage_video_chats": {
                                         "type": "boolean"
                                     },
                                     "can_restrict_members": {
@@ -13813,7 +14047,8 @@
                                         }
                                     },
                                     "scope": {
-                                        "$ref": "#/components/schemas/BotCommandScope"
+                                        "$ref": "#/components/schemas/BotCommandScope",
+                                        "default": "BotCommandScopeDefault"
                                     },
                                     "language_code": {
                                         "type": "string"
@@ -13835,7 +14070,8 @@
                                         }
                                     },
                                     "scope": {
-                                        "$ref": "#/components/schemas/BotCommandScope"
+                                        "$ref": "#/components/schemas/BotCommandScope",
+                                        "default": "BotCommandScopeDefault"
                                     },
                                     "language_code": {
                                         "type": "string"
@@ -13857,7 +14093,8 @@
                                         }
                                     },
                                     "scope": {
-                                        "$ref": "#/components/schemas/BotCommandScope"
+                                        "$ref": "#/components/schemas/BotCommandScope",
+                                        "default": "BotCommandScopeDefault"
                                     },
                                     "language_code": {
                                         "type": "string"
@@ -13927,7 +14164,8 @@
                                 "type": "object",
                                 "properties": {
                                     "scope": {
-                                        "$ref": "#/components/schemas/BotCommandScope"
+                                        "$ref": "#/components/schemas/BotCommandScope",
+                                        "default": "BotCommandScopeDefault"
                                     },
                                     "language_code": {
                                         "type": "string"
@@ -13940,7 +14178,8 @@
                                 "type": "object",
                                 "properties": {
                                     "scope": {
-                                        "$ref": "#/components/schemas/BotCommandScope"
+                                        "$ref": "#/components/schemas/BotCommandScope",
+                                        "default": "BotCommandScopeDefault"
                                     },
                                     "language_code": {
                                         "type": "string"
@@ -13953,7 +14192,8 @@
                                 "type": "object",
                                 "properties": {
                                     "scope": {
-                                        "$ref": "#/components/schemas/BotCommandScope"
+                                        "$ref": "#/components/schemas/BotCommandScope",
+                                        "default": "BotCommandScopeDefault"
                                     },
                                     "language_code": {
                                         "type": "string"
@@ -14023,7 +14263,8 @@
                                 "type": "object",
                                 "properties": {
                                     "scope": {
-                                        "$ref": "#/components/schemas/BotCommandScope"
+                                        "$ref": "#/components/schemas/BotCommandScope",
+                                        "default": "BotCommandScopeDefault"
                                     },
                                     "language_code": {
                                         "type": "string"
@@ -14036,7 +14277,8 @@
                                 "type": "object",
                                 "properties": {
                                     "scope": {
-                                        "$ref": "#/components/schemas/BotCommandScope"
+                                        "$ref": "#/components/schemas/BotCommandScope",
+                                        "default": "BotCommandScopeDefault"
                                     },
                                     "language_code": {
                                         "type": "string"
@@ -14049,7 +14291,8 @@
                                 "type": "object",
                                 "properties": {
                                     "scope": {
-                                        "$ref": "#/components/schemas/BotCommandScope"
+                                        "$ref": "#/components/schemas/BotCommandScope",
+                                        "default": "BotCommandScopeDefault"
                                     },
                                     "language_code": {
                                         "type": "string"
@@ -14077,6 +14320,375 @@
                                                     "items": {
                                                         "$ref": "#/components/schemas/BotCommand"
                                                     }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/setChatMenuButton": {
+            "description": "Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "chat_id": {
+                                        "type": "integer"
+                                    },
+                                    "menu_button": {
+                                        "$ref": "#/components/schemas/MenuButton",
+                                        "default": "MenuButtonDefault"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "chat_id": {
+                                        "type": "integer"
+                                    },
+                                    "menu_button": {
+                                        "$ref": "#/components/schemas/MenuButton",
+                                        "default": "MenuButtonDefault"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "chat_id": {
+                                        "type": "integer"
+                                    },
+                                    "menu_button": {
+                                        "$ref": "#/components/schemas/MenuButton",
+                                        "default": "MenuButtonDefault"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/getChatMenuButton": {
+            "description": "Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success.",
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "chat_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "chat_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "chat_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/MenuButton"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/setMyDefaultAdministratorRights": {
+            "description": "Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are are free to modify the list before adding the bot. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "rights": {
+                                        "$ref": "#/components/schemas/ChatAdministratorRights"
+                                    },
+                                    "for_channels": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "rights": {
+                                        "$ref": "#/components/schemas/ChatAdministratorRights"
+                                    },
+                                    "for_channels": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "rights": {
+                                        "$ref": "#/components/schemas/ChatAdministratorRights"
+                                    },
+                                    "for_channels": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/getMyDefaultAdministratorRights": {
+            "description": "Use this method to get the current default administrator rights of the bot. Returns ChatAdministratorRights on success.",
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "for_channels": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "for_channels": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "for_channels": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/ChatAdministratorRights"
                                                 }
                                             }
                                         }
@@ -16246,7 +16858,8 @@
                                         }
                                     },
                                     "cache_time": {
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "default": 300
                                     },
                                     "is_personal": {
                                         "type": "boolean"
@@ -16281,7 +16894,8 @@
                                         }
                                     },
                                     "cache_time": {
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "default": 300
                                     },
                                     "is_personal": {
                                         "type": "boolean"
@@ -16316,7 +16930,8 @@
                                         }
                                     },
                                     "cache_time": {
-                                        "type": "integer"
+                                        "type": "integer",
+                                        "default": 300
                                     },
                                     "is_personal": {
                                         "type": "boolean"
@@ -16350,6 +16965,115 @@
                                             "properties": {
                                                 "result": {
                                                     "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/answerWebAppQuery": {
+            "description": "Use this method to set the result of an interaction with a Web App and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a SentWebAppMessage object is returned.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "web_app_query_id",
+                                    "result"
+                                ],
+                                "properties": {
+                                    "web_app_query_id": {
+                                        "type": "string"
+                                    },
+                                    "result": {
+                                        "$ref": "#/components/schemas/InlineQueryResult"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "web_app_query_id",
+                                    "result"
+                                ],
+                                "properties": {
+                                    "web_app_query_id": {
+                                        "type": "string"
+                                    },
+                                    "result": {
+                                        "$ref": "#/components/schemas/InlineQueryResult"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "web_app_query_id",
+                                    "result"
+                                ],
+                                "properties": {
+                                    "web_app_query_id": {
+                                        "type": "string"
+                                    },
+                                    "result": {
+                                        "$ref": "#/components/schemas/InlineQueryResult"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/SentWebAppMessage"
                                                 }
                                             }
                                         }

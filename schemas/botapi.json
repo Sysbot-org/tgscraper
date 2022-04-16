@@ -1,5 +1,5 @@
 {
-    "version": "5.7.0",
+    "version": "6.0.0",
     "types": [
         {
             "name": "Update",
@@ -181,6 +181,14 @@
                     "description": "Optional. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook"
                 },
                 {
+                    "name": "last_synchronization_error_date",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Unix time of the most recent error that happened when trying to synchronize available updates with Telegram datacenters"
+                },
+                {
                     "name": "max_connections",
                     "types": [
                         "int"
@@ -352,7 +360,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if privacy settings of the other party in the private chat allows to use tg://user?id=<user_id> links only in chats with the user. Returned only in getChat."
+                    "description": "Optional. True, if privacy settings of the other party in the private chat allows to use tg://user?id=<user_id> links only in chats with the user. Returned only in getChat.",
+                    "default": true
                 },
                 {
                     "name": "description",
@@ -408,7 +417,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if messages from the chat can't be forwarded to other chats. Returned only in getChat."
+                    "description": "Optional. True, if messages from the chat can't be forwarded to other chats. Returned only in getChat.",
+                    "default": true
                 },
                 {
                     "name": "sticker_set_name",
@@ -424,7 +434,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the bot can change the group sticker set. Returned only in getChat."
+                    "description": "Optional. True, if the bot can change the group sticker set. Returned only in getChat.",
+                    "default": true
                 },
                 {
                     "name": "linked_chat_id",
@@ -471,7 +482,7 @@
                         "Chat"
                     ],
                     "optional": true,
-                    "description": "Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat."
+                    "description": "Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group.  For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat."
                 },
                 {
                     "name": "date",
@@ -543,7 +554,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the message is a channel post that was automatically forwarded to the connected discussion group"
+                    "description": "Optional. True, if the message is a channel post that was automatically forwarded to the connected discussion group",
+                    "default": true
                 },
                 {
                     "name": "reply_to_message",
@@ -575,7 +587,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the message can't be forwarded"
+                    "description": "Optional. True, if the message can't be forwarded",
+                    "default": true
                 },
                 {
                     "name": "media_group_id",
@@ -775,7 +788,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. Service message: the chat photo was deleted"
+                    "description": "Optional. Service message: the chat photo was deleted",
+                    "default": true
                 },
                 {
                     "name": "group_chat_created",
@@ -783,7 +797,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. Service message: the group has been created"
+                    "description": "Optional. Service message: the group has been created",
+                    "default": true
                 },
                 {
                     "name": "supergroup_chat_created",
@@ -791,7 +806,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. Service message: the supergroup has been created. This field can't be received in a message coming through updates, because bot can't be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup."
+                    "description": "Optional. Service message: the supergroup has been created. This field can't be received in a message coming through updates, because bot can't be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup.",
+                    "default": true
                 },
                 {
                     "name": "channel_chat_created",
@@ -799,7 +815,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. Service message: the channel has been created. This field can't be received in a message coming through updates, because bot can't be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel."
+                    "description": "Optional. Service message: the channel has been created. This field can't be received in a message coming through updates, because bot can't be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel.",
+                    "default": true
                 },
                 {
                     "name": "message_auto_delete_timer_changed",
@@ -874,36 +891,44 @@
                     "description": "Optional. Service message. A user in the chat triggered another user's proximity alert while sharing Live Location."
                 },
                 {
-                    "name": "voice_chat_scheduled",
+                    "name": "video_chat_scheduled",
                     "types": [
-                        "VoiceChatScheduled"
+                        "VideoChatScheduled"
                     ],
                     "optional": true,
-                    "description": "Optional. Service message: voice chat scheduled"
+                    "description": "Optional. Service message: video chat scheduled"
                 },
                 {
-                    "name": "voice_chat_started",
+                    "name": "video_chat_started",
                     "types": [
-                        "VoiceChatStarted"
+                        "VideoChatStarted"
                     ],
                     "optional": true,
-                    "description": "Optional. Service message: voice chat started"
+                    "description": "Optional. Service message: video chat started"
                 },
                 {
-                    "name": "voice_chat_ended",
+                    "name": "video_chat_ended",
                     "types": [
-                        "VoiceChatEnded"
+                        "VideoChatEnded"
                     ],
                     "optional": true,
-                    "description": "Optional. Service message: voice chat ended"
+                    "description": "Optional. Service message: video chat ended"
                 },
                 {
-                    "name": "voice_chat_participants_invited",
+                    "name": "video_chat_participants_invited",
                     "types": [
-                        "VoiceChatParticipantsInvited"
+                        "VideoChatParticipantsInvited"
                     ],
                     "optional": true,
-                    "description": "Optional. Service message: new participants invited to a voice chat"
+                    "description": "Optional. Service message: new participants invited to a video chat"
+                },
+                {
+                    "name": "web_app_data",
+                    "types": [
+                        "WebAppData"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Service message: data sent by a Web App"
                 },
                 {
                     "name": "reply_markup",
@@ -1492,7 +1517,7 @@
                         "int"
                     ],
                     "optional": false,
-                    "description": "Value of the dice, 1-6 for “”, “” and “” base emoji, 1-5 for “” and “” base emoji, 1-64 for “” base emoji"
+                    "description": "Value of the dice, 1-6 for “🎲”, “🎯” and “🎳” base emoji, 1-5 for “🏀” and “⚽” base emoji, 1-64 for “🎰” base emoji"
                 }
             ],
             "extended_by": []
@@ -1781,6 +1806,29 @@
             "extended_by": []
         },
         {
+            "name": "WebAppData",
+            "description": "Contains data sent from a Web App to the bot.",
+            "fields": [
+                {
+                    "name": "data",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "The data. Be aware that a bad client can send arbitrary data in this field."
+                },
+                {
+                    "name": "button_text",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Text of the web_app keyboard button, from which the Web App was opened. Be aware that a bad client can send arbitrary data in this field."
+                }
+            ],
+            "extended_by": []
+        },
+        {
             "name": "ProximityAlertTriggered",
             "description": "This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user.",
             "fields": [
@@ -1827,8 +1875,8 @@
             "extended_by": []
         },
         {
-            "name": "VoiceChatScheduled",
-            "description": "This object represents a service message about a voice chat scheduled in the chat.",
+            "name": "VideoChatScheduled",
+            "description": "This object represents a service message about a video chat scheduled in the chat.",
             "fields": [
                 {
                     "name": "start_date",
@@ -1836,20 +1884,20 @@
                         "int"
                     ],
                     "optional": false,
-                    "description": "Point in time (Unix timestamp) when the voice chat is supposed to be started by a chat administrator"
+                    "description": "Point in time (Unix timestamp) when the video chat is supposed to be started by a chat administrator"
                 }
             ],
             "extended_by": []
         },
         {
-            "name": "VoiceChatStarted",
-            "description": "This object represents a service message about a voice chat started in the chat. Currently holds no information.",
+            "name": "VideoChatStarted",
+            "description": "This object represents a service message about a video chat started in the chat. Currently holds no information.",
             "fields": [],
             "extended_by": []
         },
         {
-            "name": "VoiceChatEnded",
-            "description": "This object represents a service message about a voice chat ended in the chat.",
+            "name": "VideoChatEnded",
+            "description": "This object represents a service message about a video chat ended in the chat.",
             "fields": [
                 {
                     "name": "duration",
@@ -1857,22 +1905,22 @@
                         "int"
                     ],
                     "optional": false,
-                    "description": "Voice chat duration in seconds"
+                    "description": "Video chat duration in seconds"
                 }
             ],
             "extended_by": []
         },
         {
-            "name": "VoiceChatParticipantsInvited",
-            "description": "This object represents a service message about new members invited to a voice chat.",
+            "name": "VideoChatParticipantsInvited",
+            "description": "This object represents a service message about new members invited to a video chat.",
             "fields": [
                 {
                     "name": "users",
                     "types": [
                         "Array<User>"
                     ],
-                    "optional": true,
-                    "description": "Optional. New members that were invited to the voice chat"
+                    "optional": false,
+                    "description": "New members that were invited to the video chat"
                 }
             ],
             "extended_by": []
@@ -1940,6 +1988,21 @@
             "extended_by": []
         },
         {
+            "name": "WebAppInfo",
+            "description": "Contains information about a Web App.",
+            "fields": [
+                {
+                    "name": "url",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "An HTTPS URL of a Web App to be opened with additional data as specified in Initializing Web Apps"
+                }
+            ],
+            "extended_by": []
+        },
+        {
             "name": "ReplyKeyboardMarkup",
             "description": "This object represents a custom keyboard with reply options (see Introduction to bots for details and examples).",
             "fields": [
@@ -1957,7 +2020,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to false, in which case the custom keyboard is always of the same height as the app's standard keyboard."
+                    "description": "Optional. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to false, in which case the custom keyboard is always of the same height as the app's standard keyboard.",
+                    "default": false
                 },
                 {
                     "name": "one_time_keyboard",
@@ -1965,7 +2029,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. Requests clients to hide the keyboard as soon as it's been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat – the user can press a special button in the input field to see the custom keyboard again. Defaults to false."
+                    "description": "Optional. Requests clients to hide the keyboard as soon as it's been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat – the user can press a special button in the input field to see the custom keyboard again. Defaults to false.",
+                    "default": false
                 },
                 {
                     "name": "input_field_placeholder",
@@ -1988,7 +2053,7 @@
         },
         {
             "name": "KeyboardButton",
-            "description": "This object represents one button of the reply keyboard. For simple text buttons String can be used instead of this object to specify text of the button. Optional fields request_contact, request_location, and request_poll are mutually exclusive.",
+            "description": "This object represents one button of the reply keyboard. For simple text buttons String can be used instead of this object to specify text of the button. Optional fields web_app, request_contact, request_location, and request_poll are mutually exclusive.",
             "fields": [
                 {
                     "name": "text",
@@ -2004,7 +2069,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. If True, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only"
+                    "description": "Optional. If True, the user's phone number will be sent as a contact when the button is pressed. Available in private chats only."
                 },
                 {
                     "name": "request_location",
@@ -2012,7 +2077,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. If True, the user's current location will be sent when the button is pressed. Available in private chats only"
+                    "description": "Optional. If True, the user's current location will be sent when the button is pressed. Available in private chats only."
                 },
                 {
                     "name": "request_poll",
@@ -2020,7 +2085,15 @@
                         "KeyboardButtonPollType"
                     ],
                     "optional": true,
-                    "description": "Optional. If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only"
+                    "description": "Optional. If specified, the user will be asked to create a poll and send it to the bot when the button is pressed. Available in private chats only."
+                },
+                {
+                    "name": "web_app",
+                    "types": [
+                        "WebAppInfo"
+                    ],
+                    "optional": true,
+                    "description": "Optional. If specified, the described Web App will be launched when the button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private chats only."
                 }
             ],
             "extended_by": []
@@ -2050,7 +2123,8 @@
                         "bool"
                     ],
                     "optional": false,
-                    "description": "Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use one_time_keyboard in ReplyKeyboardMarkup)"
+                    "description": "Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use one_time_keyboard in ReplyKeyboardMarkup)",
+                    "default": true
                 },
                 {
                     "name": "selective",
@@ -2099,20 +2173,28 @@
                     "description": "Optional. HTTP or tg:// url to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings."
                 },
                 {
-                    "name": "login_url",
-                    "types": [
-                        "LoginUrl"
-                    ],
-                    "optional": true,
-                    "description": "Optional. An HTTP URL used to automatically authorize the user. Can be used as a replacement for the Telegram Login Widget."
-                },
-                {
                     "name": "callback_data",
                     "types": [
                         "string"
                     ],
                     "optional": true,
                     "description": "Optional. Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes"
+                },
+                {
+                    "name": "web_app",
+                    "types": [
+                        "WebAppInfo"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot."
+                },
+                {
+                    "name": "login_url",
+                    "types": [
+                        "LoginUrl"
+                    ],
+                    "optional": true,
+                    "description": "Optional. An HTTP URL used to automatically authorize the user. Can be used as a replacement for the Telegram Login Widget."
                 },
                 {
                     "name": "switch_inline_query",
@@ -2261,7 +2343,8 @@
                         "bool"
                     ],
                     "optional": false,
-                    "description": "Shows reply interface to the user, as if they manually selected the bot's message and tapped 'Reply'"
+                    "description": "Shows reply interface to the user, as if they manually selected the bot's message and tapped 'Reply'",
+                    "default": true
                 },
                 {
                     "name": "input_field_placeholder",
@@ -2401,6 +2484,101 @@
             "extended_by": []
         },
         {
+            "name": "ChatAdministratorRights",
+            "description": "Represents the rights of an administrator in a chat.",
+            "fields": [
+                {
+                    "name": "is_anonymous",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": false,
+                    "description": "True, if the user's presence in the chat is hidden"
+                },
+                {
+                    "name": "can_manage_chat",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": false,
+                    "description": "True, if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege"
+                },
+                {
+                    "name": "can_delete_messages",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": false,
+                    "description": "True, if the administrator can delete messages of other users"
+                },
+                {
+                    "name": "can_manage_video_chats",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": false,
+                    "description": "True, if the administrator can manage video chats"
+                },
+                {
+                    "name": "can_restrict_members",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": false,
+                    "description": "True, if the administrator can restrict, ban or unban chat members"
+                },
+                {
+                    "name": "can_promote_members",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": false,
+                    "description": "True, if the administrator can add new administrators with a subset of their own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by the user)"
+                },
+                {
+                    "name": "can_change_info",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": false,
+                    "description": "True, if the user is allowed to change the chat title, photo and other settings"
+                },
+                {
+                    "name": "can_invite_users",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": false,
+                    "description": "True, if the user is allowed to invite new users to the chat"
+                },
+                {
+                    "name": "can_post_messages",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the administrator can post in the channel; channels only"
+                },
+                {
+                    "name": "can_edit_messages",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the administrator can edit messages of other users and can pin messages; channels only"
+                },
+                {
+                    "name": "can_pin_messages",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the user is allowed to pin messages; groups and supergroups only"
+                }
+            ],
+            "extended_by": []
+        },
+        {
             "name": "ChatMember",
             "description": "This object contains information about one member of a chat. Currently, the following 6 types of chat members are supported:",
             "fields": [],
@@ -2505,12 +2683,12 @@
                     "description": "True, if the administrator can delete messages of other users"
                 },
                 {
-                    "name": "can_manage_voice_chats",
+                    "name": "can_manage_video_chats",
                     "types": [
                         "bool"
                     ],
                     "optional": false,
-                    "description": "True, if the administrator can manage voice chats"
+                    "description": "True, if the administrator can manage video chats"
                 },
                 {
                     "name": "can_restrict_members",
@@ -3002,7 +3180,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Scope type, must be default"
+                    "description": "Scope type, must be default",
+                    "default": "default"
                 }
             ],
             "extended_by": []
@@ -3017,7 +3196,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Scope type, must be all_private_chats"
+                    "description": "Scope type, must be all_private_chats",
+                    "default": "all_private_chats"
                 }
             ],
             "extended_by": []
@@ -3032,7 +3212,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Scope type, must be all_group_chats"
+                    "description": "Scope type, must be all_group_chats",
+                    "default": "all_group_chats"
                 }
             ],
             "extended_by": []
@@ -3047,7 +3228,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Scope type, must be all_chat_administrators"
+                    "description": "Scope type, must be all_chat_administrators",
+                    "default": "all_chat_administrators"
                 }
             ],
             "extended_by": []
@@ -3062,7 +3244,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Scope type, must be chat"
+                    "description": "Scope type, must be chat",
+                    "default": "chat"
                 },
                 {
                     "name": "chat_id",
@@ -3086,7 +3269,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Scope type, must be chat_administrators"
+                    "description": "Scope type, must be chat_administrators",
+                    "default": "chat_administrators"
                 },
                 {
                     "name": "chat_id",
@@ -3110,7 +3294,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Scope type, must be chat_member"
+                    "description": "Scope type, must be chat_member",
+                    "default": "chat_member"
                 },
                 {
                     "name": "chat_id",
@@ -3128,6 +3313,80 @@
                     ],
                     "optional": false,
                     "description": "Unique identifier of the target user"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "MenuButton",
+            "description": "This object describes the bot's menu button in a private chat. It should be one of",
+            "fields": [],
+            "extended_by": [
+                "MenuButtonCommands",
+                "MenuButtonWebApp",
+                "MenuButtonDefault"
+            ]
+        },
+        {
+            "name": "MenuButtonCommands",
+            "description": "Represents a menu button, which opens the bot's list of commands.",
+            "fields": [
+                {
+                    "name": "type",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Type of the button, must be commands",
+                    "default": "commands"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "MenuButtonWebApp",
+            "description": "Represents a menu button, which launches a Web App.",
+            "fields": [
+                {
+                    "name": "type",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Type of the button, must be web_app",
+                    "default": "web_app"
+                },
+                {
+                    "name": "text",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Text on the button"
+                },
+                {
+                    "name": "web_app",
+                    "types": [
+                        "WebAppInfo"
+                    ],
+                    "optional": false,
+                    "description": "Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery."
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "MenuButtonDefault",
+            "description": "Describes that no specific value for the menu button was set.",
+            "fields": [
+                {
+                    "name": "type",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Type of the button, must be default",
+                    "default": "default"
                 }
             ],
             "extended_by": []
@@ -3177,7 +3436,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be photo"
+                    "description": "Type of the result, must be photo",
+                    "default": "photo"
                 },
                 {
                     "name": "media",
@@ -3224,7 +3484,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be video"
+                    "description": "Type of the result, must be video",
+                    "default": "video"
                 },
                 {
                     "name": "media",
@@ -3312,7 +3573,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be animation"
+                    "description": "Type of the result, must be animation",
+                    "default": "animation"
                 },
                 {
                     "name": "media",
@@ -3392,7 +3654,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be audio"
+                    "description": "Type of the result, must be audio",
+                    "default": "audio"
                 },
                 {
                     "name": "media",
@@ -3472,7 +3735,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be document"
+                    "description": "Type of the result, must be document",
+                    "default": "document"
                 },
                 {
                     "name": "media",
@@ -3821,7 +4085,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be article"
+                    "description": "Type of the result, must be article",
+                    "default": "article"
                 },
                 {
                     "name": "id",
@@ -3916,7 +4181,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be photo"
+                    "description": "Type of the result, must be photo",
+                    "default": "photo"
                 },
                 {
                     "name": "id",
@@ -4027,7 +4293,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be gif"
+                    "description": "Type of the result, must be gif",
+                    "default": "gif"
                 },
                 {
                     "name": "id",
@@ -4083,7 +4350,8 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”"
+                    "description": "Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”",
+                    "default": "image/jpeg"
                 },
                 {
                     "name": "title",
@@ -4146,7 +4414,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be mpeg4_gif"
+                    "description": "Type of the result, must be mpeg4_gif",
+                    "default": "mpeg4_gif"
                 },
                 {
                     "name": "id",
@@ -4202,7 +4471,8 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”"
+                    "description": "Optional. MIME type of the thumbnail, must be one of “image/jpeg”, “image/gif”, or “video/mp4”. Defaults to “image/jpeg”",
+                    "default": "image/jpeg"
                 },
                 {
                     "name": "title",
@@ -4265,7 +4535,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be video"
+                    "description": "Type of the result, must be video",
+                    "default": "video"
                 },
                 {
                     "name": "id",
@@ -4392,7 +4663,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be audio"
+                    "description": "Type of the result, must be audio",
+                    "default": "audio"
                 },
                 {
                     "name": "id",
@@ -4487,7 +4759,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be voice"
+                    "description": "Type of the result, must be voice",
+                    "default": "voice"
                 },
                 {
                     "name": "id",
@@ -4574,7 +4847,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be document"
+                    "description": "Type of the result, must be document",
+                    "default": "document"
                 },
                 {
                     "name": "id",
@@ -4693,7 +4967,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be location"
+                    "description": "Type of the result, must be location",
+                    "default": "location"
                 },
                 {
                     "name": "id",
@@ -4812,7 +5087,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be venue"
+                    "description": "Type of the result, must be venue",
+                    "default": "venue"
                 },
                 {
                     "name": "id",
@@ -4939,7 +5215,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be contact"
+                    "description": "Type of the result, must be contact",
+                    "default": "contact"
                 },
                 {
                     "name": "id",
@@ -5034,7 +5311,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be game"
+                    "description": "Type of the result, must be game",
+                    "default": "game"
                 },
                 {
                     "name": "id",
@@ -5073,7 +5351,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be photo"
+                    "description": "Type of the result, must be photo",
+                    "default": "photo"
                 },
                 {
                     "name": "id",
@@ -5160,7 +5439,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be gif"
+                    "description": "Type of the result, must be gif",
+                    "default": "gif"
                 },
                 {
                     "name": "id",
@@ -5239,7 +5519,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be mpeg4_gif"
+                    "description": "Type of the result, must be mpeg4_gif",
+                    "default": "mpeg4_gif"
                 },
                 {
                     "name": "id",
@@ -5318,7 +5599,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be sticker"
+                    "description": "Type of the result, must be sticker",
+                    "default": "sticker"
                 },
                 {
                     "name": "id",
@@ -5365,7 +5647,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be document"
+                    "description": "Type of the result, must be document",
+                    "default": "document"
                 },
                 {
                     "name": "id",
@@ -5452,7 +5735,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be video"
+                    "description": "Type of the result, must be video",
+                    "default": "video"
                 },
                 {
                     "name": "id",
@@ -5539,7 +5823,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be voice"
+                    "description": "Type of the result, must be voice",
+                    "default": "voice"
                 },
                 {
                     "name": "id",
@@ -5618,7 +5903,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of the result, must be audio"
+                    "description": "Type of the result, must be audio",
+                    "default": "audio"
                 },
                 {
                     "name": "id",
@@ -5953,7 +6239,8 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0"
+                    "description": "Optional. The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0",
+                    "default": 0
                 },
                 {
                     "name": "suggested_tip_amounts",
@@ -6105,6 +6392,21 @@
                     ],
                     "optional": false,
                     "description": "The query that was used to obtain the result"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "SentWebAppMessage",
+            "description": "Contains information about an inline message sent by a Web App on behalf of a user.",
+            "fields": [
+                {
+                    "name": "inline_message_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Identifier of the sent inline message. Available only if there is an inline keyboard attached to the message."
                 }
             ],
             "extended_by": []
@@ -6675,7 +6977,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Error source, must be data"
+                    "description": "Error source, must be data",
+                    "default": "data"
                 },
                 {
                     "name": "type",
@@ -6722,7 +7025,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Error source, must be front_side"
+                    "description": "Error source, must be front_side",
+                    "default": "front_side"
                 },
                 {
                     "name": "type",
@@ -6761,7 +7065,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Error source, must be reverse_side"
+                    "description": "Error source, must be reverse_side",
+                    "default": "reverse_side"
                 },
                 {
                     "name": "type",
@@ -6800,7 +7105,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Error source, must be selfie"
+                    "description": "Error source, must be selfie",
+                    "default": "selfie"
                 },
                 {
                     "name": "type",
@@ -6839,7 +7145,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Error source, must be file"
+                    "description": "Error source, must be file",
+                    "default": "file"
                 },
                 {
                     "name": "type",
@@ -6878,7 +7185,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Error source, must be files"
+                    "description": "Error source, must be files",
+                    "default": "files"
                 },
                 {
                     "name": "type",
@@ -6917,7 +7225,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Error source, must be translation_file"
+                    "description": "Error source, must be translation_file",
+                    "default": "translation_file"
                 },
                 {
                     "name": "type",
@@ -6956,7 +7265,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Error source, must be translation_files"
+                    "description": "Error source, must be translation_files",
+                    "default": "translation_files"
                 },
                 {
                     "name": "type",
@@ -6995,7 +7305,8 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Error source, must be unspecified"
+                    "description": "Error source, must be unspecified",
+                    "default": "unspecified"
                 },
                 {
                     "name": "type",
@@ -7136,7 +7447,8 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100."
+                    "description": "Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100.",
+                    "default": 100
                 },
                 {
                     "name": "timeout",
@@ -7144,7 +7456,8 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling should be used for testing purposes only."
+                    "description": "Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling should be used for testing purposes only.",
+                    "default": 0
                 },
                 {
                     "name": "allowed_updates",
@@ -7193,7 +7506,8 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server, and higher values to increase your bot's throughput."
+                    "description": "Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server, and higher values to increase your bot's throughput.",
+                    "default": 40
                 },
                 {
                     "name": "allowed_updates",
@@ -8318,7 +8632,7 @@
                 {
                     "name": "media",
                     "types": [
-                        "Array<InputMediaAudio, InputMediaDocument, InputMediaPhoto, InputMediaVideo>"
+                        "Array<InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo>"
                     ],
                     "optional": false,
                     "description": "A JSON-serialized array describing messages to be sent, must include 2-10 items"
@@ -8848,7 +9162,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "True, if the poll needs to be anonymous, defaults to True"
+                    "description": "True, if the poll needs to be anonymous, defaults to True",
+                    "default": true
                 },
                 {
                     "name": "type",
@@ -8856,7 +9171,8 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Poll type, “quiz” or “regular”, defaults to “regular”"
+                    "description": "Poll type, “quiz” or “regular”, defaults to “regular”",
+                    "default": "regular"
                 },
                 {
                     "name": "allows_multiple_answers",
@@ -8864,7 +9180,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False"
+                    "description": "True, if the poll allows multiple answers, ignored for polls in quiz mode, defaults to False",
+                    "default": false
                 },
                 {
                     "name": "correct_option_id",
@@ -8989,7 +9306,8 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Emoji on which the dice throw animation is based. Currently, must be one of “”, “”, “”, “”, “”, or “”. Dice can have values 1-6 for “”, “” and “”, values 1-5 for “” and “”, and values 1-64 for “”. Defaults to “”"
+                    "description": "Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”",
+                    "default": "🎲"
                 },
                 {
                     "name": "disable_notification",
@@ -9091,7 +9409,8 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100."
+                    "description": "Limits the number of photos to be retrieved. Values between 1-100 are accepted. Defaults to 100.",
+                    "default": 100
                 }
             ],
             "return_types": [
@@ -9295,12 +9614,12 @@
                     "description": "Pass True, if the administrator can delete messages of other users"
                 },
                 {
-                    "name": "can_manage_voice_chats",
+                    "name": "can_manage_video_chats",
                     "types": [
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Pass True, if the administrator can manage voice chats"
+                    "description": "Pass True, if the administrator can manage video chats"
                 },
                 {
                     "name": "can_restrict_members",
@@ -10005,7 +10324,8 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "If True, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to false."
+                    "description": "If True, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to false.",
+                    "default": false
                 },
                 {
                     "name": "url",
@@ -10021,7 +10341,8 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0."
+                    "description": "The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.",
+                    "default": 0
                 }
             ],
             "return_types": [
@@ -10046,7 +10367,8 @@
                         "BotCommandScope"
                     ],
                     "optional": true,
-                    "description": "A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to BotCommandScopeDefault."
+                    "description": "A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to BotCommandScopeDefault.",
+                    "default": "BotCommandScopeDefault"
                 },
                 {
                     "name": "language_code",
@@ -10071,7 +10393,8 @@
                         "BotCommandScope"
                     ],
                     "optional": true,
-                    "description": "A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to BotCommandScopeDefault."
+                    "description": "A JSON-serialized object, describing scope of users for which the commands are relevant. Defaults to BotCommandScopeDefault.",
+                    "default": "BotCommandScopeDefault"
                 },
                 {
                     "name": "language_code",
@@ -10096,7 +10419,8 @@
                         "BotCommandScope"
                     ],
                     "optional": true,
-                    "description": "A JSON-serialized object, describing scope of users. Defaults to BotCommandScopeDefault."
+                    "description": "A JSON-serialized object, describing scope of users. Defaults to BotCommandScopeDefault.",
+                    "default": "BotCommandScopeDefault"
                 },
                 {
                     "name": "language_code",
@@ -10109,6 +10433,91 @@
             ],
             "return_types": [
                 "Array<BotCommand>"
+            ]
+        },
+        {
+            "name": "setChatMenuButton",
+            "description": "Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.",
+            "fields": [
+                {
+                    "name": "chat_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target private chat. If not specified, default bot's menu button will be changed"
+                },
+                {
+                    "name": "menu_button",
+                    "types": [
+                        "MenuButton"
+                    ],
+                    "optional": true,
+                    "description": "A JSON-serialized object for the new bot's menu button. Defaults to MenuButtonDefault",
+                    "default": "MenuButtonDefault"
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "getChatMenuButton",
+            "description": "Use this method to get the current value of the bot's menu button in a private chat, or the default menu button. Returns MenuButton on success.",
+            "fields": [
+                {
+                    "name": "chat_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target private chat. If not specified, default bot's menu button will be returned"
+                }
+            ],
+            "return_types": [
+                "MenuButton"
+            ]
+        },
+        {
+            "name": "setMyDefaultAdministratorRights",
+            "description": "Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are are free to modify the list before adding the bot. Returns True on success.",
+            "fields": [
+                {
+                    "name": "rights",
+                    "types": [
+                        "ChatAdministratorRights"
+                    ],
+                    "optional": true,
+                    "description": "A JSON-serialized object describing new default administrator rights. If not specified, the default administrator rights will be cleared."
+                },
+                {
+                    "name": "for_channels",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Pass True to change the default administrator rights of the bot in channels. Otherwise, the default administrator rights of the bot for groups and supergroups will be changed."
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "getMyDefaultAdministratorRights",
+            "description": "Use this method to get the current default administrator rights of the bot. Returns ChatAdministratorRights on success.",
+            "fields": [
+                {
+                    "name": "for_channels",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Pass True to get default administrator rights of the bot in channels. Otherwise, default administrator rights of the bot for groups and supergroups will be returned."
+                }
+            ],
+            "return_types": [
+                "ChatAdministratorRights"
             ]
         },
         {
@@ -10537,7 +10946,7 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only english letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in “_by_<bot username>”. <bot_username> is case insensitive. 1-64 characters."
+                    "description": "Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only english letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in \"_by_<bot_username>\". <bot_username> is case insensitive. 1-64 characters."
                 },
                 {
                     "name": "title",
@@ -10769,7 +11178,8 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "The maximum amount of time in seconds that the result of the inline query may be cached on the server. Defaults to 300."
+                    "description": "The maximum amount of time in seconds that the result of the inline query may be cached on the server. Defaults to 300.",
+                    "default": 300
                 },
                 {
                     "name": "is_personal",
@@ -10806,6 +11216,31 @@
             ],
             "return_types": [
                 "bool"
+            ]
+        },
+        {
+            "name": "answerWebAppQuery",
+            "description": "Use this method to set the result of an interaction with a Web App and send a corresponding message on behalf of the user to the chat from which the query originated. On success, a SentWebAppMessage object is returned.",
+            "fields": [
+                {
+                    "name": "web_app_query_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier for the query to be answered"
+                },
+                {
+                    "name": "result",
+                    "types": [
+                        "InlineQueryResult"
+                    ],
+                    "optional": false,
+                    "description": "A JSON-serialized object describing the message to be sent"
+                }
+            ],
+            "return_types": [
+                "SentWebAppMessage"
             ]
         },
         {
@@ -10875,7 +11310,8 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0"
+                    "description": "The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0",
+                    "default": 0
                 },
                 {
                     "name": "suggested_tip_amounts",

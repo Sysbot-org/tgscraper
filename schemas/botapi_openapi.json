@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "6.0.0"
+        "version": "6.1.0"
     },
     "servers": [
         {
@@ -216,7 +216,7 @@
                 "type": "object"
             },
             "WebhookInfo": {
-                "description": "Contains information about the current status of a webhook.",
+                "description": "Describes the current status of a webhook.",
                 "required": [
                     "url",
                     "has_custom_certificate",
@@ -282,6 +282,14 @@
                     "language_code": {
                         "type": "string"
                     },
+                    "is_premium": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "added_to_attachment_menu": {
+                        "type": "boolean",
+                        "default": true
+                    },
                     "can_join_groups": {
                         "type": "boolean"
                     },
@@ -326,6 +334,14 @@
                         "type": "string"
                     },
                     "has_private_forwards": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "join_to_send_messages": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "join_by_request": {
                         "type": "boolean",
                         "default": true
                     },
@@ -1048,7 +1064,7 @@
                 "type": "object"
             },
             "WebAppData": {
-                "description": "Contains data sent from a Web App to the bot.",
+                "description": "Describes data sent from a Web App to the bot.",
                 "required": [
                     "data",
                     "button_text"
@@ -1183,7 +1199,7 @@
                 "type": "object"
             },
             "WebAppInfo": {
-                "description": "Contains information about a Web App.",
+                "description": "Describes a Web App.",
                 "required": [
                     "url"
                 ],
@@ -2065,7 +2081,7 @@
                 "type": "object"
             },
             "ResponseParameters": {
-                "description": "Contains information about why a request was unsuccessful.",
+                "description": "Describes why a request was unsuccessful.",
                 "properties": {
                     "migrate_to_chat_id": {
                         "type": "integer"
@@ -2355,6 +2371,9 @@
                     },
                     "set_name": {
                         "type": "string"
+                    },
+                    "premium_animation": {
+                        "$ref": "#/components/schemas/File"
                     },
                     "mask_position": {
                         "$ref": "#/components/schemas/MaskPosition"
@@ -3711,7 +3730,7 @@
                 "type": "object"
             },
             "SentWebAppMessage": {
-                "description": "Contains information about an inline message sent by a Web App on behalf of a user.",
+                "description": "Describes an inline message sent by a Web App on behalf of a user.",
                 "properties": {
                     "inline_message_id": {
                         "type": "string"
@@ -3929,7 +3948,7 @@
                 "type": "object"
             },
             "PassportData": {
-                "description": "Contains information about Telegram Passport data shared with the bot by the user.",
+                "description": "Describes Telegram Passport data shared with the bot by the user.",
                 "required": [
                     "data",
                     "credentials"
@@ -3972,7 +3991,7 @@
                 "type": "object"
             },
             "EncryptedPassportElement": {
-                "description": "Contains information about documents or other Telegram Passport elements shared with the bot by the user.",
+                "description": "Describes documents or other Telegram Passport elements shared with the bot by the user.",
                 "required": [
                     "type",
                     "hash"
@@ -4018,7 +4037,7 @@
                 "type": "object"
             },
             "EncryptedCredentials": {
-                "description": "Contains data required for decrypting and authenticating EncryptedPassportElement. See the Telegram Passport Documentation for a complete description of the data decryption and authentication processes.",
+                "description": "Describes data required for decrypting and authenticating EncryptedPassportElement. See the Telegram Passport Documentation for a complete description of the data decryption and authentication processes.",
                 "required": [
                     "data",
                     "hash",
@@ -4496,7 +4515,7 @@
             }
         },
         "/setWebhook": {
-            "description": "Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns True on success.\nIf you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. https://www.example.com/<token>. Since nobody else knows your bot's token, you can be pretty sure it's us.",
+            "description": "Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns True on success.\nIf you'd like to make sure that the webhook was set by you, you can specify secret data in the parameter secret_token. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -4529,6 +4548,9 @@
                                     },
                                     "drop_pending_updates": {
                                         "type": "boolean"
+                                    },
+                                    "secret_token": {
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -4561,6 +4583,9 @@
                                     },
                                     "drop_pending_updates": {
                                         "type": "boolean"
+                                    },
+                                    "secret_token": {
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -4593,6 +4618,9 @@
                                     },
                                     "drop_pending_updates": {
                                         "type": "boolean"
+                                    },
+                                    "secret_token": {
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -6648,7 +6676,7 @@
             }
         },
         "/sendVideo": {
-            "description": "Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.",
+            "description": "Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -7593,7 +7621,7 @@
             }
         },
         "/sendVideoNote": {
-            "description": "As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent Message is returned.",
+            "description": "As of v.4.0, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent Message is returned.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -10029,7 +10057,7 @@
             }
         },
         "/getFile": {
-            "description": "Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.",
+            "description": "Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -17462,6 +17490,307 @@
                                             "properties": {
                                                 "result": {
                                                     "$ref": "#/components/schemas/Message"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/createInvoiceLink": {
+            "description": "Use this method to create a link for an invoice. Returns the created invoice link as String on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "payload",
+                                    "provider_token",
+                                    "currency",
+                                    "prices"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "payload": {
+                                        "type": "string"
+                                    },
+                                    "provider_token": {
+                                        "type": "string"
+                                    },
+                                    "currency": {
+                                        "type": "string"
+                                    },
+                                    "prices": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/LabeledPrice"
+                                        }
+                                    },
+                                    "max_tip_amount": {
+                                        "type": "integer"
+                                    },
+                                    "suggested_tip_amounts": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "provider_data": {
+                                        "type": "string"
+                                    },
+                                    "photo_url": {
+                                        "type": "string"
+                                    },
+                                    "photo_size": {
+                                        "type": "integer"
+                                    },
+                                    "photo_width": {
+                                        "type": "integer"
+                                    },
+                                    "photo_height": {
+                                        "type": "integer"
+                                    },
+                                    "need_name": {
+                                        "type": "boolean"
+                                    },
+                                    "need_phone_number": {
+                                        "type": "boolean"
+                                    },
+                                    "need_email": {
+                                        "type": "boolean"
+                                    },
+                                    "need_shipping_address": {
+                                        "type": "boolean"
+                                    },
+                                    "send_phone_number_to_provider": {
+                                        "type": "boolean"
+                                    },
+                                    "send_email_to_provider": {
+                                        "type": "boolean"
+                                    },
+                                    "is_flexible": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "payload",
+                                    "provider_token",
+                                    "currency",
+                                    "prices"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "payload": {
+                                        "type": "string"
+                                    },
+                                    "provider_token": {
+                                        "type": "string"
+                                    },
+                                    "currency": {
+                                        "type": "string"
+                                    },
+                                    "prices": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/LabeledPrice"
+                                        }
+                                    },
+                                    "max_tip_amount": {
+                                        "type": "integer"
+                                    },
+                                    "suggested_tip_amounts": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "provider_data": {
+                                        "type": "string"
+                                    },
+                                    "photo_url": {
+                                        "type": "string"
+                                    },
+                                    "photo_size": {
+                                        "type": "integer"
+                                    },
+                                    "photo_width": {
+                                        "type": "integer"
+                                    },
+                                    "photo_height": {
+                                        "type": "integer"
+                                    },
+                                    "need_name": {
+                                        "type": "boolean"
+                                    },
+                                    "need_phone_number": {
+                                        "type": "boolean"
+                                    },
+                                    "need_email": {
+                                        "type": "boolean"
+                                    },
+                                    "need_shipping_address": {
+                                        "type": "boolean"
+                                    },
+                                    "send_phone_number_to_provider": {
+                                        "type": "boolean"
+                                    },
+                                    "send_email_to_provider": {
+                                        "type": "boolean"
+                                    },
+                                    "is_flexible": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "payload",
+                                    "provider_token",
+                                    "currency",
+                                    "prices"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "payload": {
+                                        "type": "string"
+                                    },
+                                    "provider_token": {
+                                        "type": "string"
+                                    },
+                                    "currency": {
+                                        "type": "string"
+                                    },
+                                    "prices": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/LabeledPrice"
+                                        }
+                                    },
+                                    "max_tip_amount": {
+                                        "type": "integer"
+                                    },
+                                    "suggested_tip_amounts": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "provider_data": {
+                                        "type": "string"
+                                    },
+                                    "photo_url": {
+                                        "type": "string"
+                                    },
+                                    "photo_size": {
+                                        "type": "integer"
+                                    },
+                                    "photo_width": {
+                                        "type": "integer"
+                                    },
+                                    "photo_height": {
+                                        "type": "integer"
+                                    },
+                                    "need_name": {
+                                        "type": "boolean"
+                                    },
+                                    "need_phone_number": {
+                                        "type": "boolean"
+                                    },
+                                    "need_email": {
+                                        "type": "boolean"
+                                    },
+                                    "need_shipping_address": {
+                                        "type": "boolean"
+                                    },
+                                    "send_phone_number_to_provider": {
+                                        "type": "boolean"
+                                    },
+                                    "send_email_to_provider": {
+                                        "type": "boolean"
+                                    },
+                                    "is_flexible": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "string"
                                                 }
                                             }
                                         }

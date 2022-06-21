@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "6.0.0"
+        "version": "6.1.0"
     },
     "variable": {
         "key": "token",
@@ -72,7 +72,7 @@
                         {
                             "key": "url",
                             "disabled": false,
-                            "description": "Required. HTTPS url to send updates to. Use an empty string to remove webhook integration",
+                            "description": "Required. HTTPS URL to send updates to. Use an empty string to remove webhook integration",
                             "type": "text"
                         },
                         {
@@ -90,7 +90,7 @@
                         {
                             "key": "max_connections",
                             "disabled": true,
-                            "description": "Optional. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server, and higher values to increase your bot's throughput.",
+                            "description": "Optional. The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server, and higher values to increase your bot's throughput.",
                             "type": "text",
                             "value": "40"
                         },
@@ -104,6 +104,12 @@
                             "key": "drop_pending_updates",
                             "disabled": true,
                             "description": "Optional. Pass True to drop all pending updates",
+                            "type": "text"
+                        },
+                        {
+                            "key": "secret_token",
+                            "disabled": true,
+                            "description": "Optional. A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in every webhook request, 1-256 characters. Only characters A-Z, a-z, 0-9, _ and - are allowed. The header is useful to ensure that the request comes from a webhook set by you.",
                             "type": "text"
                         }
                     ]
@@ -121,7 +127,7 @@
                         "setWebhook"
                     ]
                 },
-                "description": "Use this method to specify a url and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified url, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns True on success.\nIf you'd like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. https://www.example.com/<token>. Since nobody else knows your bot's token, you can be pretty sure it's us."
+                "description": "Use this method to specify a URL and receive incoming updates via an outgoing webhook. Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL, containing a JSON-serialized Update. In case of an unsuccessful request, we will give up after a reasonable amount of attempts. Returns True on success.\nIf you'd like to make sure that the webhook was set by you, you can specify secret data in the parameter secret_token. If specified, the request will contain a header “X-Telegram-Bot-Api-Secret-Token” with the secret token as content."
             }
         },
         {
@@ -498,7 +504,7 @@
                         {
                             "key": "photo",
                             "disabled": false,
-                            "description": "Required. Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20. More info on Sending Files »",
+                            "description": "Required. Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20. More information on Sending Files »",
                             "type": "text"
                         },
                         {
@@ -583,7 +589,7 @@
                         {
                             "key": "audio",
                             "disabled": false,
-                            "description": "Required. Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »",
+                            "description": "Required. Audio file to send. Pass a file_id as String to send an audio file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »",
                             "type": "text"
                         },
                         {
@@ -625,7 +631,7 @@
                         {
                             "key": "thumb",
                             "disabled": true,
-                            "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+                            "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »",
                             "type": "text"
                         },
                         {
@@ -692,13 +698,13 @@
                         {
                             "key": "document",
                             "disabled": false,
-                            "description": "Required. File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »",
+                            "description": "Required. File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »",
                             "type": "text"
                         },
                         {
                             "key": "thumb",
                             "disabled": true,
-                            "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+                            "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »",
                             "type": "text"
                         },
                         {
@@ -789,7 +795,7 @@
                         {
                             "key": "video",
                             "disabled": false,
-                            "description": "Required. Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. More info on Sending Files »",
+                            "description": "Required. Video to send. Pass a file_id as String to send a video that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data. More information on Sending Files »",
                             "type": "text"
                         },
                         {
@@ -813,7 +819,7 @@
                         {
                             "key": "thumb",
                             "disabled": true,
-                            "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+                            "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »",
                             "type": "text"
                         },
                         {
@@ -885,7 +891,7 @@
                         "sendVideo"
                     ]
                 },
-                "description": "Use this method to send video files, Telegram clients support mp4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future."
+                "description": "Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future."
             }
         },
         {
@@ -904,7 +910,7 @@
                         {
                             "key": "animation",
                             "disabled": false,
-                            "description": "Required. Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. More info on Sending Files »",
+                            "description": "Required. Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. More information on Sending Files »",
                             "type": "text"
                         },
                         {
@@ -928,7 +934,7 @@
                         {
                             "key": "thumb",
                             "disabled": true,
-                            "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+                            "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »",
                             "type": "text"
                         },
                         {
@@ -1013,7 +1019,7 @@
                         {
                             "key": "voice",
                             "disabled": false,
-                            "description": "Required. Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »",
+                            "description": "Required. Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »",
                             "type": "text"
                         },
                         {
@@ -1104,7 +1110,7 @@
                         {
                             "key": "video_note",
                             "disabled": false,
-                            "description": "Required. Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. More info on Sending Files ». Sending video notes by a URL is currently unsupported",
+                            "description": "Required. Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. More information on Sending Files ». Sending video notes by a URL is currently unsupported",
                             "type": "text"
                         },
                         {
@@ -1122,7 +1128,7 @@
                         {
                             "key": "thumb",
                             "disabled": true,
-                            "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More info on Sending Files »",
+                            "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »",
                             "type": "text"
                         },
                         {
@@ -1170,7 +1176,7 @@
                         "sendVideoNote"
                     ]
                 },
-                "description": "As of v.4.0, Telegram clients support rounded square mp4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent Message is returned."
+                "description": "As of v.4.0, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent Message is returned."
             }
         },
         {
@@ -1383,7 +1389,7 @@
                         {
                             "key": "proximity_alert_radius",
                             "disabled": true,
-                            "description": "Optional. Maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.",
+                            "description": "Optional. The maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.",
                             "type": "text"
                         },
                         {
@@ -1947,7 +1953,7 @@
                         {
                             "key": "file_id",
                             "disabled": false,
-                            "description": "Required. File identifier to get info about",
+                            "description": "Required. File identifier to get information about",
                             "type": "text"
                         }
                     ]
@@ -1965,7 +1971,7 @@
                         "getFile"
                     ]
                 },
-                "description": "Use this method to get basic info about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again."
+                "description": "Use this method to get basic information about a file and prepare it for downloading. For the moment, bots can download files of up to 20MB in size. On success, a File object is returned. The file can then be downloaded via the link https://api.telegram.org/file/bot<token>/<file_path>, where <file_path> is taken from the response. It is guaranteed that the link will be valid for at least 1 hour. When the link expires, a new one can be requested by calling getFile again."
             }
         },
         {
@@ -2425,7 +2431,7 @@
                         {
                             "key": "member_limit",
                             "disabled": true,
-                            "description": "Optional. Maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999",
+                            "description": "Optional. The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999",
                             "type": "text"
                         },
                         {
@@ -2486,7 +2492,7 @@
                         {
                             "key": "member_limit",
                             "disabled": true,
-                            "description": "Optional. Maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999",
+                            "description": "Optional. The maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999",
                             "type": "text"
                         },
                         {
@@ -3134,7 +3140,7 @@
                         {
                             "key": "url",
                             "disabled": true,
-                            "description": "Optional. URL that will be opened by the user's client. If you have created a Game and accepted the conditions via @Botfather, specify the URL that opens your game — note that this will only work if the query comes from a callback_game button.Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.",
+                            "description": "Optional. URL that will be opened by the user's client. If you have created a Game and accepted the conditions via @BotFather, specify the URL that opens your game - note that this will only work if the query comes from a callback_game button.Otherwise, you may use links like t.me/your_bot?start=XXXX that open your bot with a parameter.",
                             "type": "text"
                         },
                         {
@@ -3297,7 +3303,7 @@
                         {
                             "key": "menu_button",
                             "disabled": true,
-                            "description": "Optional. A JSON-serialized object for the new bot's menu button. Defaults to MenuButtonDefault",
+                            "description": "Optional. A JSON-serialized object for the bot's new menu button. Defaults to MenuButtonDefault",
                             "type": "text",
                             "value": "MenuButtonDefault"
                         }
@@ -3758,7 +3764,7 @@
                         {
                             "key": "sticker",
                             "disabled": false,
-                            "description": "Required. Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »",
+                            "description": "Required. Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »",
                             "type": "text"
                         },
                         {
@@ -3856,7 +3862,7 @@
                         {
                             "key": "png_sticker",
                             "disabled": false,
-                            "description": "Required. PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. More info on Sending Files »",
+                            "description": "Required. PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. More information on Sending Files »",
                             "type": "text"
                         }
                     ]
@@ -3893,7 +3899,7 @@
                         {
                             "key": "name",
                             "disabled": false,
-                            "description": "Required. Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only english letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in \"_by_<bot_username>\". <bot_username> is case insensitive. 1-64 characters.",
+                            "description": "Required. Short name of sticker set, to be used in t.me/addstickers/ URLs (e.g., animals). Can contain only English letters, digits and underscores. Must begin with a letter, can't contain consecutive underscores and must end in \"_by_<bot_username>\". <bot_username> is case insensitive. 1-64 characters.",
                             "type": "text"
                         },
                         {
@@ -3905,7 +3911,7 @@
                         {
                             "key": "png_sticker",
                             "disabled": true,
-                            "description": "Optional. PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »",
+                            "description": "Optional. PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »",
                             "type": "text"
                         },
                         {
@@ -3978,7 +3984,7 @@
                         {
                             "key": "png_sticker",
                             "disabled": true,
-                            "description": "Optional. PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files »",
+                            "description": "Optional. PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »",
                             "type": "text"
                         },
                         {
@@ -4113,7 +4119,7 @@
                         {
                             "key": "thumb",
                             "disabled": true,
-                            "description": "Optional. A PNG image with the thumbnail, must be up to 128 kilobytes in size and have width and height exactly 100px, or a TGS animation with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements, or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More info on Sending Files ». Animated sticker set thumbnails can't be uploaded via HTTP URL.",
+                            "description": "Optional. A PNG image with the thumbnail, must be up to 128 kilobytes in size and have width and height exactly 100px, or a TGS animation with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements, or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files ». Animated sticker set thumbnails can't be uploaded via HTTP URL.",
                             "type": "text"
                         }
                     ]
@@ -4273,7 +4279,7 @@
                         {
                             "key": "provider_token",
                             "disabled": false,
-                            "description": "Required. Payments provider token, obtained via Botfather",
+                            "description": "Required. Payment provider token, obtained via @BotFather",
                             "type": "text"
                         },
                         {
@@ -4309,7 +4315,7 @@
                         {
                             "key": "provider_data",
                             "disabled": true,
-                            "description": "Optional. A JSON-serialized data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.",
+                            "description": "Optional. JSON-serialized data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.",
                             "type": "text"
                         },
                         {
@@ -4321,7 +4327,7 @@
                         {
                             "key": "photo_size",
                             "disabled": true,
-                            "description": "Optional. Photo size",
+                            "description": "Optional. Photo size in bytes",
                             "type": "text"
                         },
                         {
@@ -4363,13 +4369,13 @@
                         {
                             "key": "send_phone_number_to_provider",
                             "disabled": true,
-                            "description": "Optional. Pass True, if user's phone number should be sent to provider",
+                            "description": "Optional. Pass True, if the user's phone number should be sent to provider",
                             "type": "text"
                         },
                         {
                             "key": "send_email_to_provider",
                             "disabled": true,
-                            "description": "Optional. Pass True, if user's email address should be sent to provider",
+                            "description": "Optional. Pass True, if the user's email address should be sent to provider",
                             "type": "text"
                         },
                         {
@@ -4424,6 +4430,151 @@
                     ]
                 },
                 "description": "Use this method to send invoices. On success, the sent Message is returned."
+            }
+        },
+        {
+            "name": "createInvoiceLink",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "title",
+                            "disabled": false,
+                            "description": "Required. Product name, 1-32 characters",
+                            "type": "text"
+                        },
+                        {
+                            "key": "description",
+                            "disabled": false,
+                            "description": "Required. Product description, 1-255 characters",
+                            "type": "text"
+                        },
+                        {
+                            "key": "payload",
+                            "disabled": false,
+                            "description": "Required. Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "provider_token",
+                            "disabled": false,
+                            "description": "Required. Payment provider token, obtained via BotFather",
+                            "type": "text"
+                        },
+                        {
+                            "key": "currency",
+                            "disabled": false,
+                            "description": "Required. Three-letter ISO 4217 currency code, see more on currencies",
+                            "type": "text"
+                        },
+                        {
+                            "key": "prices",
+                            "disabled": false,
+                            "description": "Required. Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "max_tip_amount",
+                            "disabled": true,
+                            "description": "Optional. The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0",
+                            "type": "text"
+                        },
+                        {
+                            "key": "suggested_tip_amounts",
+                            "disabled": true,
+                            "description": "Optional. A JSON-serialized array of suggested amounts of tips in the smallest units of the currency (integer, not float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed max_tip_amount.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "provider_data",
+                            "disabled": true,
+                            "description": "Optional. JSON-serialized data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "photo_url",
+                            "disabled": true,
+                            "description": "Optional. URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "photo_size",
+                            "disabled": true,
+                            "description": "Optional. Photo size in bytes",
+                            "type": "text"
+                        },
+                        {
+                            "key": "photo_width",
+                            "disabled": true,
+                            "description": "Optional. Photo width",
+                            "type": "text"
+                        },
+                        {
+                            "key": "photo_height",
+                            "disabled": true,
+                            "description": "Optional. Photo height",
+                            "type": "text"
+                        },
+                        {
+                            "key": "need_name",
+                            "disabled": true,
+                            "description": "Optional. Pass True, if you require the user's full name to complete the order",
+                            "type": "text"
+                        },
+                        {
+                            "key": "need_phone_number",
+                            "disabled": true,
+                            "description": "Optional. Pass True, if you require the user's phone number to complete the order",
+                            "type": "text"
+                        },
+                        {
+                            "key": "need_email",
+                            "disabled": true,
+                            "description": "Optional. Pass True, if you require the user's email address to complete the order",
+                            "type": "text"
+                        },
+                        {
+                            "key": "need_shipping_address",
+                            "disabled": true,
+                            "description": "Optional. Pass True, if you require the user's shipping address to complete the order",
+                            "type": "text"
+                        },
+                        {
+                            "key": "send_phone_number_to_provider",
+                            "disabled": true,
+                            "description": "Optional. Pass True, if the user's phone number should be sent to the provider",
+                            "type": "text"
+                        },
+                        {
+                            "key": "send_email_to_provider",
+                            "disabled": true,
+                            "description": "Optional. Pass True, if the user's email address should be sent to the provider",
+                            "type": "text"
+                        },
+                        {
+                            "key": "is_flexible",
+                            "disabled": true,
+                            "description": "Optional. Pass True, if the final price depends on the shipping method",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/createInvoiceLink",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "createInvoiceLink"
+                    ]
+                },
+                "description": "Use this method to create a link for an invoice. Returns the created invoice link as String on success."
             }
         },
         {
@@ -4571,7 +4722,7 @@
                         {
                             "key": "game_short_name",
                             "disabled": false,
-                            "description": "Required. Short name of the game, serves as the unique identifier for the game. Set up your games via Botfather.",
+                            "description": "Required. Short name of the game, serves as the unique identifier for the game. Set up your games via @BotFather.",
                             "type": "text"
                         },
                         {

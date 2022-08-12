@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "6.1.0"
+        "version": "6.2.0"
     },
     "servers": [
         {
@@ -337,6 +337,10 @@
                         "type": "boolean",
                         "default": true
                     },
+                    "has_restricted_voice_and_video_messages": {
+                        "type": "boolean",
+                        "default": true
+                    },
                     "join_to_send_messages": {
                         "type": "boolean",
                         "default": true
@@ -628,6 +632,9 @@
                         "$ref": "#/components/schemas/User"
                     },
                     "language": {
+                        "type": "string"
+                    },
+                    "custom_emoji_id": {
                         "type": "string"
                     }
                 },
@@ -2339,6 +2346,7 @@
                 "required": [
                     "file_id",
                     "file_unique_id",
+                    "type",
                     "width",
                     "height",
                     "is_animated",
@@ -2349,6 +2357,9 @@
                         "type": "string"
                     },
                     "file_unique_id": {
+                        "type": "string"
+                    },
+                    "type": {
                         "type": "string"
                     },
                     "width": {
@@ -2378,6 +2389,9 @@
                     "mask_position": {
                         "$ref": "#/components/schemas/MaskPosition"
                     },
+                    "custom_emoji_id": {
+                        "type": "string"
+                    },
                     "file_size": {
                         "type": "integer"
                     }
@@ -2389,9 +2403,9 @@
                 "required": [
                     "name",
                     "title",
+                    "sticker_type",
                     "is_animated",
                     "is_video",
-                    "contains_masks",
                     "stickers"
                 ],
                 "properties": {
@@ -2401,13 +2415,13 @@
                     "title": {
                         "type": "string"
                     },
+                    "sticker_type": {
+                        "type": "string"
+                    },
                     "is_animated": {
                         "type": "boolean"
                     },
                     "is_video": {
-                        "type": "boolean"
-                    },
-                    "contains_masks": {
                         "type": "boolean"
                     },
                     "stickers": {
@@ -4386,7 +4400,7 @@
     },
     "paths": {
         "/getUpdates": {
-            "description": "Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned.",
+            "description": "Use this method to receive incoming updates using long polling (wiki). Returns an Array of Update objects.",
             "post": {
                 "requestBody": {
                     "content": {
@@ -5484,7 +5498,7 @@
             }
         },
         "/copyMessage": {
-            "description": "Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.",
+            "description": "Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -13306,7 +13320,7 @@
             }
         },
         "/getChatAdministrators": {
-            "description": "Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.",
+            "description": "Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of ChatMember objects.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -14282,7 +14296,7 @@
             }
         },
         "/getMyCommands": {
-            "description": "Use this method to get the current list of the bot's commands for the given scope and user language. Returns Array of BotCommand on success. If commands aren't set, an empty list is returned.",
+            "description": "Use this method to get the current list of the bot's commands for the given scope and user language. Returns an Array of BotCommand objects. If commands aren't set, an empty list is returned.",
             "post": {
                 "requestBody": {
                     "content": {
@@ -16031,6 +16045,115 @@
                 }
             }
         },
+        "/getCustomEmojiStickers": {
+            "description": "Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of Sticker objects.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "custom_emoji_ids"
+                                ],
+                                "properties": {
+                                    "custom_emoji_ids": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "custom_emoji_ids"
+                                ],
+                                "properties": {
+                                    "custom_emoji_ids": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "custom_emoji_ids"
+                                ],
+                                "properties": {
+                                    "custom_emoji_ids": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Sticker"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
         "/uploadStickerFile": {
             "description": "Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.",
             "post": {
@@ -16181,11 +16304,11 @@
                                     "webm_sticker": {
                                         "$ref": "#/components/schemas/InputFile"
                                     },
-                                    "emojis": {
+                                    "sticker_type": {
                                         "type": "string"
                                     },
-                                    "contains_masks": {
-                                        "type": "boolean"
+                                    "emojis": {
+                                        "type": "string"
                                     },
                                     "mask_position": {
                                         "$ref": "#/components/schemas/MaskPosition"
@@ -16228,11 +16351,11 @@
                                     "webm_sticker": {
                                         "$ref": "#/components/schemas/InputFile"
                                     },
-                                    "emojis": {
+                                    "sticker_type": {
                                         "type": "string"
                                     },
-                                    "contains_masks": {
-                                        "type": "boolean"
+                                    "emojis": {
+                                        "type": "string"
                                     },
                                     "mask_position": {
                                         "$ref": "#/components/schemas/MaskPosition"
@@ -16275,11 +16398,11 @@
                                     "webm_sticker": {
                                         "$ref": "#/components/schemas/InputFile"
                                     },
-                                    "emojis": {
+                                    "sticker_type": {
                                         "type": "string"
                                     },
-                                    "contains_masks": {
-                                        "type": "boolean"
+                                    "emojis": {
+                                        "type": "string"
                                     },
                                     "mask_position": {
                                         "$ref": "#/components/schemas/MaskPosition"
@@ -18514,7 +18637,7 @@
             }
         },
         "/getGameHighScores": {
-            "description": "Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. On success, returns an Array of GameHighScore objects.",
+            "description": "Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of GameHighScore objects.",
             "post": {
                 "requestBody": {
                     "required": true,

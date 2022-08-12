@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "6.1.0"
+        "version": "6.2.0"
     },
     "variable": {
         "key": "token",
@@ -59,7 +59,7 @@
                         "getUpdates"
                     ]
                 },
-                "description": "Use this method to receive incoming updates using long polling (wiki). An Array of Update objects is returned."
+                "description": "Use this method to receive incoming updates using long polling (wiki). Returns an Array of Update objects."
             }
         },
         {
@@ -315,7 +315,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -461,7 +461,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -485,7 +485,7 @@
                         "copyMessage"
                     ]
                 },
-                "description": "Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success."
+                "description": "Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success."
             }
         },
         {
@@ -546,7 +546,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -655,7 +655,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -752,7 +752,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -843,7 +843,7 @@
                         {
                             "key": "supports_streaming",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the uploaded video is suitable for streaming",
+                            "description": "Optional. Pass True if the uploaded video is suitable for streaming",
                             "type": "text"
                         },
                         {
@@ -867,7 +867,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -976,7 +976,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -1067,7 +1067,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -1152,7 +1152,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -1219,7 +1219,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         }
                     ]
@@ -1310,7 +1310,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -1547,7 +1547,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -1632,7 +1632,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -1743,7 +1743,7 @@
                         {
                             "key": "is_closed",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the poll needs to be immediately closed. This can be useful for poll preview.",
+                            "description": "Optional. Pass True if the poll needs to be immediately closed. This can be useful for poll preview.",
                             "type": "text"
                         },
                         {
@@ -1767,7 +1767,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -1810,7 +1810,7 @@
                         {
                             "key": "emoji",
                             "disabled": true,
-                            "description": "Optional. Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”",
+                            "description": "Optional. ____simple_html_dom__voku__html_wrapper____>Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”",
                             "type": "text",
                             "value": "🎲"
                         },
@@ -1835,7 +1835,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -2137,67 +2137,67 @@
                         {
                             "key": "is_anonymous",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the administrator's presence in the chat is hidden",
+                            "description": "Optional. Pass True if the administrator's presence in the chat is hidden",
                             "type": "text"
                         },
                         {
                             "key": "can_manage_chat",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege",
+                            "description": "Optional. Pass True if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege",
                             "type": "text"
                         },
                         {
                             "key": "can_post_messages",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the administrator can create channel posts, channels only",
+                            "description": "Optional. Pass True if the administrator can create channel posts, channels only",
                             "type": "text"
                         },
                         {
                             "key": "can_edit_messages",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the administrator can edit messages of other users and can pin messages, channels only",
+                            "description": "Optional. Pass True if the administrator can edit messages of other users and can pin messages, channels only",
                             "type": "text"
                         },
                         {
                             "key": "can_delete_messages",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the administrator can delete messages of other users",
+                            "description": "Optional. Pass True if the administrator can delete messages of other users",
                             "type": "text"
                         },
                         {
                             "key": "can_manage_video_chats",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the administrator can manage video chats",
+                            "description": "Optional. Pass True if the administrator can manage video chats",
                             "type": "text"
                         },
                         {
                             "key": "can_restrict_members",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the administrator can restrict, ban or unban chat members",
+                            "description": "Optional. Pass True if the administrator can restrict, ban or unban chat members",
                             "type": "text"
                         },
                         {
                             "key": "can_promote_members",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the administrator can add new administrators with a subset of their own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him)",
+                            "description": "Optional. Pass True if the administrator can add new administrators with a subset of their own privileges or demote administrators that he has promoted, directly or indirectly (promoted by administrators that were appointed by him)",
                             "type": "text"
                         },
                         {
                             "key": "can_change_info",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the administrator can change chat title, photo and other settings",
+                            "description": "Optional. Pass True if the administrator can change chat title, photo and other settings",
                             "type": "text"
                         },
                         {
                             "key": "can_invite_users",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the administrator can invite new users to the chat",
+                            "description": "Optional. Pass True if the administrator can invite new users to the chat",
                             "type": "text"
                         },
                         {
                             "key": "can_pin_messages",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the administrator can pin messages, supergroups only",
+                            "description": "Optional. Pass True if the administrator can pin messages, supergroups only",
                             "type": "text"
                         }
                     ]
@@ -2794,7 +2794,7 @@
                         {
                             "key": "disable_notification",
                             "disabled": true,
-                            "description": "Optional. Pass True, if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.",
+                            "description": "Optional. Pass True if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.",
                             "type": "text"
                         }
                     ]
@@ -2973,7 +2973,7 @@
                         "getChatAdministrators"
                     ]
                 },
-                "description": "Use this method to get a list of administrators in a chat. On success, returns an Array of ChatMember objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned."
+                "description": "Use this method to get a list of administrators in a chat, which aren't bots. Returns an Array of ChatMember objects."
             }
         },
         {
@@ -3284,7 +3284,7 @@
                         "getMyCommands"
                     ]
                 },
-                "description": "Use this method to get the current list of the bot's commands for the given scope and user language. Returns Array of BotCommand on success. If commands aren't set, an empty list is returned."
+                "description": "Use this method to get the current list of the bot's commands for the given scope and user language. Returns an Array of BotCommand objects. If commands aren't set, an empty list is returned."
             }
         },
         {
@@ -3788,7 +3788,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -3844,6 +3844,37 @@
                     ]
                 },
                 "description": "Use this method to get a sticker set. On success, a StickerSet object is returned."
+            }
+        },
+        {
+            "name": "getCustomEmojiStickers",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "custom_emoji_ids",
+                            "disabled": false,
+                            "description": "Required. List of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/getCustomEmojiStickers",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "getCustomEmojiStickers"
+                    ]
+                },
+                "description": "Use this method to get information about custom emoji stickers by their identifiers. Returns an Array of Sticker objects."
             }
         },
         {
@@ -3927,15 +3958,15 @@
                             "type": "text"
                         },
                         {
-                            "key": "emojis",
-                            "disabled": false,
-                            "description": "Required. One or more emoji corresponding to the sticker",
+                            "key": "sticker_type",
+                            "disabled": true,
+                            "description": "Optional. Type of stickers in the set, pass “regular” or “mask”. Custom emoji sticker sets can't be created via the Bot API at the moment. By default, a regular sticker set is created.",
                             "type": "text"
                         },
                         {
-                            "key": "contains_masks",
-                            "disabled": true,
-                            "description": "Optional. Pass True, if a set of mask stickers should be created",
+                            "key": "emojis",
+                            "disabled": false,
+                            "description": "Required. One or more emoji corresponding to the sticker",
                             "type": "text"
                         },
                         {
@@ -4169,7 +4200,7 @@
                         {
                             "key": "is_personal",
                             "disabled": true,
-                            "description": "Optional. Pass True, if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query",
+                            "description": "Optional. Pass True if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query",
                             "type": "text"
                         },
                         {
@@ -4345,43 +4376,43 @@
                         {
                             "key": "need_name",
                             "disabled": true,
-                            "description": "Optional. Pass True, if you require the user's full name to complete the order",
+                            "description": "Optional. Pass True if you require the user's full name to complete the order",
                             "type": "text"
                         },
                         {
                             "key": "need_phone_number",
                             "disabled": true,
-                            "description": "Optional. Pass True, if you require the user's phone number to complete the order",
+                            "description": "Optional. Pass True if you require the user's phone number to complete the order",
                             "type": "text"
                         },
                         {
                             "key": "need_email",
                             "disabled": true,
-                            "description": "Optional. Pass True, if you require the user's email address to complete the order",
+                            "description": "Optional. Pass True if you require the user's email address to complete the order",
                             "type": "text"
                         },
                         {
                             "key": "need_shipping_address",
                             "disabled": true,
-                            "description": "Optional. Pass True, if you require the user's shipping address to complete the order",
+                            "description": "Optional. Pass True if you require the user's shipping address to complete the order",
                             "type": "text"
                         },
                         {
                             "key": "send_phone_number_to_provider",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the user's phone number should be sent to provider",
+                            "description": "Optional. Pass True if the user's phone number should be sent to provider",
                             "type": "text"
                         },
                         {
                             "key": "send_email_to_provider",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the user's email address should be sent to provider",
+                            "description": "Optional. Pass True if the user's email address should be sent to provider",
                             "type": "text"
                         },
                         {
                             "key": "is_flexible",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the final price depends on the shipping method",
+                            "description": "Optional. Pass True if the final price depends on the shipping method",
                             "type": "text"
                         },
                         {
@@ -4405,7 +4436,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -4520,43 +4551,43 @@
                         {
                             "key": "need_name",
                             "disabled": true,
-                            "description": "Optional. Pass True, if you require the user's full name to complete the order",
+                            "description": "Optional. Pass True if you require the user's full name to complete the order",
                             "type": "text"
                         },
                         {
                             "key": "need_phone_number",
                             "disabled": true,
-                            "description": "Optional. Pass True, if you require the user's phone number to complete the order",
+                            "description": "Optional. Pass True if you require the user's phone number to complete the order",
                             "type": "text"
                         },
                         {
                             "key": "need_email",
                             "disabled": true,
-                            "description": "Optional. Pass True, if you require the user's email address to complete the order",
+                            "description": "Optional. Pass True if you require the user's email address to complete the order",
                             "type": "text"
                         },
                         {
                             "key": "need_shipping_address",
                             "disabled": true,
-                            "description": "Optional. Pass True, if you require the user's shipping address to complete the order",
+                            "description": "Optional. Pass True if you require the user's shipping address to complete the order",
                             "type": "text"
                         },
                         {
                             "key": "send_phone_number_to_provider",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the user's phone number should be sent to the provider",
+                            "description": "Optional. Pass True if the user's phone number should be sent to the provider",
                             "type": "text"
                         },
                         {
                             "key": "send_email_to_provider",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the user's email address should be sent to the provider",
+                            "description": "Optional. Pass True if the user's email address should be sent to the provider",
                             "type": "text"
                         },
                         {
                             "key": "is_flexible",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the final price depends on the shipping method",
+                            "description": "Optional. Pass True if the final price depends on the shipping method",
                             "type": "text"
                         }
                     ]
@@ -4593,7 +4624,7 @@
                         {
                             "key": "ok",
                             "disabled": false,
-                            "description": "Required. Specify True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)",
+                            "description": "Required. Pass True if delivery to the specified address is possible and False if there are any problems (for example, if delivery to the specified address is not possible)",
                             "type": "text"
                         },
                         {
@@ -4746,7 +4777,7 @@
                         {
                             "key": "allow_sending_without_reply",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
                             "type": "text"
                         },
                         {
@@ -4795,13 +4826,13 @@
                         {
                             "key": "force",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters",
+                            "description": "Optional. Pass True if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters",
                             "type": "text"
                         },
                         {
                             "key": "disable_edit_message",
                             "disabled": true,
-                            "description": "Optional. Pass True, if the game message should not be automatically edited to include the current scoreboard",
+                            "description": "Optional. Pass True if the game message should not be automatically edited to include the current scoreboard",
                             "type": "text"
                         },
                         {
@@ -4886,7 +4917,7 @@
                         "getGameHighScores"
                     ]
                 },
-                "description": "Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. On success, returns an Array of GameHighScore objects."
+                "description": "Use this method to get data for high score tables. Will return the score of the specified user and several of their neighbors in a game. Returns an Array of GameHighScore objects."
             }
         }
     ]

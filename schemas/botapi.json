@@ -1,5 +1,5 @@
 {
-    "version": "6.2.0",
+    "version": "6.3.0",
     "types": [
         {
             "name": "Update",
@@ -357,12 +357,37 @@
                     "description": "Optional. Last name of the other party in a private chat"
                 },
                 {
+                    "name": "is_forum",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the supergroup chat is a forum (has topics enabled)",
+                    "default": true
+                },
+                {
                     "name": "photo",
                     "types": [
                         "ChatPhoto"
                     ],
                     "optional": true,
                     "description": "Optional. Chat photo. Returned only in getChat."
+                },
+                {
+                    "name": "active_usernames",
+                    "types": [
+                        "Array<string>"
+                    ],
+                    "optional": true,
+                    "description": "Optional. If non-empty, the list of all active chat usernames; for private chats, supergroups and channels. Returned only in getChat."
+                },
+                {
+                    "name": "emoji_status_custom_emoji_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Custom emoji identifier of emoji status of the other party in a private chat. Returned only in getChat."
                 },
                 {
                     "name": "bio",
@@ -514,6 +539,14 @@
                     "description": "Unique message identifier inside this chat"
                 },
                 {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Unique identifier of a message thread to which the message belongs; for supergroups only"
+                },
+                {
                     "name": "from",
                     "types": [
                         "User"
@@ -592,6 +625,15 @@
                     ],
                     "optional": true,
                     "description": "Optional. For forwarded messages, date the original message was sent in Unix time"
+                },
+                {
+                    "name": "is_topic_message",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the message is sent to a forum topic",
+                    "default": true
                 },
                 {
                     "name": "is_automatic_forward",
@@ -934,6 +976,30 @@
                     ],
                     "optional": true,
                     "description": "Optional. Service message. A user in the chat triggered another user's proximity alert while sharing Live Location."
+                },
+                {
+                    "name": "forum_topic_created",
+                    "types": [
+                        "ForumTopicCreated"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Service message: forum topic created"
+                },
+                {
+                    "name": "forum_topic_closed",
+                    "types": [
+                        "ForumTopicClosed"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Service message: forum topic closed"
+                },
+                {
+                    "name": "forum_topic_reopened",
+                    "types": [
+                        "ForumTopicReopened"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Service message: forum topic reopened"
                 },
                 {
                     "name": "video_chat_scheduled",
@@ -1928,6 +1994,49 @@
             "extended_by": []
         },
         {
+            "name": "ForumTopicCreated",
+            "description": "This object represents a service message about a new forum topic created in the chat.",
+            "fields": [
+                {
+                    "name": "name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Name of the topic"
+                },
+                {
+                    "name": "icon_color",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Color of the topic icon in RGB format"
+                },
+                {
+                    "name": "icon_custom_emoji_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Unique identifier of the custom emoji shown as the topic icon"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "ForumTopicClosed",
+            "description": "This object represents a service message about a forum topic closed in the chat. Currently holds no information.",
+            "fields": [],
+            "extended_by": []
+        },
+        {
+            "name": "ForumTopicReopened",
+            "description": "This object represents a service message about a forum topic reopened in the chat. Currently holds no information.",
+            "fields": [],
+            "extended_by": []
+        },
+        {
             "name": "VideoChatScheduled",
             "description": "This object represents a service message about a video chat scheduled in the chat.",
             "fields": [
@@ -2627,6 +2736,14 @@
                     ],
                     "optional": true,
                     "description": "Optional. True, if the user is allowed to pin messages; groups and supergroups only"
+                },
+                {
+                    "name": "can_manage_topics",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only"
                 }
             ],
             "extended_by": []
@@ -2800,6 +2917,14 @@
                     "description": "Optional. True, if the user is allowed to pin messages; groups and supergroups only"
                 },
                 {
+                    "name": "can_manage_topics",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only"
+                },
+                {
                     "name": "custom_title",
                     "types": [
                         "string"
@@ -2884,6 +3009,14 @@
                     ],
                     "optional": false,
                     "description": "True, if the user is allowed to pin messages"
+                },
+                {
+                    "name": "can_manage_topics",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": false,
+                    "description": "True, if the user is allowed to create forum topics"
                 },
                 {
                     "name": "can_send_messages",
@@ -3159,6 +3292,14 @@
                     ],
                     "optional": true,
                     "description": "Optional. True, if the user is allowed to pin messages. Ignored in public supergroups"
+                },
+                {
+                    "name": "can_manage_topics",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the user is allowed to create forum topics. If omitted defaults to the value of can_pin_messages"
                 }
             ],
             "extended_by": []
@@ -3182,6 +3323,45 @@
                     ],
                     "optional": false,
                     "description": "Location address; 1-64 characters, as defined by the chat owner"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "ForumTopic",
+            "description": "This object represents a forum topic.",
+            "fields": [
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier of the forum topic"
+                },
+                {
+                    "name": "name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Name of the topic"
+                },
+                {
+                    "name": "icon_color",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Color of the topic icon in RGB format"
+                },
+                {
+                    "name": "icon_custom_emoji_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Unique identifier of the custom emoji shown as the topic icon"
                 }
             ],
             "extended_by": []
@@ -7678,6 +7858,14 @@
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
                 },
                 {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
+                },
+                {
                     "name": "text",
                     "types": [
                         "string"
@@ -7771,6 +7959,14 @@
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
                 },
                 {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
+                },
+                {
                     "name": "from_chat_id",
                     "types": [
                         "int",
@@ -7820,6 +8016,14 @@
                     ],
                     "optional": false,
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
                 },
                 {
                     "name": "from_chat_id",
@@ -7924,6 +8128,14 @@
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
                 },
                 {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
+                },
+                {
                     "name": "photo",
                     "types": [
                         "InputFile",
@@ -8016,6 +8228,14 @@
                     ],
                     "optional": false,
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
                 },
                 {
                     "name": "audio",
@@ -8145,6 +8365,14 @@
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
                 },
                 {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
+                },
+                {
                     "name": "document",
                     "types": [
                         "InputFile",
@@ -8254,6 +8482,14 @@
                     ],
                     "optional": false,
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
                 },
                 {
                     "name": "video",
@@ -8391,6 +8627,14 @@
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
                 },
                 {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
+                },
+                {
                     "name": "animation",
                     "types": [
                         "InputFile",
@@ -8518,6 +8762,14 @@
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
                 },
                 {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
+                },
+                {
                     "name": "voice",
                     "types": [
                         "InputFile",
@@ -8620,6 +8872,14 @@
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
                 },
                 {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
+                },
+                {
                     "name": "video_note",
                     "types": [
                         "InputFile",
@@ -8715,6 +8975,14 @@
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
                 },
                 {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
+                },
+                {
                     "name": "media",
                     "types": [
                         "Array<InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo>"
@@ -8771,6 +9039,14 @@
                     ],
                     "optional": false,
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
                 },
                 {
                     "name": "latitude",
@@ -9008,6 +9284,14 @@
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
                 },
                 {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
+                },
+                {
                     "name": "latitude",
                     "types": [
                         "float"
@@ -9133,6 +9417,14 @@
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
                 },
                 {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
+                },
+                {
                     "name": "phone_number",
                     "types": [
                         "string"
@@ -9205,7 +9497,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
                 }
             ],
             "return_types": [
@@ -9224,6 +9516,14 @@
                     ],
                     "optional": false,
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
                 },
                 {
                     "name": "question",
@@ -9384,6 +9684,14 @@
                     ],
                     "optional": false,
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
                 },
                 {
                     "name": "emoji",
@@ -9745,6 +10053,14 @@
                     ],
                     "optional": true,
                     "description": "Pass True if the administrator can pin messages, supergroups only"
+                },
+                {
+                    "name": "can_manage_topics",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Pass True if the user is allowed to create, rename, close, and reopen forum topics, supergroups only"
                 }
             ],
             "return_types": [
@@ -10130,7 +10446,7 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "New chat title, 1-255 characters"
+                    "description": "New chat title, 1-128 characters"
                 }
             ],
             "return_types": [
@@ -10384,6 +10700,202 @@
             ]
         },
         {
+            "name": "getForumTopicIconStickers",
+            "description": "Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of Sticker objects.",
+            "fields": [],
+            "return_types": [
+                "Array<Sticker>"
+            ]
+        },
+        {
+            "name": "createForumTopic",
+            "description": "Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object.",
+            "fields": [
+                {
+                    "name": "chat_id",
+                    "types": [
+                        "int",
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)"
+                },
+                {
+                    "name": "name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Topic name, 1-128 characters"
+                },
+                {
+                    "name": "icon_color",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Color of the topic icon in RGB format. Currently, must be one of 0x6FB9F0, 0xFFD67E, 0xCB86DB, 0x8EEE98, 0xFF93B2, or 0xFB6F5F"
+                },
+                {
+                    "name": "icon_custom_emoji_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers."
+                }
+            ],
+            "return_types": [
+                "ForumTopic"
+            ]
+        },
+        {
+            "name": "editForumTopic",
+            "description": "Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.",
+            "fields": [
+                {
+                    "name": "chat_id",
+                    "types": [
+                        "int",
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier for the target message thread of the forum topic"
+                },
+                {
+                    "name": "name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "New topic name, 1-128 characters"
+                },
+                {
+                    "name": "icon_custom_emoji_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "New unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers"
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "closeForumTopic",
+            "description": "Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.",
+            "fields": [
+                {
+                    "name": "chat_id",
+                    "types": [
+                        "int",
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier for the target message thread of the forum topic"
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "reopenForumTopic",
+            "description": "Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.",
+            "fields": [
+                {
+                    "name": "chat_id",
+                    "types": [
+                        "int",
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier for the target message thread of the forum topic"
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "deleteForumTopic",
+            "description": "Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.",
+            "fields": [
+                {
+                    "name": "chat_id",
+                    "types": [
+                        "int",
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier for the target message thread of the forum topic"
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "unpinAllForumTopicMessages",
+            "description": "Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.",
+            "fields": [
+                {
+                    "name": "chat_id",
+                    "types": [
+                        "int",
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier for the target message thread of the forum topic"
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
             "name": "answerCallbackQuery",
             "description": "Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.",
             "fields": [
@@ -10436,7 +10948,7 @@
         },
         {
             "name": "setMyCommands",
-            "description": "Use this method to change the list of the bot's commands. See https://core.telegram.org/bots#commands for more details about bot commands. Returns True on success.",
+            "description": "Use this method to change the list of the bot's commands. See this manual for more details about bot commands. Returns True on success.",
             "fields": [
                 {
                     "name": "commands",
@@ -10877,7 +11389,7 @@
         },
         {
             "name": "deleteMessage",
-            "description": "Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.- Bots can delete outgoing messages in private chats, groups, and supergroups.- Bots can delete incoming messages in private chats.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success.",
+            "description": "Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- Service messages about a supergroup, channel, or forum topic creation can't be deleted.- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.- Bots can delete outgoing messages in private chats, groups, and supergroups.- Bots can delete incoming messages in private chats.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success.",
             "fields": [
                 {
                     "name": "chat_id",
@@ -10913,6 +11425,14 @@
                     ],
                     "optional": false,
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
                 },
                 {
                     "name": "sticker",
@@ -11357,6 +11877,14 @@
                     ],
                     "optional": false,
                     "description": "Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
                 },
                 {
                     "name": "title",
@@ -11852,6 +12380,14 @@
                     ],
                     "optional": false,
                     "description": "Unique identifier for the target chat"
+                },
+                {
+                    "name": "message_thread_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier for the target message thread (topic) of the forum; for forum supergroups only"
                 },
                 {
                     "name": "game_short_name",

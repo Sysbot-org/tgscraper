@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "6.2.0"
+        "version": "6.3.0"
     },
     "variable": {
         "key": "token",
@@ -271,6 +271,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                            "type": "text"
+                        },
+                        {
                             "key": "text",
                             "disabled": false,
                             "description": "Required. Text of the message to be sent, 1-4096 characters after entities parsing",
@@ -356,6 +362,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                            "type": "text"
+                        },
+                        {
                             "key": "from_chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the chat where the original message was sent (or channel username in the format @channelusername)",
@@ -408,6 +420,12 @@
                             "key": "chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
                             "type": "text"
                         },
                         {
@@ -502,6 +520,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                            "type": "text"
+                        },
+                        {
                             "key": "photo",
                             "disabled": false,
                             "description": "Required. Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet, or upload a new photo using multipart/form-data. The photo must be at most 10 MB in size. The photo's width and height must not exceed 10000 in total. Width and height ratio must be at most 20. More information on Sending Files »",
@@ -584,6 +608,12 @@
                             "key": "chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
                             "type": "text"
                         },
                         {
@@ -696,6 +726,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                            "type": "text"
+                        },
+                        {
                             "key": "document",
                             "disabled": false,
                             "description": "Required. File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »",
@@ -790,6 +826,12 @@
                             "key": "chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
                             "type": "text"
                         },
                         {
@@ -908,6 +950,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                            "type": "text"
+                        },
+                        {
                             "key": "animation",
                             "disabled": false,
                             "description": "Required. Animation to send. Pass a file_id as String to send an animation that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from the Internet, or upload a new animation using multipart/form-data. More information on Sending Files »",
@@ -1017,6 +1065,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                            "type": "text"
+                        },
+                        {
                             "key": "voice",
                             "disabled": false,
                             "description": "Required. Audio file to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »",
@@ -1108,6 +1162,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                            "type": "text"
+                        },
+                        {
                             "key": "video_note",
                             "disabled": false,
                             "description": "Required. Video note to send. Pass a file_id as String to send a video note that exists on the Telegram servers (recommended) or upload a new video using multipart/form-data. More information on Sending Files ». Sending video notes by a URL is currently unsupported",
@@ -1193,6 +1253,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                            "type": "text"
+                        },
+                        {
                             "key": "media",
                             "disabled": false,
                             "description": "Required. A JSON-serialized array describing messages to be sent, must include 2-10 items",
@@ -1251,6 +1317,12 @@
                             "key": "chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
                             "type": "text"
                         },
                         {
@@ -1479,6 +1551,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                            "type": "text"
+                        },
+                        {
                             "key": "latitude",
                             "disabled": false,
                             "description": "Required. Latitude of the venue",
@@ -1588,6 +1666,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                            "type": "text"
+                        },
+                        {
                             "key": "phone_number",
                             "disabled": false,
                             "description": "Required. Contact's phone number",
@@ -1638,7 +1722,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
                             "type": "text"
                         }
                     ]
@@ -1670,6 +1754,12 @@
                             "key": "chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
                             "type": "text"
                         },
                         {
@@ -1805,6 +1895,12 @@
                             "key": "chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
                             "type": "text"
                         },
                         {
@@ -2198,6 +2294,12 @@
                             "key": "can_pin_messages",
                             "disabled": true,
                             "description": "Optional. Pass True if the administrator can pin messages, supergroups only",
+                            "type": "text"
+                        },
+                        {
+                            "key": "can_manage_topics",
+                            "disabled": true,
+                            "description": "Optional. Pass True if the user is allowed to create, rename, close, and reopen forum topics, supergroups only",
                             "type": "text"
                         }
                     ]
@@ -2714,7 +2816,7 @@
                         {
                             "key": "title",
                             "disabled": false,
-                            "description": "Required. New chat title, 1-255 characters",
+                            "description": "Required. New chat title, 1-128 characters",
                             "type": "text"
                         }
                     ]
@@ -3113,6 +3215,276 @@
             }
         },
         {
+            "name": "getForumTopicIconStickers",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": []
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/getForumTopicIconStickers",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "getForumTopicIconStickers"
+                    ]
+                },
+                "description": "Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of Sticker objects."
+            }
+        },
+        {
+            "name": "createForumTopic",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "name",
+                            "disabled": false,
+                            "description": "Required. Topic name, 1-128 characters",
+                            "type": "text"
+                        },
+                        {
+                            "key": "icon_color",
+                            "disabled": true,
+                            "description": "Optional. Color of the topic icon in RGB format. Currently, must be one of 0x6FB9F0, 0xFFD67E, 0xCB86DB, 0x8EEE98, 0xFF93B2, or 0xFB6F5F",
+                            "type": "text"
+                        },
+                        {
+                            "key": "icon_custom_emoji_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers.",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/createForumTopic",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "createForumTopic"
+                    ]
+                },
+                "description": "Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object."
+            }
+        },
+        {
+            "name": "editForumTopic",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target message thread of the forum topic",
+                            "type": "text"
+                        },
+                        {
+                            "key": "name",
+                            "disabled": false,
+                            "description": "Required. New topic name, 1-128 characters",
+                            "type": "text"
+                        },
+                        {
+                            "key": "icon_custom_emoji_id",
+                            "disabled": false,
+                            "description": "Required. New unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/editForumTopic",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "editForumTopic"
+                    ]
+                },
+                "description": "Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success."
+            }
+        },
+        {
+            "name": "closeForumTopic",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target message thread of the forum topic",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/closeForumTopic",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "closeForumTopic"
+                    ]
+                },
+                "description": "Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success."
+            }
+        },
+        {
+            "name": "reopenForumTopic",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target message thread of the forum topic",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/reopenForumTopic",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "reopenForumTopic"
+                    ]
+                },
+                "description": "Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success."
+            }
+        },
+        {
+            "name": "deleteForumTopic",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target message thread of the forum topic",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/deleteForumTopic",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "deleteForumTopic"
+                    ]
+                },
+                "description": "Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success."
+            }
+        },
+        {
+            "name": "unpinAllForumTopicMessages",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target message thread of the forum topic",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/unpinAllForumTopicMessages",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "unpinAllForumTopicMessages"
+                    ]
+                },
+                "description": "Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success."
+            }
+        },
+        {
             "name": "answerCallbackQuery",
             "request": {
                 "method": "POST",
@@ -3208,7 +3580,7 @@
                         "setMyCommands"
                     ]
                 },
-                "description": "Use this method to change the list of the bot's commands. See https://core.telegram.org/bots#commands for more details about bot commands. Returns True on success."
+                "description": "Use this method to change the list of the bot's commands. See this manual for more details about bot commands. Returns True on success."
             }
         },
         {
@@ -3745,7 +4117,7 @@
                         "deleteMessage"
                     ]
                 },
-                "description": "Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.- Bots can delete outgoing messages in private chats, groups, and supergroups.- Bots can delete incoming messages in private chats.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success."
+                "description": "Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- Service messages about a supergroup, channel, or forum topic creation can't be deleted.- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.- Bots can delete outgoing messages in private chats, groups, and supergroups.- Bots can delete incoming messages in private chats.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success."
             }
         },
         {
@@ -3759,6 +4131,12 @@
                             "key": "chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
                             "type": "text"
                         },
                         {
@@ -4290,6 +4668,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                            "type": "text"
+                        },
+                        {
                             "key": "title",
                             "disabled": false,
                             "description": "Required. Product name, 1-32 characters",
@@ -4748,6 +5132,12 @@
                             "key": "chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the target chat",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
                             "type": "text"
                         },
                         {

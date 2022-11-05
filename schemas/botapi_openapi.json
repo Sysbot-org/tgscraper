@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "6.2.0"
+        "version": "6.3.0"
     },
     "servers": [
         {
@@ -327,8 +327,21 @@
                     "last_name": {
                         "type": "string"
                     },
+                    "is_forum": {
+                        "type": "boolean",
+                        "default": true
+                    },
                     "photo": {
                         "$ref": "#/components/schemas/ChatPhoto"
+                    },
+                    "active_usernames": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "emoji_status_custom_emoji_id": {
+                        "type": "string"
                     },
                     "bio": {
                         "type": "string"
@@ -398,6 +411,9 @@
                     "message_id": {
                         "type": "integer"
                     },
+                    "message_thread_id": {
+                        "type": "integer"
+                    },
                     "from": {
                         "$ref": "#/components/schemas/User"
                     },
@@ -427,6 +443,10 @@
                     },
                     "forward_date": {
                         "type": "integer"
+                    },
+                    "is_topic_message": {
+                        "type": "boolean",
+                        "default": true
                     },
                     "is_automatic_forward": {
                         "type": "boolean",
@@ -574,6 +594,15 @@
                     },
                     "proximity_alert_triggered": {
                         "$ref": "#/components/schemas/ProximityAlertTriggered"
+                    },
+                    "forum_topic_created": {
+                        "$ref": "#/components/schemas/ForumTopicCreated"
+                    },
+                    "forum_topic_closed": {
+                        "$ref": "#/components/schemas/ForumTopicClosed"
+                    },
+                    "forum_topic_reopened": {
+                        "$ref": "#/components/schemas/ForumTopicReopened"
                     },
                     "video_chat_scheduled": {
                         "$ref": "#/components/schemas/VideoChatScheduled"
@@ -1118,6 +1147,33 @@
                 },
                 "type": "object"
             },
+            "ForumTopicCreated": {
+                "description": "This object represents a service message about a new forum topic created in the chat.",
+                "required": [
+                    "name",
+                    "icon_color"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "icon_color": {
+                        "type": "integer"
+                    },
+                    "icon_custom_emoji_id": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ForumTopicClosed": {
+                "description": "This object represents a service message about a forum topic closed in the chat. Currently holds no information.",
+                "type": "object"
+            },
+            "ForumTopicReopened": {
+                "description": "This object represents a service message about a forum topic reopened in the chat. Currently holds no information.",
+                "type": "object"
+            },
             "VideoChatScheduled": {
                 "description": "This object represents a service message about a video chat scheduled in the chat.",
                 "required": [
@@ -1531,6 +1587,9 @@
                     },
                     "can_pin_messages": {
                         "type": "boolean"
+                    },
+                    "can_manage_topics": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -1639,6 +1698,9 @@
                     "can_pin_messages": {
                         "type": "boolean"
                     },
+                    "can_manage_topics": {
+                        "type": "boolean"
+                    },
                     "custom_title": {
                         "type": "string"
                     }
@@ -1670,6 +1732,7 @@
                     "can_change_info",
                     "can_invite_users",
                     "can_pin_messages",
+                    "can_manage_topics",
                     "can_send_messages",
                     "can_send_media_messages",
                     "can_send_polls",
@@ -1694,6 +1757,9 @@
                         "type": "boolean"
                     },
                     "can_pin_messages": {
+                        "type": "boolean"
+                    },
+                    "can_manage_topics": {
                         "type": "boolean"
                     },
                     "can_send_messages": {
@@ -1836,6 +1902,9 @@
                     },
                     "can_pin_messages": {
                         "type": "boolean"
+                    },
+                    "can_manage_topics": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -1851,6 +1920,29 @@
                         "$ref": "#/components/schemas/Location"
                     },
                     "address": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ForumTopic": {
+                "description": "This object represents a forum topic.",
+                "required": [
+                    "message_thread_id",
+                    "name",
+                    "icon_color"
+                ],
+                "properties": {
+                    "message_thread_id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "icon_color": {
+                        "type": "integer"
+                    },
+                    "icon_custom_emoji_id": {
                         "type": "string"
                     }
                 },
@@ -5090,6 +5182,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "text": {
                                         "type": "string"
                                     },
@@ -5154,6 +5249,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "text": {
                                         "type": "string"
                                     },
@@ -5217,6 +5315,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "text": {
                                         "type": "string"
@@ -5341,6 +5442,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "from_chat_id": {
                                         "anyOf": [
                                             {
@@ -5382,6 +5486,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "from_chat_id": {
                                         "anyOf": [
                                             {
@@ -5422,6 +5529,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "from_chat_id": {
                                         "anyOf": [
@@ -5522,6 +5632,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "from_chat_id": {
                                         "anyOf": [
                                             {
@@ -5597,6 +5710,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "from_chat_id": {
                                         "anyOf": [
                                             {
@@ -5671,6 +5787,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "from_chat_id": {
                                         "anyOf": [
@@ -5804,6 +5923,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "photo": {
                                         "anyOf": [
                                             {
@@ -5875,6 +5997,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "photo": {
                                         "anyOf": [
                                             {
@@ -5945,6 +6070,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "photo": {
                                         "anyOf": [
@@ -6075,6 +6203,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "audio": {
                                         "anyOf": [
                                             {
@@ -6165,6 +6296,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "audio": {
                                         "anyOf": [
                                             {
@@ -6254,6 +6388,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "audio": {
                                         "anyOf": [
@@ -6403,6 +6540,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "document": {
                                         "anyOf": [
                                             {
@@ -6487,6 +6627,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "document": {
                                         "anyOf": [
                                             {
@@ -6570,6 +6713,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "document": {
                                         "anyOf": [
@@ -6713,6 +6859,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "video": {
                                         "anyOf": [
                                             {
@@ -6806,6 +6955,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "video": {
                                         "anyOf": [
                                             {
@@ -6898,6 +7050,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "video": {
                                         "anyOf": [
@@ -7050,6 +7205,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "animation": {
                                         "anyOf": [
                                             {
@@ -7140,6 +7298,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "animation": {
                                         "anyOf": [
                                             {
@@ -7229,6 +7390,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "animation": {
                                         "anyOf": [
@@ -7378,6 +7542,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "voice": {
                                         "anyOf": [
                                             {
@@ -7452,6 +7619,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "voice": {
                                         "anyOf": [
                                             {
@@ -7525,6 +7695,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "voice": {
                                         "anyOf": [
@@ -7658,6 +7831,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "video_note": {
                                         "anyOf": [
                                             {
@@ -7733,6 +7909,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "video_note": {
                                         "anyOf": [
                                             {
@@ -7807,6 +7986,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "video_note": {
                                         "anyOf": [
@@ -7941,6 +8123,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "media": {
                                         "type": "array",
                                         "items": {
@@ -7993,6 +8178,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "media": {
                                         "type": "array",
                                         "items": {
@@ -8044,6 +8232,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "media": {
                                         "type": "array",
@@ -8159,6 +8350,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "latitude": {
                                         "type": "number"
                                     },
@@ -8227,6 +8421,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "latitude": {
                                         "type": "number"
                                     },
@@ -8294,6 +8491,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "latitude": {
                                         "type": "number"
@@ -8765,6 +8965,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "latitude": {
                                         "type": "number"
                                     },
@@ -8841,6 +9044,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "latitude": {
                                         "type": "number"
                                     },
@@ -8916,6 +9122,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "latitude": {
                                         "type": "number"
@@ -9049,6 +9258,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "phone_number": {
                                         "type": "string"
                                     },
@@ -9111,6 +9323,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "phone_number": {
                                         "type": "string"
                                     },
@@ -9172,6 +9387,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "phone_number": {
                                         "type": "string"
@@ -9293,6 +9511,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "question": {
                                         "type": "string"
                                     },
@@ -9387,6 +9608,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "question": {
                                         "type": "string"
                                     },
@@ -9480,6 +9704,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "question": {
                                         "type": "string"
@@ -9631,6 +9858,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "emoji": {
                                         "type": "string",
                                         "default": "🎲"
@@ -9683,6 +9913,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "emoji": {
                                         "type": "string",
                                         "default": "🎲"
@@ -9734,6 +9967,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "emoji": {
                                         "type": "string",
@@ -10664,6 +10900,9 @@
                                     },
                                     "can_pin_messages": {
                                         "type": "boolean"
+                                    },
+                                    "can_manage_topics": {
+                                        "type": "boolean"
                                     }
                                 }
                             }
@@ -10721,6 +10960,9 @@
                                     },
                                     "can_pin_messages": {
                                         "type": "boolean"
+                                    },
+                                    "can_manage_topics": {
+                                        "type": "boolean"
                                     }
                                 }
                             }
@@ -10777,6 +11019,9 @@
                                         "type": "boolean"
                                     },
                                     "can_pin_messages": {
+                                        "type": "boolean"
+                                    },
+                                    "can_manage_topics": {
                                         "type": "boolean"
                                     }
                                 }
@@ -13936,6 +14181,903 @@
                 }
             }
         },
+        "/getForumTopicIconStickers": {
+            "description": "Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of Sticker objects.",
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Sticker"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/createForumTopic": {
+            "description": "Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "icon_color": {
+                                        "type": "integer"
+                                    },
+                                    "icon_custom_emoji_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "icon_color": {
+                                        "type": "integer"
+                                    },
+                                    "icon_custom_emoji_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "icon_color": {
+                                        "type": "integer"
+                                    },
+                                    "icon_custom_emoji_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/ForumTopic"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/editForumTopic": {
+            "description": "Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id",
+                                    "name",
+                                    "icon_custom_emoji_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "icon_custom_emoji_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id",
+                                    "name",
+                                    "icon_custom_emoji_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "icon_custom_emoji_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id",
+                                    "name",
+                                    "icon_custom_emoji_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "icon_custom_emoji_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/closeForumTopic": {
+            "description": "Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/reopenForumTopic": {
+            "description": "Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/deleteForumTopic": {
+            "description": "Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/unpinAllForumTopicMessages": {
+            "description": "Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "message_thread_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
         "/answerCallbackQuery": {
             "description": "Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.",
             "post": {
@@ -14070,7 +15212,7 @@
             }
         },
         "/setMyCommands": {
-            "description": "Use this method to change the list of the bot's commands. See https://core.telegram.org/bots#commands for more details about bot commands. Returns True on success.",
+            "description": "Use this method to change the list of the bot's commands. See this manual for more details about bot commands. Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -15584,7 +16726,7 @@
             }
         },
         "/deleteMessage": {
-            "description": "Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.- Bots can delete outgoing messages in private chats, groups, and supergroups.- Bots can delete incoming messages in private chats.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success.",
+            "description": "Use this method to delete a message, including service messages, with the following limitations:- A message can only be deleted if it was sent less than 48 hours ago.- Service messages about a supergroup, channel, or forum topic creation can't be deleted.- A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.- Bots can delete outgoing messages in private chats, groups, and supergroups.- Bots can delete incoming messages in private chats.- Bots granted can_post_messages permissions can delete outgoing messages in channels.- If the bot is an administrator of a group, it can delete any message there.- If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -15737,6 +16879,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "sticker": {
                                         "anyOf": [
                                             {
@@ -15796,6 +16941,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "sticker": {
                                         "anyOf": [
                                             {
@@ -15854,6 +17002,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "sticker": {
                                         "anyOf": [
@@ -17289,6 +18440,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "title": {
                                         "type": "string"
                                     },
@@ -17399,6 +18553,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "title": {
                                         "type": "string"
                                     },
@@ -17508,6 +18665,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "title": {
                                         "type": "string"
@@ -18338,6 +19498,9 @@
                                     "chat_id": {
                                         "type": "integer"
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "game_short_name": {
                                         "type": "string"
                                     },
@@ -18370,6 +19533,9 @@
                                     "chat_id": {
                                         "type": "integer"
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "game_short_name": {
                                         "type": "string"
                                     },
@@ -18400,6 +19566,9 @@
                                 ],
                                 "properties": {
                                     "chat_id": {
+                                        "type": "integer"
+                                    },
+                                    "message_thread_id": {
                                         "type": "integer"
                                     },
                                     "game_short_name": {

@@ -45,8 +45,9 @@ class Versions
     public const V600 = '6.0.0';
     public const V610 = '6.1.0';
     public const V620 = '6.2.0';
+    public const V630 = '6.3.0';
     public const LATEST = 'latest';
-    public const STABLE = self::V620;
+    public const STABLE = self::V630;
 
     public const URLS = [
         self::V100 => 'https://web.archive.org/web/20150714025308id_/https://core.telegram.org/bots/api/',
@@ -90,6 +91,7 @@ class Versions
         self::V600 => 'https://web.archive.org/web/20220416143511id_/https://core.telegram.org/bots/api',
         self::V610 => 'https://web.archive.org/web/20220621093855id_/https://core.telegram.org/bots/api',
         self::V620 => 'https://web.archive.org/web/20220812143250id_/https://core.telegram.org/bots/api',
+        self::V630 => 'https://web.archive.org/web/20221105155229id_/https://core.telegram.org/bots/api',
         self::LATEST => 'https://core.telegram.org/bots/api'
     ];
 

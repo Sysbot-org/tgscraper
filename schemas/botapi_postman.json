@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "6.3.0"
+        "version": "6.4.0"
     },
     "variable": {
         "key": "token",
@@ -550,6 +550,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "has_spoiler",
+                            "disabled": true,
+                            "description": "Optional. Pass True if the photo needs to be covered with a spoiler animation",
+                            "type": "text"
+                        },
+                        {
                             "key": "disable_notification",
                             "disabled": true,
                             "description": "Optional. Sends the message silently. Users will receive a notification with no sound.",
@@ -883,6 +889,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "has_spoiler",
+                            "disabled": true,
+                            "description": "Optional. Pass True if the video needs to be covered with a spoiler animation",
+                            "type": "text"
+                        },
+                        {
                             "key": "supports_streaming",
                             "disabled": true,
                             "description": "Optional. Pass True if the uploaded video is suitable for streaming",
@@ -1001,6 +1013,12 @@
                             "key": "caption_entities",
                             "disabled": true,
                             "description": "Optional. A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode",
+                            "type": "text"
+                        },
+                        {
+                            "key": "has_spoiler",
+                            "disabled": true,
+                            "description": "Optional. Pass True if the animation needs to be covered with a spoiler animation",
                             "type": "text"
                         },
                         {
@@ -1969,6 +1987,12 @@
                             "key": "chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread; supergroups only",
                             "type": "text"
                         },
                         {
@@ -3143,7 +3167,7 @@
                         "getChatMember"
                     ]
                 },
-                "description": "Use this method to get information about a member of a chat. Returns a ChatMember object on success."
+                "description": "Use this method to get information about a member of a chat. The method is guaranteed to work only if the bot is an administrator in the chat. Returns a ChatMember object on success."
             }
         },
         {
@@ -3260,7 +3284,7 @@
                         {
                             "key": "icon_color",
                             "disabled": true,
-                            "description": "Optional. Color of the topic icon in RGB format. Currently, must be one of 0x6FB9F0, 0xFFD67E, 0xCB86DB, 0x8EEE98, 0xFF93B2, or 0xFB6F5F",
+                            "description": "Optional. Color of the topic icon in RGB format. Currently, must be one of 7322096 (0x6FB9F0), 16766590 (0xFFD67E), 13338331 (0xCB86DB), 9367192 (0x8EEE98), 16749490 (0xFF93B2), or 16478047 (0xFB6F5F)",
                             "type": "text"
                         },
                         {
@@ -3308,14 +3332,14 @@
                         },
                         {
                             "key": "name",
-                            "disabled": false,
-                            "description": "Required. New topic name, 1-128 characters",
+                            "disabled": true,
+                            "description": "Optional. New topic name, 0-128 characters. If not specified or empty, the current name of the topic will be kept",
                             "type": "text"
                         },
                         {
                             "key": "icon_custom_emoji_id",
-                            "disabled": false,
-                            "description": "Required. New unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers",
+                            "disabled": true,
+                            "description": "Optional. New unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will be kept",
                             "type": "text"
                         }
                     ]
@@ -3482,6 +3506,167 @@
                     ]
                 },
                 "description": "Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success."
+            }
+        },
+        {
+            "name": "editGeneralForumTopic",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "name",
+                            "disabled": false,
+                            "description": "Required. New topic name, 1-128 characters",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/editGeneralForumTopic",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "editGeneralForumTopic"
+                    ]
+                },
+                "description": "Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success."
+            }
+        },
+        {
+            "name": "closeGeneralForumTopic",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/closeGeneralForumTopic",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "closeGeneralForumTopic"
+                    ]
+                },
+                "description": "Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success."
+            }
+        },
+        {
+            "name": "reopenGeneralForumTopic",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/reopenGeneralForumTopic",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "reopenGeneralForumTopic"
+                    ]
+                },
+                "description": "Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically unhidden if it was hidden. Returns True on success."
+            }
+        },
+        {
+            "name": "hideGeneralForumTopic",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/hideGeneralForumTopic",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "hideGeneralForumTopic"
+                    ]
+                },
+                "description": "Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically closed if it was open. Returns True on success."
+            }
+        },
+        {
+            "name": "unhideGeneralForumTopic",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/unhideGeneralForumTopic",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "unhideGeneralForumTopic"
+                    ]
+                },
+                "description": "Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success."
             }
         },
         {

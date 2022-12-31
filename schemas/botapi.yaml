@@ -1,4 +1,4 @@
-version: 6.3.0
+version: 6.4.0
 types:
     -
         name: Update
@@ -363,6 +363,20 @@ types:
                 optional: true
                 description: 'Optional. The time after which all messages sent to the chat will be automatically deleted; in seconds. Returned only in getChat.'
             -
+                name: has_aggressive_anti_spam_enabled
+                types:
+                    - bool
+                optional: true
+                description: 'Optional. True, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators. Returned only in getChat.'
+                default: true
+            -
+                name: has_hidden_members
+                types:
+                    - bool
+                optional: true
+                description: 'Optional. True, if non-administrators can only get the list of bots and administrators in the chat. Returned only in getChat.'
+                default: true
+            -
                 name: has_protected_content
                 types:
                     - bool
@@ -595,6 +609,13 @@ types:
                 optional: true
                 description: 'Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption'
             -
+                name: has_media_spoiler
+                types:
+                    - bool
+                optional: true
+                description: 'Optional. True, if the message media is covered by a spoiler animation'
+                default: true
+            -
                 name: contact
                 types:
                     - Contact
@@ -725,6 +746,12 @@ types:
                 optional: true
                 description: 'Optional. The domain name of the website on which the user has logged in. More about Telegram Login »'
             -
+                name: write_access_allowed
+                types:
+                    - WriteAccessAllowed
+                optional: true
+                description: 'Optional. Service message: the user allowed the bot added to the attachment menu to write messages'
+            -
                 name: passport_data
                 types:
                     - PassportData
@@ -743,6 +770,12 @@ types:
                 optional: true
                 description: 'Optional. Service message: forum topic created'
             -
+                name: forum_topic_edited
+                types:
+                    - ForumTopicEdited
+                optional: true
+                description: 'Optional. Service message: forum topic edited'
+            -
                 name: forum_topic_closed
                 types:
                     - ForumTopicClosed
@@ -754,6 +787,18 @@ types:
                     - ForumTopicReopened
                 optional: true
                 description: 'Optional. Service message: forum topic reopened'
+            -
+                name: general_forum_topic_hidden
+                types:
+                    - GeneralForumTopicHidden
+                optional: true
+                description: "Optional. Service message: the 'General' forum topic hidden"
+            -
+                name: general_forum_topic_unhidden
+                types:
+                    - GeneralForumTopicUnhidden
+                optional: true
+                description: "Optional. Service message: the 'General' forum topic unhidden"
             -
                 name: video_chat_scheduled
                 types:
@@ -1521,8 +1566,40 @@ types:
         fields: {  }
         extended_by: {  }
     -
+        name: ForumTopicEdited
+        description: 'This object represents a service message about an edited forum topic.'
+        fields:
+            -
+                name: name
+                types:
+                    - string
+                optional: true
+                description: 'Optional. New name of the topic, if it was edited'
+            -
+                name: icon_custom_emoji_id
+                types:
+                    - string
+                optional: true
+                description: 'Optional. New identifier of the custom emoji shown as the topic icon, if it was edited; an empty string if the icon was removed'
+        extended_by: {  }
+    -
         name: ForumTopicReopened
         description: 'This object represents a service message about a forum topic reopened in the chat. Currently holds no information.'
+        fields: {  }
+        extended_by: {  }
+    -
+        name: GeneralForumTopicHidden
+        description: 'This object represents a service message about General forum topic hidden in the chat. Currently holds no information.'
+        fields: {  }
+        extended_by: {  }
+    -
+        name: GeneralForumTopicUnhidden
+        description: 'This object represents a service message about General forum topic unhidden in the chat. Currently holds no information.'
+        fields: {  }
+        extended_by: {  }
+    -
+        name: WriteAccessAllowed
+        description: 'This object represents a service message about a user allowing a bot added to the attachment menu to write messages. Currently holds no information.'
         fields: {  }
         extended_by: {  }
     -
@@ -1630,6 +1707,13 @@ types:
                     - Array<Array<KeyboardButton>>
                 optional: false
                 description: 'Array of button rows, each represented by an Array of KeyboardButton objects'
+            -
+                name: is_persistent
+                types:
+                    - bool
+                optional: true
+                description: 'Optional. Requests clients to always show the keyboard when the regular keyboard is hidden. Defaults to false, in which case the custom keyboard can be hidden and opened with a keyboard icon.'
+                default: false
             -
                 name: resize_keyboard
                 types:
@@ -2776,6 +2860,12 @@ types:
                     - Array<MessageEntity>
                 optional: true
                 description: 'Optional. List of special entities that appear in the caption, which can be specified instead of parse_mode'
+            -
+                name: has_spoiler
+                types:
+                    - bool
+                optional: true
+                description: 'Optional. Pass True if the photo needs to be covered with a spoiler animation'
         extended_by: {  }
     -
         name: InputMediaVideo
@@ -2843,6 +2933,12 @@ types:
                     - bool
                 optional: true
                 description: 'Optional. Pass True if the uploaded video is suitable for streaming'
+            -
+                name: has_spoiler
+                types:
+                    - bool
+                optional: true
+                description: 'Optional. Pass True if the video needs to be covered with a spoiler animation'
         extended_by: {  }
     -
         name: InputMediaAnimation
@@ -2904,6 +3000,12 @@ types:
                     - int
                 optional: true
                 description: 'Optional. Animation duration in seconds'
+            -
+                name: has_spoiler
+                types:
+                    - bool
+                optional: true
+                description: 'Optional. Pass True if the animation needs to be covered with a spoiler animation'
         extended_by: {  }
     -
         name: InputMediaAudio
@@ -6128,6 +6230,12 @@ methods:
                 optional: true
                 description: 'A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode'
             -
+                name: has_spoiler
+                types:
+                    - bool
+                optional: true
+                description: 'Pass True if the photo needs to be covered with a spoiler animation'
+            -
                 name: disable_notification
                 types:
                     - bool
@@ -6422,6 +6530,12 @@ methods:
                 optional: true
                 description: 'A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode'
             -
+                name: has_spoiler
+                types:
+                    - bool
+                optional: true
+                description: 'Pass True if the video needs to be covered with a spoiler animation'
+            -
                 name: supports_streaming
                 types:
                     - bool
@@ -6529,6 +6643,12 @@ methods:
                     - Array<MessageEntity>
                 optional: true
                 description: 'A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode'
+            -
+                name: has_spoiler
+                types:
+                    - bool
+                optional: true
+                description: 'Pass True if the animation needs to be covered with a spoiler animation'
             -
                 name: disable_notification
                 types:
@@ -7330,6 +7450,12 @@ methods:
                 optional: false
                 description: 'Unique identifier for the target chat or username of the target channel (in the format @channelusername)'
             -
+                name: message_thread_id
+                types:
+                    - int
+                optional: true
+                description: 'Unique identifier for the target message thread; supergroups only'
+            -
                 name: action
                 types:
                     - string
@@ -7965,7 +8091,7 @@ methods:
             - int
     -
         name: getChatMember
-        description: 'Use this method to get information about a member of a chat. Returns a ChatMember object on success.'
+        description: 'Use this method to get information about a member of a chat. The method is guaranteed to work only if the bot is an administrator in the chat. Returns a ChatMember object on success.'
         fields:
             -
                 name: chat_id
@@ -8042,7 +8168,7 @@ methods:
                 types:
                     - int
                 optional: true
-                description: 'Color of the topic icon in RGB format. Currently, must be one of 0x6FB9F0, 0xFFD67E, 0xCB86DB, 0x8EEE98, 0xFF93B2, or 0xFB6F5F'
+                description: 'Color of the topic icon in RGB format. Currently, must be one of 7322096 (0x6FB9F0), 16766590 (0xFFD67E), 13338331 (0xCB86DB), 9367192 (0x8EEE98), 16749490 (0xFF93B2), or 16478047 (0xFB6F5F)'
             -
                 name: icon_custom_emoji_id
                 types:
@@ -8072,14 +8198,14 @@ methods:
                 name: name
                 types:
                     - string
-                optional: false
-                description: 'New topic name, 1-128 characters'
+                optional: true
+                description: 'New topic name, 0-128 characters. If not specified or empty, the current name of the topic will be kept'
             -
                 name: icon_custom_emoji_id
                 types:
                     - string
-                optional: false
-                description: 'New unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers'
+                optional: true
+                description: 'New unique identifier of the custom emoji shown as the topic icon. Use getForumTopicIconStickers to get all allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will be kept'
         return_types:
             - bool
     -
@@ -8156,6 +8282,77 @@ methods:
                     - int
                 optional: false
                 description: 'Unique identifier for the target message thread of the forum topic'
+        return_types:
+            - bool
+    -
+        name: editGeneralForumTopic
+        description: "Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success."
+        fields:
+            -
+                name: chat_id
+                types:
+                    - int
+                    - string
+                optional: false
+                description: 'Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)'
+            -
+                name: name
+                types:
+                    - string
+                optional: false
+                description: 'New topic name, 1-128 characters'
+        return_types:
+            - bool
+    -
+        name: closeGeneralForumTopic
+        description: "Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success."
+        fields:
+            -
+                name: chat_id
+                types:
+                    - int
+                    - string
+                optional: false
+                description: 'Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)'
+        return_types:
+            - bool
+    -
+        name: reopenGeneralForumTopic
+        description: "Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically unhidden if it was hidden. Returns True on success."
+        fields:
+            -
+                name: chat_id
+                types:
+                    - int
+                    - string
+                optional: false
+                description: 'Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)'
+        return_types:
+            - bool
+    -
+        name: hideGeneralForumTopic
+        description: "Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically closed if it was open. Returns True on success."
+        fields:
+            -
+                name: chat_id
+                types:
+                    - int
+                    - string
+                optional: false
+                description: 'Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)'
+        return_types:
+            - bool
+    -
+        name: unhideGeneralForumTopic
+        description: "Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success."
+        fields:
+            -
+                name: chat_id
+                types:
+                    - int
+                    - string
+                optional: false
+                description: 'Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)'
         return_types:
             - bool
     -

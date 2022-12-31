@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "6.3.0"
+        "version": "6.4.0"
     },
     "servers": [
         {
@@ -380,6 +380,14 @@
                     "message_auto_delete_time": {
                         "type": "integer"
                     },
+                    "has_aggressive_anti_spam_enabled": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "has_hidden_members": {
+                        "type": "boolean",
+                        "default": true
+                    },
                     "has_protected_content": {
                         "type": "boolean",
                         "default": true
@@ -516,6 +524,10 @@
                             "$ref": "#/components/schemas/MessageEntity"
                         }
                     },
+                    "has_media_spoiler": {
+                        "type": "boolean",
+                        "default": true
+                    },
                     "contact": {
                         "$ref": "#/components/schemas/Contact"
                     },
@@ -589,6 +601,9 @@
                     "connected_website": {
                         "type": "string"
                     },
+                    "write_access_allowed": {
+                        "$ref": "#/components/schemas/WriteAccessAllowed"
+                    },
                     "passport_data": {
                         "$ref": "#/components/schemas/PassportData"
                     },
@@ -598,11 +613,20 @@
                     "forum_topic_created": {
                         "$ref": "#/components/schemas/ForumTopicCreated"
                     },
+                    "forum_topic_edited": {
+                        "$ref": "#/components/schemas/ForumTopicEdited"
+                    },
                     "forum_topic_closed": {
                         "$ref": "#/components/schemas/ForumTopicClosed"
                     },
                     "forum_topic_reopened": {
                         "$ref": "#/components/schemas/ForumTopicReopened"
+                    },
+                    "general_forum_topic_hidden": {
+                        "$ref": "#/components/schemas/GeneralForumTopicHidden"
+                    },
+                    "general_forum_topic_unhidden": {
+                        "$ref": "#/components/schemas/GeneralForumTopicUnhidden"
                     },
                     "video_chat_scheduled": {
                         "$ref": "#/components/schemas/VideoChatScheduled"
@@ -1170,8 +1194,32 @@
                 "description": "This object represents a service message about a forum topic closed in the chat. Currently holds no information.",
                 "type": "object"
             },
+            "ForumTopicEdited": {
+                "description": "This object represents a service message about an edited forum topic.",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "icon_custom_emoji_id": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "ForumTopicReopened": {
                 "description": "This object represents a service message about a forum topic reopened in the chat. Currently holds no information.",
+                "type": "object"
+            },
+            "GeneralForumTopicHidden": {
+                "description": "This object represents a service message about General forum topic hidden in the chat. Currently holds no information.",
+                "type": "object"
+            },
+            "GeneralForumTopicUnhidden": {
+                "description": "This object represents a service message about General forum topic unhidden in the chat. Currently holds no information.",
+                "type": "object"
+            },
+            "WriteAccessAllowed": {
+                "description": "This object represents a service message about a user allowing a bot added to the attachment menu to write messages. Currently holds no information.",
                 "type": "object"
             },
             "VideoChatScheduled": {
@@ -1287,6 +1335,9 @@
                                 "$ref": "#/components/schemas/KeyboardButton"
                             }
                         }
+                    },
+                    "is_persistent": {
+                        "type": "boolean"
                     },
                     "resize_keyboard": {
                         "type": "boolean"
@@ -2236,6 +2287,9 @@
                         "items": {
                             "$ref": "#/components/schemas/MessageEntity"
                         }
+                    },
+                    "has_spoiler": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -2287,6 +2341,9 @@
                     },
                     "supports_streaming": {
                         "type": "boolean"
+                    },
+                    "has_spoiler": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -2335,6 +2392,9 @@
                     },
                     "duration": {
                         "type": "integer"
+                    },
+                    "has_spoiler": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -5948,6 +6008,9 @@
                                             "$ref": "#/components/schemas/MessageEntity"
                                         }
                                     },
+                                    "has_spoiler": {
+                                        "type": "boolean"
+                                    },
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
@@ -6022,6 +6085,9 @@
                                             "$ref": "#/components/schemas/MessageEntity"
                                         }
                                     },
+                                    "has_spoiler": {
+                                        "type": "boolean"
+                                    },
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
@@ -6095,6 +6161,9 @@
                                         "items": {
                                             "$ref": "#/components/schemas/MessageEntity"
                                         }
+                                    },
+                                    "has_spoiler": {
+                                        "type": "boolean"
                                     },
                                     "disable_notification": {
                                         "type": "boolean"
@@ -6903,6 +6972,9 @@
                                             "$ref": "#/components/schemas/MessageEntity"
                                         }
                                     },
+                                    "has_spoiler": {
+                                        "type": "boolean"
+                                    },
                                     "supports_streaming": {
                                         "type": "boolean"
                                     },
@@ -6999,6 +7071,9 @@
                                             "$ref": "#/components/schemas/MessageEntity"
                                         }
                                     },
+                                    "has_spoiler": {
+                                        "type": "boolean"
+                                    },
                                     "supports_streaming": {
                                         "type": "boolean"
                                     },
@@ -7094,6 +7169,9 @@
                                         "items": {
                                             "$ref": "#/components/schemas/MessageEntity"
                                         }
+                                    },
+                                    "has_spoiler": {
+                                        "type": "boolean"
                                     },
                                     "supports_streaming": {
                                         "type": "boolean"
@@ -7249,6 +7327,9 @@
                                             "$ref": "#/components/schemas/MessageEntity"
                                         }
                                     },
+                                    "has_spoiler": {
+                                        "type": "boolean"
+                                    },
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
@@ -7342,6 +7423,9 @@
                                             "$ref": "#/components/schemas/MessageEntity"
                                         }
                                     },
+                                    "has_spoiler": {
+                                        "type": "boolean"
+                                    },
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
@@ -7434,6 +7518,9 @@
                                         "items": {
                                             "$ref": "#/components/schemas/MessageEntity"
                                         }
+                                    },
+                                    "has_spoiler": {
+                                        "type": "boolean"
                                     },
                                     "disable_notification": {
                                         "type": "boolean"
@@ -10082,6 +10169,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "action": {
                                         "type": "string"
                                     }
@@ -10106,6 +10196,9 @@
                                             }
                                         ]
                                     },
+                                    "message_thread_id": {
+                                        "type": "integer"
+                                    },
                                     "action": {
                                         "type": "string"
                                     }
@@ -10129,6 +10222,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "message_thread_id": {
+                                        "type": "integer"
                                     },
                                     "action": {
                                         "type": "string"
@@ -13804,7 +13900,7 @@
             }
         },
         "/getChatMember": {
-            "description": "Use this method to get information about a member of a chat. Returns a ChatMember object on success.",
+            "description": "Use this method to get information about a member of a chat. The method is guaranteed to work only if the bot is an administrator in the chat. Returns a ChatMember object on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -14415,9 +14511,7 @@
                                 "type": "object",
                                 "required": [
                                     "chat_id",
-                                    "message_thread_id",
-                                    "name",
-                                    "icon_custom_emoji_id"
+                                    "message_thread_id"
                                 ],
                                 "properties": {
                                     "chat_id": {
@@ -14447,9 +14541,7 @@
                                 "type": "object",
                                 "required": [
                                     "chat_id",
-                                    "message_thread_id",
-                                    "name",
-                                    "icon_custom_emoji_id"
+                                    "message_thread_id"
                                 ],
                                 "properties": {
                                     "chat_id": {
@@ -14479,9 +14571,7 @@
                                 "type": "object",
                                 "required": [
                                     "chat_id",
-                                    "message_thread_id",
-                                    "name",
-                                    "icon_custom_emoji_id"
+                                    "message_thread_id"
                                 ],
                                 "properties": {
                                     "chat_id": {
@@ -15022,6 +15112,608 @@
                                     },
                                     "message_thread_id": {
                                         "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/editGeneralForumTopic": {
+            "description": "Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/closeGeneralForumTopic": {
+            "description": "Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/reopenGeneralForumTopic": {
+            "description": "Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically unhidden if it was hidden. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/hideGeneralForumTopic": {
+            "description": "Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. The topic will be automatically closed if it was open. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/unhideGeneralForumTopic": {
+            "description": "Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
                                     }
                                 }
                             }

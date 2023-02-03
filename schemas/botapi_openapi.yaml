@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
     title: 'Telegram Bot API'
     description: 'Auto-generated OpenAPI schema by TGScraper.'
-    version: 6.4.0
+    version: 6.5.0
 servers:
     -
         url: 'https://api.telegram.org/bot{token}'
@@ -402,6 +402,10 @@ components:
                     $ref: '#/components/schemas/Invoice'
                 successful_payment:
                     $ref: '#/components/schemas/SuccessfulPayment'
+                user_shared:
+                    $ref: '#/components/schemas/UserShared'
+                chat_shared:
+                    $ref: '#/components/schemas/ChatShared'
                 connected_website:
                     type: string
                 write_access_allowed:
@@ -829,6 +833,28 @@ components:
         GeneralForumTopicUnhidden:
             description: 'This object represents a service message about General forum topic unhidden in the chat. Currently holds no information.'
             type: object
+        UserShared:
+            description: 'This object contains information about the user whose identifier was shared with the bot using a KeyboardButtonRequestUser button.'
+            required:
+                - request_id
+                - user_id
+            properties:
+                request_id:
+                    type: integer
+                user_id:
+                    type: integer
+            type: object
+        ChatShared:
+            description: 'This object contains information about the chat whose identifier was shared with the bot using a KeyboardButtonRequestChat button.'
+            required:
+                - request_id
+                - chat_id
+            properties:
+                request_id:
+                    type: integer
+                chat_id:
+                    type: integer
+            type: object
         WriteAccessAllowed:
             description: 'This object represents a service message about a user allowing a bot added to the attachment menu to write messages. Currently holds no information.'
             type: object
@@ -922,12 +948,16 @@ components:
                     type: boolean
             type: object
         KeyboardButton:
-            description: 'This object represents one button of the reply keyboard. For simple text buttons String can be used instead of this object to specify text of the button. Optional fields web_app, request_contact, request_location, and request_poll are mutually exclusive.'
+            description: 'This object represents one button of the reply keyboard. For simple text buttons, String can be used instead of this object to specify the button text. The optional fields web_app, request_user, request_chat, request_contact, request_location, and request_poll are mutually exclusive.'
             required:
                 - text
             properties:
                 text:
                     type: string
+                request_user:
+                    $ref: '#/components/schemas/KeyboardButtonRequestUser'
+                request_chat:
+                    $ref: '#/components/schemas/KeyboardButtonRequestChat'
                 request_contact:
                     type: boolean
                 request_location:
@@ -936,6 +966,41 @@ components:
                     $ref: '#/components/schemas/KeyboardButtonPollType'
                 web_app:
                     $ref: '#/components/schemas/WebAppInfo'
+            type: object
+        KeyboardButtonRequestUser:
+            description: 'This object defines the criteria used to request a suitable user. The identifier of the selected user will be shared with the bot when the corresponding button is pressed.'
+            required:
+                - request_id
+            properties:
+                request_id:
+                    type: integer
+                user_is_bot:
+                    type: boolean
+                user_is_premium:
+                    type: boolean
+            type: object
+        KeyboardButtonRequestChat:
+            description: 'This object defines the criteria used to request a suitable chat. The identifier of the selected chat will be shared with the bot when the corresponding button is pressed.'
+            required:
+                - request_id
+                - chat_is_channel
+            properties:
+                request_id:
+                    type: integer
+                chat_is_channel:
+                    type: boolean
+                chat_is_forum:
+                    type: boolean
+                chat_has_username:
+                    type: boolean
+                chat_is_created:
+                    type: boolean
+                user_administrator_rights:
+                    $ref: '#/components/schemas/ChatAdministratorRights'
+                bot_administrator_rights:
+                    $ref: '#/components/schemas/ChatAdministratorRights'
+                bot_is_member:
+                    type: boolean
             type: object
         KeyboardButtonPollType:
             description: 'This object represents type of a poll, which is allowed to be created and sent when the corresponding button is pressed.'
@@ -1217,15 +1282,20 @@ components:
                 - status
                 - user
                 - is_member
+                - can_send_messages
+                - can_send_audios
+                - can_send_documents
+                - can_send_photos
+                - can_send_videos
+                - can_send_video_notes
+                - can_send_voice_notes
+                - can_send_polls
+                - can_send_other_messages
+                - can_add_web_page_previews
                 - can_change_info
                 - can_invite_users
                 - can_pin_messages
                 - can_manage_topics
-                - can_send_messages
-                - can_send_media_messages
-                - can_send_polls
-                - can_send_other_messages
-                - can_add_web_page_previews
                 - until_date
             properties:
                 status:
@@ -1234,6 +1304,26 @@ components:
                     $ref: '#/components/schemas/User'
                 is_member:
                     type: boolean
+                can_send_messages:
+                    type: boolean
+                can_send_audios:
+                    type: boolean
+                can_send_documents:
+                    type: boolean
+                can_send_photos:
+                    type: boolean
+                can_send_videos:
+                    type: boolean
+                can_send_video_notes:
+                    type: boolean
+                can_send_voice_notes:
+                    type: boolean
+                can_send_polls:
+                    type: boolean
+                can_send_other_messages:
+                    type: boolean
+                can_add_web_page_previews:
+                    type: boolean
                 can_change_info:
                     type: boolean
                 can_invite_users:
@@ -1241,16 +1331,6 @@ components:
                 can_pin_messages:
                     type: boolean
                 can_manage_topics:
-                    type: boolean
-                can_send_messages:
-                    type: boolean
-                can_send_media_messages:
-                    type: boolean
-                can_send_polls:
-                    type: boolean
-                can_send_other_messages:
-                    type: boolean
-                can_add_web_page_previews:
                     type: boolean
                 until_date:
                     type: integer
@@ -1307,12 +1387,15 @@ components:
             required:
                 - chat
                 - from
+                - user_chat_id
                 - date
             properties:
                 chat:
                     $ref: '#/components/schemas/Chat'
                 from:
                     $ref: '#/components/schemas/User'
+                user_chat_id:
+                    type: integer
                 date:
                     type: integer
                 bio:
@@ -1325,7 +1408,17 @@ components:
             properties:
                 can_send_messages:
                     type: boolean
-                can_send_media_messages:
+                can_send_audios:
+                    type: boolean
+                can_send_documents:
+                    type: boolean
+                can_send_photos:
+                    type: boolean
+                can_send_videos:
+                    type: boolean
+                can_send_video_notes:
+                    type: boolean
+                can_send_voice_notes:
                     type: boolean
                 can_send_polls:
                     type: boolean
@@ -7107,6 +7200,8 @@ paths:
                                     type: integer
                                 permissions:
                                     $ref: '#/components/schemas/ChatPermissions'
+                                use_independent_chat_permissions:
+                                    type: boolean
                                 until_date:
                                     type: integer
                     application/x-www-form-urlencoded:
@@ -7127,6 +7222,8 @@ paths:
                                     type: integer
                                 permissions:
                                     $ref: '#/components/schemas/ChatPermissions'
+                                use_independent_chat_permissions:
+                                    type: boolean
                                 until_date:
                                     type: integer
                     multipart/form-data:
@@ -7147,6 +7244,8 @@ paths:
                                     type: integer
                                 permissions:
                                     $ref: '#/components/schemas/ChatPermissions'
+                                use_independent_chat_permissions:
+                                    type: boolean
                                 until_date:
                                     type: integer
             responses:
@@ -7605,6 +7704,8 @@ paths:
                                             type: string
                                 permissions:
                                     $ref: '#/components/schemas/ChatPermissions'
+                                use_independent_chat_permissions:
+                                    type: boolean
                     application/x-www-form-urlencoded:
                         schema:
                             type: object
@@ -7620,6 +7721,8 @@ paths:
                                             type: string
                                 permissions:
                                     $ref: '#/components/schemas/ChatPermissions'
+                                use_independent_chat_permissions:
+                                    type: boolean
                     multipart/form-data:
                         schema:
                             type: object
@@ -7635,6 +7738,8 @@ paths:
                                             type: string
                                 permissions:
                                     $ref: '#/components/schemas/ChatPermissions'
+                                use_independent_chat_permissions:
+                                    type: boolean
             responses:
                 200:
                     description: 'Request was successful, the result is returned.'
@@ -9021,7 +9126,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /getChatMember:
-        description: 'Use this method to get information about a member of a chat. The method is guaranteed to work only if the bot is an administrator in the chat. Returns a ChatMember object on success.'
+        description: 'Use this method to get information about a member of a chat. The method is guaranteed to work for other users, only if the bot is an administrator in the chat. Returns a ChatMember object on success.'
         post:
             requestBody:
                 required: true

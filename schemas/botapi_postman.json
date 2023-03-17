@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "6.5.0"
+        "version": "6.6.0"
     },
     "variable": {
         "key": "token",
@@ -665,7 +665,7 @@
                             "type": "text"
                         },
                         {
-                            "key": "thumb",
+                            "key": "thumbnail",
                             "disabled": true,
                             "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »",
                             "type": "text"
@@ -744,7 +744,7 @@
                             "type": "text"
                         },
                         {
-                            "key": "thumb",
+                            "key": "thumbnail",
                             "disabled": true,
                             "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »",
                             "type": "text"
@@ -865,7 +865,7 @@
                             "type": "text"
                         },
                         {
-                            "key": "thumb",
+                            "key": "thumbnail",
                             "disabled": true,
                             "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »",
                             "type": "text"
@@ -992,7 +992,7 @@
                             "type": "text"
                         },
                         {
-                            "key": "thumb",
+                            "key": "thumbnail",
                             "disabled": true,
                             "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »",
                             "type": "text"
@@ -1204,7 +1204,7 @@
                             "type": "text"
                         },
                         {
-                            "key": "thumb",
+                            "key": "thumbnail",
                             "disabled": true,
                             "description": "Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »",
                             "type": "text"
@@ -1425,134 +1425,6 @@
                     ]
                 },
                 "description": "Use this method to send point on the map. On success, the sent Message is returned."
-            }
-        },
-        {
-            "name": "editMessageLiveLocation",
-            "request": {
-                "method": "POST",
-                "body": {
-                    "mode": "formdata",
-                    "formdata": [
-                        {
-                            "key": "chat_id",
-                            "disabled": true,
-                            "description": "Optional. Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
-                            "type": "text"
-                        },
-                        {
-                            "key": "message_id",
-                            "disabled": true,
-                            "description": "Optional. Required if inline_message_id is not specified. Identifier of the message to edit",
-                            "type": "text"
-                        },
-                        {
-                            "key": "inline_message_id",
-                            "disabled": true,
-                            "description": "Optional. Required if chat_id and message_id are not specified. Identifier of the inline message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "latitude",
-                            "disabled": false,
-                            "description": "Required. Latitude of new location",
-                            "type": "text"
-                        },
-                        {
-                            "key": "longitude",
-                            "disabled": false,
-                            "description": "Required. Longitude of new location",
-                            "type": "text"
-                        },
-                        {
-                            "key": "horizontal_accuracy",
-                            "disabled": true,
-                            "description": "Optional. The radius of uncertainty for the location, measured in meters; 0-1500",
-                            "type": "text"
-                        },
-                        {
-                            "key": "heading",
-                            "disabled": true,
-                            "description": "Optional. Direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.",
-                            "type": "text"
-                        },
-                        {
-                            "key": "proximity_alert_radius",
-                            "disabled": true,
-                            "description": "Optional. The maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.",
-                            "type": "text"
-                        },
-                        {
-                            "key": "reply_markup",
-                            "disabled": true,
-                            "description": "Optional. A JSON-serialized object for a new inline keyboard.",
-                            "type": "text"
-                        }
-                    ]
-                },
-                "url": {
-                    "raw": "https://api.telegram.org/bot{{token}}/editMessageLiveLocation",
-                    "protocol": "https",
-                    "host": [
-                        "api",
-                        "telegram",
-                        "org"
-                    ],
-                    "path": [
-                        "bot{{token}}",
-                        "editMessageLiveLocation"
-                    ]
-                },
-                "description": "Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned."
-            }
-        },
-        {
-            "name": "stopMessageLiveLocation",
-            "request": {
-                "method": "POST",
-                "body": {
-                    "mode": "formdata",
-                    "formdata": [
-                        {
-                            "key": "chat_id",
-                            "disabled": true,
-                            "description": "Optional. Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
-                            "type": "text"
-                        },
-                        {
-                            "key": "message_id",
-                            "disabled": true,
-                            "description": "Optional. Required if inline_message_id is not specified. Identifier of the message with live location to stop",
-                            "type": "text"
-                        },
-                        {
-                            "key": "inline_message_id",
-                            "disabled": true,
-                            "description": "Optional. Required if chat_id and message_id are not specified. Identifier of the inline message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "reply_markup",
-                            "disabled": true,
-                            "description": "Optional. A JSON-serialized object for a new inline keyboard.",
-                            "type": "text"
-                        }
-                    ]
-                },
-                "url": {
-                    "raw": "https://api.telegram.org/bot{{token}}/stopMessageLiveLocation",
-                    "protocol": "https",
-                    "host": [
-                        "api",
-                        "telegram",
-                        "org"
-                    ],
-                    "path": [
-                        "bot{{token}}",
-                        "stopMessageLiveLocation"
-                    ]
-                },
-                "description": "Use this method to stop updating a live location message before live_period expires. On success, if the message is not an inline message, the edited Message is returned, otherwise True is returned."
             }
         },
         {
@@ -3179,7 +3051,7 @@
                         "getChatMember"
                     ]
                 },
-                "description": "Use this method to get information about a member of a chat. The method is guaranteed to work for other users, only if the bot is an administrator in the chat. Returns a ChatMember object on success."
+                "description": "Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a ChatMember object on success."
             }
         },
         {
@@ -3857,6 +3729,142 @@
             }
         },
         {
+            "name": "setMyDescription",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "description",
+                            "disabled": true,
+                            "description": "Optional. New bot description; 0-512 characters. Pass an empty string to remove the dedicated description for the given language.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "language_code",
+                            "disabled": true,
+                            "description": "Optional. A two-letter ISO 639-1 language code. If empty, the description will be applied to all users for whose language there is no dedicated description.",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/setMyDescription",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "setMyDescription"
+                    ]
+                },
+                "description": "Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns True on success."
+            }
+        },
+        {
+            "name": "getMyDescription",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "language_code",
+                            "disabled": true,
+                            "description": "Optional. A two-letter ISO 639-1 language code or an empty string",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/getMyDescription",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "getMyDescription"
+                    ]
+                },
+                "description": "Use this method to get the current bot description for the given user language. Returns BotDescription on success."
+            }
+        },
+        {
+            "name": "setMyShortDescription",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "short_description",
+                            "disabled": true,
+                            "description": "Optional. New short description for the bot; 0-120 characters. Pass an empty string to remove the dedicated short description for the given language.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "language_code",
+                            "disabled": true,
+                            "description": "Optional. A two-letter ISO 639-1 language code. If empty, the short description will be applied to all users for whose language there is no dedicated short description.",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/setMyShortDescription",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "setMyShortDescription"
+                    ]
+                },
+                "description": "Use this method to change the bot's short description, which is shown on the bot's profile page and is sent together with the link when users share the bot. Returns True on success."
+            }
+        },
+        {
+            "name": "getMyShortDescription",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "language_code",
+                            "disabled": true,
+                            "description": "Optional. A two-letter ISO 639-1 language code or an empty string",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/getMyShortDescription",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "getMyShortDescription"
+                    ]
+                },
+                "description": "Use this method to get the current bot short description for the given user language. Returns BotShortDescription on success."
+            }
+        },
+        {
             "name": "setChatMenuButton",
             "request": {
                 "method": "POST",
@@ -3959,7 +3967,7 @@
                         "setMyDefaultAdministratorRights"
                     ]
                 },
-                "description": "Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are are free to modify the list before adding the bot. Returns True on success."
+                "description": "Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns True on success."
             }
         },
         {
@@ -4189,6 +4197,134 @@
             }
         },
         {
+            "name": "editMessageLiveLocation",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": true,
+                            "description": "Optional. Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_id",
+                            "disabled": true,
+                            "description": "Optional. Required if inline_message_id is not specified. Identifier of the message to edit",
+                            "type": "text"
+                        },
+                        {
+                            "key": "inline_message_id",
+                            "disabled": true,
+                            "description": "Optional. Required if chat_id and message_id are not specified. Identifier of the inline message",
+                            "type": "text"
+                        },
+                        {
+                            "key": "latitude",
+                            "disabled": false,
+                            "description": "Required. Latitude of new location",
+                            "type": "text"
+                        },
+                        {
+                            "key": "longitude",
+                            "disabled": false,
+                            "description": "Required. Longitude of new location",
+                            "type": "text"
+                        },
+                        {
+                            "key": "horizontal_accuracy",
+                            "disabled": true,
+                            "description": "Optional. The radius of uncertainty for the location, measured in meters; 0-1500",
+                            "type": "text"
+                        },
+                        {
+                            "key": "heading",
+                            "disabled": true,
+                            "description": "Optional. Direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "proximity_alert_radius",
+                            "disabled": true,
+                            "description": "Optional. The maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "reply_markup",
+                            "disabled": true,
+                            "description": "Optional. A JSON-serialized object for a new inline keyboard.",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/editMessageLiveLocation",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "editMessageLiveLocation"
+                    ]
+                },
+                "description": "Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned."
+            }
+        },
+        {
+            "name": "stopMessageLiveLocation",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": true,
+                            "description": "Optional. Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_id",
+                            "disabled": true,
+                            "description": "Optional. Required if inline_message_id is not specified. Identifier of the message with live location to stop",
+                            "type": "text"
+                        },
+                        {
+                            "key": "inline_message_id",
+                            "disabled": true,
+                            "description": "Optional. Required if chat_id and message_id are not specified. Identifier of the inline message",
+                            "type": "text"
+                        },
+                        {
+                            "key": "reply_markup",
+                            "disabled": true,
+                            "description": "Optional. A JSON-serialized object for a new inline keyboard.",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/stopMessageLiveLocation",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "stopMessageLiveLocation"
+                    ]
+                },
+                "description": "Use this method to stop updating a live location message before live_period expires. On success, if the message is not an inline message, the edited Message is returned, otherwise True is returned."
+            }
+        },
+        {
             "name": "editMessageReplyMarkup",
             "request": {
                 "method": "POST",
@@ -4339,7 +4475,13 @@
                         {
                             "key": "sticker",
                             "disabled": false,
-                            "description": "Required. Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »",
+                            "description": "Required. Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP or .TGS sticker using multipart/form-data. More information on Sending Files ». Video stickers can only be sent by a file_id. Animated stickers can't be sent via an HTTP URL.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "emoji",
+                            "disabled": true,
+                            "description": "Optional. Emoji associated with the sticker; only for just uploaded stickers",
                             "type": "text"
                         },
                         {
@@ -4466,9 +4608,15 @@
                             "type": "text"
                         },
                         {
-                            "key": "png_sticker",
+                            "key": "sticker",
                             "disabled": false,
-                            "description": "Required. PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. More information on Sending Files »",
+                            "description": "Required. A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See https://core.telegram.org/stickers for technical requirements. More information on Sending Files »",
+                            "type": "text"
+                        },
+                        {
+                            "key": "sticker_format",
+                            "disabled": false,
+                            "description": "Required. Format of the sticker, must be one of “static”, “animated”, “video”",
                             "type": "text"
                         }
                     ]
@@ -4486,7 +4634,7 @@
                         "uploadStickerFile"
                     ]
                 },
-                "description": "Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success."
+                "description": "Use this method to upload a file with a sticker for later use in the createNewStickerSet and addStickerToSet methods (the file can be used multiple times). Returns the uploaded File on success."
             }
         },
         {
@@ -4515,39 +4663,27 @@
                             "type": "text"
                         },
                         {
-                            "key": "png_sticker",
-                            "disabled": true,
-                            "description": "Optional. PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »",
+                            "key": "stickers",
+                            "disabled": false,
+                            "description": "Required. A JSON-serialized list of 1-50 initial stickers to be added to the sticker set",
                             "type": "text"
                         },
                         {
-                            "key": "tgs_sticker",
-                            "disabled": true,
-                            "description": "Optional. TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#animated-sticker-requirements for technical requirements",
-                            "type": "text"
-                        },
-                        {
-                            "key": "webm_sticker",
-                            "disabled": true,
-                            "description": "Optional. WEBM video with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#video-sticker-requirements for technical requirements",
+                            "key": "sticker_format",
+                            "disabled": false,
+                            "description": "Required. Format of stickers in the set, must be one of “static”, “animated”, “video”",
                             "type": "text"
                         },
                         {
                             "key": "sticker_type",
                             "disabled": true,
-                            "description": "Optional. Type of stickers in the set, pass “regular” or “mask”. Custom emoji sticker sets can't be created via the Bot API at the moment. By default, a regular sticker set is created.",
+                            "description": "Optional. Type of stickers in the set, pass “regular”, “mask”, or “custom_emoji”. By default, a regular sticker set is created.",
                             "type": "text"
                         },
                         {
-                            "key": "emojis",
-                            "disabled": false,
-                            "description": "Required. One or more emoji corresponding to the sticker",
-                            "type": "text"
-                        },
-                        {
-                            "key": "mask_position",
+                            "key": "needs_repainting",
                             "disabled": true,
-                            "description": "Optional. A JSON-serialized object for position where the mask should be placed on faces",
+                            "description": "Optional. Pass True if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only",
                             "type": "text"
                         }
                     ]
@@ -4565,7 +4701,7 @@
                         "createNewStickerSet"
                     ]
                 },
-                "description": "Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Returns True on success."
+                "description": "Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns True on success."
             }
         },
         {
@@ -4588,33 +4724,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "png_sticker",
-                            "disabled": true,
-                            "description": "Optional. PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »",
-                            "type": "text"
-                        },
-                        {
-                            "key": "tgs_sticker",
-                            "disabled": true,
-                            "description": "Optional. TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#animated-sticker-requirements for technical requirements",
-                            "type": "text"
-                        },
-                        {
-                            "key": "webm_sticker",
-                            "disabled": true,
-                            "description": "Optional. WEBM video with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#video-sticker-requirements for technical requirements",
-                            "type": "text"
-                        },
-                        {
-                            "key": "emojis",
+                            "key": "sticker",
                             "disabled": false,
-                            "description": "Required. One or more emoji corresponding to the sticker",
-                            "type": "text"
-                        },
-                        {
-                            "key": "mask_position",
-                            "disabled": true,
-                            "description": "Optional. A JSON-serialized object for position where the mask should be placed on faces",
+                            "description": "Required. A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn't changed.",
                             "type": "text"
                         }
                     ]
@@ -4632,7 +4744,7 @@
                         "addStickerToSet"
                     ]
                 },
-                "description": "Use this method to add a new sticker to a set created by the bot. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Animated stickers can be added to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success."
+                "description": "Use this method to add a new sticker to a set created by the bot. The format of the added sticker must match the format of the other stickers in the set. Emoji sticker sets can have up to 200 stickers. Animated and video sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success."
             }
         },
         {
@@ -4704,7 +4816,155 @@
             }
         },
         {
-            "name": "setStickerSetThumb",
+            "name": "setStickerEmojiList",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "sticker",
+                            "disabled": false,
+                            "description": "Required. File identifier of the sticker",
+                            "type": "text"
+                        },
+                        {
+                            "key": "emoji_list",
+                            "disabled": false,
+                            "description": "Required. A JSON-serialized list of 1-20 emoji associated with the sticker",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/setStickerEmojiList",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "setStickerEmojiList"
+                    ]
+                },
+                "description": "Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns True on success."
+            }
+        },
+        {
+            "name": "setStickerKeywords",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "sticker",
+                            "disabled": false,
+                            "description": "Required. File identifier of the sticker",
+                            "type": "text"
+                        },
+                        {
+                            "key": "keywords",
+                            "disabled": true,
+                            "description": "Optional. A JSON-serialized list of 0-20 search keywords for the sticker with total length of up to 64 characters",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/setStickerKeywords",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "setStickerKeywords"
+                    ]
+                },
+                "description": "Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns True on success."
+            }
+        },
+        {
+            "name": "setStickerMaskPosition",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "sticker",
+                            "disabled": false,
+                            "description": "Required. File identifier of the sticker",
+                            "type": "text"
+                        },
+                        {
+                            "key": "mask_position",
+                            "disabled": true,
+                            "description": "Optional. A JSON-serialized object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position.",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/setStickerMaskPosition",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "setStickerMaskPosition"
+                    ]
+                },
+                "description": "Use this method to change the mask position of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns True on success."
+            }
+        },
+        {
+            "name": "setStickerSetTitle",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "name",
+                            "disabled": false,
+                            "description": "Required. Sticker set name",
+                            "type": "text"
+                        },
+                        {
+                            "key": "title",
+                            "disabled": false,
+                            "description": "Required. Sticker set title, 1-64 characters",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/setStickerSetTitle",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "setStickerSetTitle"
+                    ]
+                },
+                "description": "Use this method to set the title of a created sticker set. Returns True on success."
+            }
+        },
+        {
+            "name": "setStickerSetThumbnail",
             "request": {
                 "method": "POST",
                 "body": {
@@ -4723,15 +4983,15 @@
                             "type": "text"
                         },
                         {
-                            "key": "thumb",
+                            "key": "thumbnail",
                             "disabled": true,
-                            "description": "Optional. A PNG image with the thumbnail, must be up to 128 kilobytes in size and have width and height exactly 100px, or a TGS animation with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements, or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files ». Animated sticker set thumbnails can't be uploaded via HTTP URL.",
+                            "description": "Optional. A .WEBP or .PNG image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a .TGS animation with a thumbnail up to 32 kilobytes in size (see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements), or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files ». Animated and video sticker set thumbnails can't be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.",
                             "type": "text"
                         }
                     ]
                 },
                 "url": {
-                    "raw": "https://api.telegram.org/bot{{token}}/setStickerSetThumb",
+                    "raw": "https://api.telegram.org/bot{{token}}/setStickerSetThumbnail",
                     "protocol": "https",
                     "host": [
                         "api",
@@ -4740,10 +5000,78 @@
                     ],
                     "path": [
                         "bot{{token}}",
-                        "setStickerSetThumb"
+                        "setStickerSetThumbnail"
                     ]
                 },
-                "description": "Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only. Video thumbnails can be set only for video sticker sets only. Returns True on success."
+                "description": "Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns True on success."
+            }
+        },
+        {
+            "name": "setCustomEmojiStickerSetThumbnail",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "name",
+                            "disabled": false,
+                            "description": "Required. Sticker set name",
+                            "type": "text"
+                        },
+                        {
+                            "key": "custom_emoji_id",
+                            "disabled": true,
+                            "description": "Optional. Custom emoji identifier of a sticker from the sticker set; pass an empty string to drop the thumbnail and use the first sticker as the thumbnail.",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/setCustomEmojiStickerSetThumbnail",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "setCustomEmojiStickerSetThumbnail"
+                    ]
+                },
+                "description": "Use this method to set the thumbnail of a custom emoji sticker set. Returns True on success."
+            }
+        },
+        {
+            "name": "deleteStickerSet",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "name",
+                            "disabled": false,
+                            "description": "Required. Sticker set name",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/deleteStickerSet",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "deleteStickerSet"
+                    ]
+                },
+                "description": "Use this method to delete a sticker set that was created by the bot. Returns True on success."
             }
         },
         {

@@ -1,5 +1,5 @@
 {
-    "version": "6.5.0",
+    "version": "6.6.0",
     "types": [
         {
             "name": "Update",
@@ -1297,7 +1297,7 @@
                     "description": "Duration of the video in seconds as defined by sender"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "PhotoSize"
                     ],
@@ -1400,7 +1400,7 @@
                     "description": "Optional. File size in bytes. It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this value."
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "PhotoSize"
                     ],
@@ -1431,7 +1431,7 @@
                     "description": "Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file."
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "PhotoSize"
                     ],
@@ -1510,7 +1510,7 @@
                     "description": "Duration of the video in seconds as defined by sender"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "PhotoSize"
                     ],
@@ -1581,7 +1581,7 @@
                     "description": "Duration of the video in seconds as defined by sender"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "PhotoSize"
                     ],
@@ -2457,7 +2457,7 @@
                         "int"
                     ],
                     "optional": false,
-                    "description": "Signed 32-bit identifier of the request"
+                    "description": "Signed 32-bit identifier of the request, which will be received back in the UserShared object. Must be unique within the message"
                 },
                 {
                     "name": "user_is_bot",
@@ -2488,7 +2488,7 @@
                         "int"
                     ],
                     "optional": false,
-                    "description": "Signed 32-bit identifier of the request"
+                    "description": "Signed 32-bit identifier of the request, which will be received back in the ChatShared object. Must be unique within the message"
                 },
                 {
                     "name": "chat_is_channel",
@@ -2528,7 +2528,7 @@
                         "ChatAdministratorRights"
                     ],
                     "optional": true,
-                    "description": "Optional. A JSON-serialized object listing the required administrator rights of the user in the chat. If not specified, no additional restrictions are applied."
+                    "description": "Optional. A JSON-serialized object listing the required administrator rights of the user in the chat. The rights must be a superset of bot_administrator_rights. If not specified, no additional restrictions are applied."
                 },
                 {
                     "name": "bot_administrator_rights",
@@ -3928,6 +3928,36 @@
             "extended_by": []
         },
         {
+            "name": "BotDescription",
+            "description": "This object represents the bot's description.",
+            "fields": [
+                {
+                    "name": "description",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "The bot's description"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "BotShortDescription",
+            "description": "This object represents the bot's short description.",
+            "fields": [
+                {
+                    "name": "short_description",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "The bot's short description"
+                }
+            ],
+            "extended_by": []
+        },
+        {
             "name": "MenuButton",
             "description": "This object describes the bot's menu button in a private chat. It should be one of",
             "fields": [],
@@ -4114,7 +4144,7 @@
                     "description": "File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files »"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "InputFile",
                         "string"
@@ -4211,7 +4241,7 @@
                     "description": "File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files »"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "InputFile",
                         "string"
@@ -4300,7 +4330,7 @@
                     "description": "File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files »"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "InputFile",
                         "string"
@@ -4381,7 +4411,7 @@
                     "description": "File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files »"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "InputFile",
                         "string"
@@ -4491,7 +4521,7 @@
                     "description": "True, if the sticker is a video sticker"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "PhotoSize"
                     ],
@@ -4537,6 +4567,15 @@
                     ],
                     "optional": true,
                     "description": "Optional. For custom emoji stickers, unique identifier of the custom emoji"
+                },
+                {
+                    "name": "needs_repainting",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the sticker must be repainted to a text color in messages, the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate color in other places",
+                    "default": true
                 },
                 {
                     "name": "file_size",
@@ -4602,7 +4641,7 @@
                     "description": "List of all set stickers"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "PhotoSize"
                     ],
@@ -4647,6 +4686,46 @@
                     ],
                     "optional": false,
                     "description": "Mask scaling coefficient. For example, 2.0 means double size."
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "InputSticker",
+            "description": "This object describes a sticker to be added to a sticker set.",
+            "fields": [
+                {
+                    "name": "sticker",
+                    "types": [
+                        "InputFile",
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "The added sticker. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. Animated and video stickers can't be uploaded via HTTP URL. More information on Sending Files »"
+                },
+                {
+                    "name": "emoji_list",
+                    "types": [
+                        "Array<string>"
+                    ],
+                    "optional": false,
+                    "description": "List of 1-20 emoji associated with the sticker"
+                },
+                {
+                    "name": "mask_position",
+                    "types": [
+                        "MaskPosition"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Position where the mask should be placed on faces. For “mask” stickers only."
+                },
+                {
+                    "name": "keywords",
+                    "types": [
+                        "Array<string>"
+                    ],
+                    "optional": true,
+                    "description": "Optional. List of 0-20 search keywords for the sticker with total length of up to 64 characters. For “regular” and “custom_emoji” stickers only."
                 }
             ],
             "extended_by": []
@@ -4803,7 +4882,7 @@
                     "description": "Optional. Short description of the result"
                 },
                 {
-                    "name": "thumb_url",
+                    "name": "thumbnail_url",
                     "types": [
                         "string"
                     ],
@@ -4811,7 +4890,7 @@
                     "description": "Optional. Url of the thumbnail for the result"
                 },
                 {
-                    "name": "thumb_width",
+                    "name": "thumbnail_width",
                     "types": [
                         "int"
                     ],
@@ -4819,7 +4898,7 @@
                     "description": "Optional. Thumbnail width"
                 },
                 {
-                    "name": "thumb_height",
+                    "name": "thumbnail_height",
                     "types": [
                         "int"
                     ],
@@ -4859,7 +4938,7 @@
                     "description": "A valid URL of the photo. Photo must be in JPEG format. Photo size must not exceed 5MB"
                 },
                 {
-                    "name": "thumb_url",
+                    "name": "thumbnail_url",
                     "types": [
                         "string"
                     ],
@@ -4995,7 +5074,7 @@
                     "description": "Optional. Duration of the GIF in seconds"
                 },
                 {
-                    "name": "thumb_url",
+                    "name": "thumbnail_url",
                     "types": [
                         "string"
                     ],
@@ -5003,7 +5082,7 @@
                     "description": "URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result"
                 },
                 {
-                    "name": "thumb_mime_type",
+                    "name": "thumbnail_mime_type",
                     "types": [
                         "string"
                     ],
@@ -5116,7 +5195,7 @@
                     "description": "Optional. Video duration in seconds"
                 },
                 {
-                    "name": "thumb_url",
+                    "name": "thumbnail_url",
                     "types": [
                         "string"
                     ],
@@ -5124,7 +5203,7 @@
                     "description": "URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result"
                 },
                 {
-                    "name": "thumb_mime_type",
+                    "name": "thumbnail_mime_type",
                     "types": [
                         "string"
                     ],
@@ -5221,7 +5300,7 @@
                     "description": "MIME type of the content of the video URL, “text/html” or “video/mp4”"
                 },
                 {
-                    "name": "thumb_url",
+                    "name": "thumbnail_url",
                     "types": [
                         "string"
                     ],
@@ -5589,7 +5668,7 @@
                     "description": "Optional. Content of the message to be sent instead of the file"
                 },
                 {
-                    "name": "thumb_url",
+                    "name": "thumbnail_url",
                     "types": [
                         "string"
                     ],
@@ -5597,7 +5676,7 @@
                     "description": "Optional. URL of the thumbnail (JPEG only) for the file"
                 },
                 {
-                    "name": "thumb_width",
+                    "name": "thumbnail_width",
                     "types": [
                         "int"
                     ],
@@ -5605,7 +5684,7 @@
                     "description": "Optional. Thumbnail width"
                 },
                 {
-                    "name": "thumb_height",
+                    "name": "thumbnail_height",
                     "types": [
                         "int"
                     ],
@@ -5709,7 +5788,7 @@
                     "description": "Optional. Content of the message to be sent instead of the location"
                 },
                 {
-                    "name": "thumb_url",
+                    "name": "thumbnail_url",
                     "types": [
                         "string"
                     ],
@@ -5717,7 +5796,7 @@
                     "description": "Optional. Url of the thumbnail for the result"
                 },
                 {
-                    "name": "thumb_width",
+                    "name": "thumbnail_width",
                     "types": [
                         "int"
                     ],
@@ -5725,7 +5804,7 @@
                     "description": "Optional. Thumbnail width"
                 },
                 {
-                    "name": "thumb_height",
+                    "name": "thumbnail_height",
                     "types": [
                         "int"
                     ],
@@ -5837,7 +5916,7 @@
                     "description": "Optional. Content of the message to be sent instead of the venue"
                 },
                 {
-                    "name": "thumb_url",
+                    "name": "thumbnail_url",
                     "types": [
                         "string"
                     ],
@@ -5845,7 +5924,7 @@
                     "description": "Optional. Url of the thumbnail for the result"
                 },
                 {
-                    "name": "thumb_width",
+                    "name": "thumbnail_width",
                     "types": [
                         "int"
                     ],
@@ -5853,7 +5932,7 @@
                     "description": "Optional. Thumbnail width"
                 },
                 {
-                    "name": "thumb_height",
+                    "name": "thumbnail_height",
                     "types": [
                         "int"
                     ],
@@ -5933,7 +6012,7 @@
                     "description": "Optional. Content of the message to be sent instead of the contact"
                 },
                 {
-                    "name": "thumb_url",
+                    "name": "thumbnail_url",
                     "types": [
                         "string"
                     ],
@@ -5941,7 +6020,7 @@
                     "description": "Optional. Url of the thumbnail for the result"
                 },
                 {
-                    "name": "thumb_width",
+                    "name": "thumbnail_width",
                     "types": [
                         "int"
                     ],
@@ -5949,7 +6028,7 @@
                     "description": "Optional. Thumbnail width"
                 },
                 {
-                    "name": "thumb_height",
+                    "name": "thumbnail_height",
                     "types": [
                         "int"
                     ],
@@ -8704,7 +8783,7 @@
                     "description": "Track name"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "InputFile",
                         "string"
@@ -8791,7 +8870,7 @@
                     "description": "File to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "InputFile",
                         "string"
@@ -8934,7 +9013,7 @@
                     "description": "Video height"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "InputFile",
                         "string"
@@ -9085,7 +9164,7 @@
                     "description": "Animation height"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "InputFile",
                         "string"
@@ -9330,7 +9409,7 @@
                     "description": "Video width and height, i.e. diameter of the video message"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "InputFile",
                         "string"
@@ -9567,132 +9646,6 @@
             ],
             "return_types": [
                 "Message"
-            ]
-        },
-        {
-            "name": "editMessageLiveLocation",
-            "description": "Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.",
-            "fields": [
-                {
-                    "name": "chat_id",
-                    "types": [
-                        "int",
-                        "string"
-                    ],
-                    "optional": true,
-                    "description": "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-                },
-                {
-                    "name": "message_id",
-                    "types": [
-                        "int"
-                    ],
-                    "optional": true,
-                    "description": "Required if inline_message_id is not specified. Identifier of the message to edit"
-                },
-                {
-                    "name": "inline_message_id",
-                    "types": [
-                        "string"
-                    ],
-                    "optional": true,
-                    "description": "Required if chat_id and message_id are not specified. Identifier of the inline message"
-                },
-                {
-                    "name": "latitude",
-                    "types": [
-                        "float"
-                    ],
-                    "optional": false,
-                    "description": "Latitude of new location"
-                },
-                {
-                    "name": "longitude",
-                    "types": [
-                        "float"
-                    ],
-                    "optional": false,
-                    "description": "Longitude of new location"
-                },
-                {
-                    "name": "horizontal_accuracy",
-                    "types": [
-                        "float"
-                    ],
-                    "optional": true,
-                    "description": "The radius of uncertainty for the location, measured in meters; 0-1500"
-                },
-                {
-                    "name": "heading",
-                    "types": [
-                        "int"
-                    ],
-                    "optional": true,
-                    "description": "Direction in which the user is moving, in degrees. Must be between 1 and 360 if specified."
-                },
-                {
-                    "name": "proximity_alert_radius",
-                    "types": [
-                        "int"
-                    ],
-                    "optional": true,
-                    "description": "The maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified."
-                },
-                {
-                    "name": "reply_markup",
-                    "types": [
-                        "InlineKeyboardMarkup"
-                    ],
-                    "optional": true,
-                    "description": "A JSON-serialized object for a new inline keyboard."
-                }
-            ],
-            "return_types": [
-                "Message",
-                "bool"
-            ]
-        },
-        {
-            "name": "stopMessageLiveLocation",
-            "description": "Use this method to stop updating a live location message before live_period expires. On success, if the message is not an inline message, the edited Message is returned, otherwise True is returned.",
-            "fields": [
-                {
-                    "name": "chat_id",
-                    "types": [
-                        "int",
-                        "string"
-                    ],
-                    "optional": true,
-                    "description": "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-                },
-                {
-                    "name": "message_id",
-                    "types": [
-                        "int"
-                    ],
-                    "optional": true,
-                    "description": "Required if inline_message_id is not specified. Identifier of the message with live location to stop"
-                },
-                {
-                    "name": "inline_message_id",
-                    "types": [
-                        "string"
-                    ],
-                    "optional": true,
-                    "description": "Required if chat_id and message_id are not specified. Identifier of the inline message"
-                },
-                {
-                    "name": "reply_markup",
-                    "types": [
-                        "InlineKeyboardMarkup"
-                    ],
-                    "optional": true,
-                    "description": "A JSON-serialized object for a new inline keyboard."
-                }
-            ],
-            "return_types": [
-                "Message",
-                "bool"
             ]
         },
         {
@@ -11080,7 +11033,7 @@
         },
         {
             "name": "getChatMember",
-            "description": "Use this method to get information about a member of a chat. The method is guaranteed to work for other users, only if the bot is an administrator in the chat. Returns a ChatMember object on success.",
+            "description": "Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a ChatMember object on success.",
             "fields": [
                 {
                     "name": "chat_id",
@@ -11580,6 +11533,90 @@
             ]
         },
         {
+            "name": "setMyDescription",
+            "description": "Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns True on success.",
+            "fields": [
+                {
+                    "name": "description",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "New bot description; 0-512 characters. Pass an empty string to remove the dedicated description for the given language."
+                },
+                {
+                    "name": "language_code",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "A two-letter ISO 639-1 language code. If empty, the description will be applied to all users for whose language there is no dedicated description."
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "getMyDescription",
+            "description": "Use this method to get the current bot description for the given user language. Returns BotDescription on success.",
+            "fields": [
+                {
+                    "name": "language_code",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "A two-letter ISO 639-1 language code or an empty string"
+                }
+            ],
+            "return_types": [
+                "BotDescription"
+            ]
+        },
+        {
+            "name": "setMyShortDescription",
+            "description": "Use this method to change the bot's short description, which is shown on the bot's profile page and is sent together with the link when users share the bot. Returns True on success.",
+            "fields": [
+                {
+                    "name": "short_description",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "New short description for the bot; 0-120 characters. Pass an empty string to remove the dedicated short description for the given language."
+                },
+                {
+                    "name": "language_code",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "A two-letter ISO 639-1 language code. If empty, the short description will be applied to all users for whose language there is no dedicated short description."
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "getMyShortDescription",
+            "description": "Use this method to get the current bot short description for the given user language. Returns BotShortDescription on success.",
+            "fields": [
+                {
+                    "name": "language_code",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "A two-letter ISO 639-1 language code or an empty string"
+                }
+            ],
+            "return_types": [
+                "BotShortDescription"
+            ]
+        },
+        {
             "name": "setChatMenuButton",
             "description": "Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.",
             "fields": [
@@ -11624,7 +11661,7 @@
         },
         {
             "name": "setMyDefaultAdministratorRights",
-            "description": "Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are are free to modify the list before adding the bot. Returns True on success.",
+            "description": "Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns True on success.",
             "fields": [
                 {
                     "name": "rights",
@@ -11858,6 +11895,132 @@
             ]
         },
         {
+            "name": "editMessageLiveLocation",
+            "description": "Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.",
+            "fields": [
+                {
+                    "name": "chat_id",
+                    "types": [
+                        "int",
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+                },
+                {
+                    "name": "message_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Required if inline_message_id is not specified. Identifier of the message to edit"
+                },
+                {
+                    "name": "inline_message_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Required if chat_id and message_id are not specified. Identifier of the inline message"
+                },
+                {
+                    "name": "latitude",
+                    "types": [
+                        "float"
+                    ],
+                    "optional": false,
+                    "description": "Latitude of new location"
+                },
+                {
+                    "name": "longitude",
+                    "types": [
+                        "float"
+                    ],
+                    "optional": false,
+                    "description": "Longitude of new location"
+                },
+                {
+                    "name": "horizontal_accuracy",
+                    "types": [
+                        "float"
+                    ],
+                    "optional": true,
+                    "description": "The radius of uncertainty for the location, measured in meters; 0-1500"
+                },
+                {
+                    "name": "heading",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Direction in which the user is moving, in degrees. Must be between 1 and 360 if specified."
+                },
+                {
+                    "name": "proximity_alert_radius",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "The maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified."
+                },
+                {
+                    "name": "reply_markup",
+                    "types": [
+                        "InlineKeyboardMarkup"
+                    ],
+                    "optional": true,
+                    "description": "A JSON-serialized object for a new inline keyboard."
+                }
+            ],
+            "return_types": [
+                "Message",
+                "bool"
+            ]
+        },
+        {
+            "name": "stopMessageLiveLocation",
+            "description": "Use this method to stop updating a live location message before live_period expires. On success, if the message is not an inline message, the edited Message is returned, otherwise True is returned.",
+            "fields": [
+                {
+                    "name": "chat_id",
+                    "types": [
+                        "int",
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+                },
+                {
+                    "name": "message_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Required if inline_message_id is not specified. Identifier of the message with live location to stop"
+                },
+                {
+                    "name": "inline_message_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Required if chat_id and message_id are not specified. Identifier of the inline message"
+                },
+                {
+                    "name": "reply_markup",
+                    "types": [
+                        "InlineKeyboardMarkup"
+                    ],
+                    "optional": true,
+                    "description": "A JSON-serialized object for a new inline keyboard."
+                }
+            ],
+            "return_types": [
+                "Message",
+                "bool"
+            ]
+        },
+        {
             "name": "editMessageReplyMarkup",
             "description": "Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.",
             "fields": [
@@ -11988,7 +12151,15 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »"
+                    "description": "Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP or .TGS sticker using multipart/form-data. More information on Sending Files ». Video stickers can only be sent by a file_id. Animated stickers can't be sent via an HTTP URL."
+                },
+                {
+                    "name": "emoji",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Emoji associated with the sticker; only for just uploaded stickers"
                 },
                 {
                     "name": "disable_notification",
@@ -12074,7 +12245,7 @@
         },
         {
             "name": "uploadStickerFile",
-            "description": "Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.",
+            "description": "Use this method to upload a file with a sticker for later use in the createNewStickerSet and addStickerToSet methods (the file can be used multiple times). Returns the uploaded File on success.",
             "fields": [
                 {
                     "name": "user_id",
@@ -12085,12 +12256,20 @@
                     "description": "User identifier of sticker file owner"
                 },
                 {
-                    "name": "png_sticker",
+                    "name": "sticker",
                     "types": [
                         "InputFile"
                     ],
                     "optional": false,
-                    "description": "PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. More information on Sending Files »"
+                    "description": "A file with the sticker in .WEBP, .PNG, .TGS, or .WEBM format. See https://core.telegram.org/stickers for technical requirements. More information on Sending Files »"
+                },
+                {
+                    "name": "sticker_format",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Format of the sticker, must be one of “static”, “animated”, “video”"
                 }
             ],
             "return_types": [
@@ -12099,7 +12278,7 @@
         },
         {
             "name": "createNewStickerSet",
-            "description": "Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Returns True on success.",
+            "description": "Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns True on success.",
             "fields": [
                 {
                     "name": "user_id",
@@ -12126,29 +12305,20 @@
                     "description": "Sticker set title, 1-64 characters"
                 },
                 {
-                    "name": "png_sticker",
+                    "name": "stickers",
                     "types": [
-                        "InputFile",
+                        "Array<InputSticker>"
+                    ],
+                    "optional": false,
+                    "description": "A JSON-serialized list of 1-50 initial stickers to be added to the sticker set"
+                },
+                {
+                    "name": "sticker_format",
+                    "types": [
                         "string"
                     ],
-                    "optional": true,
-                    "description": "PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »"
-                },
-                {
-                    "name": "tgs_sticker",
-                    "types": [
-                        "InputFile"
-                    ],
-                    "optional": true,
-                    "description": "TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#animated-sticker-requirements for technical requirements"
-                },
-                {
-                    "name": "webm_sticker",
-                    "types": [
-                        "InputFile"
-                    ],
-                    "optional": true,
-                    "description": "WEBM video with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#video-sticker-requirements for technical requirements"
+                    "optional": false,
+                    "description": "Format of stickers in the set, must be one of “static”, “animated”, “video”"
                 },
                 {
                     "name": "sticker_type",
@@ -12156,23 +12326,15 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Type of stickers in the set, pass “regular” or “mask”. Custom emoji sticker sets can't be created via the Bot API at the moment. By default, a regular sticker set is created."
+                    "description": "Type of stickers in the set, pass “regular”, “mask”, or “custom_emoji”. By default, a regular sticker set is created."
                 },
                 {
-                    "name": "emojis",
+                    "name": "needs_repainting",
                     "types": [
-                        "string"
-                    ],
-                    "optional": false,
-                    "description": "One or more emoji corresponding to the sticker"
-                },
-                {
-                    "name": "mask_position",
-                    "types": [
-                        "MaskPosition"
+                        "bool"
                     ],
                     "optional": true,
-                    "description": "A JSON-serialized object for position where the mask should be placed on faces"
+                    "description": "Pass True if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only"
                 }
             ],
             "return_types": [
@@ -12181,7 +12343,7 @@
         },
         {
             "name": "addStickerToSet",
-            "description": "Use this method to add a new sticker to a set created by the bot. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Animated stickers can be added to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.",
+            "description": "Use this method to add a new sticker to a set created by the bot. The format of the added sticker must match the format of the other stickers in the set. Emoji sticker sets can have up to 200 stickers. Animated and video sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.",
             "fields": [
                 {
                     "name": "user_id",
@@ -12200,45 +12362,12 @@
                     "description": "Sticker set name"
                 },
                 {
-                    "name": "png_sticker",
+                    "name": "sticker",
                     "types": [
-                        "InputFile",
-                        "string"
-                    ],
-                    "optional": true,
-                    "description": "PNG image with the sticker, must be up to 512 kilobytes in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files »"
-                },
-                {
-                    "name": "tgs_sticker",
-                    "types": [
-                        "InputFile"
-                    ],
-                    "optional": true,
-                    "description": "TGS animation with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#animated-sticker-requirements for technical requirements"
-                },
-                {
-                    "name": "webm_sticker",
-                    "types": [
-                        "InputFile"
-                    ],
-                    "optional": true,
-                    "description": "WEBM video with the sticker, uploaded using multipart/form-data. See https://core.telegram.org/stickers#video-sticker-requirements for technical requirements"
-                },
-                {
-                    "name": "emojis",
-                    "types": [
-                        "string"
+                        "InputSticker"
                     ],
                     "optional": false,
-                    "description": "One or more emoji corresponding to the sticker"
-                },
-                {
-                    "name": "mask_position",
-                    "types": [
-                        "MaskPosition"
-                    ],
-                    "optional": true,
-                    "description": "A JSON-serialized object for position where the mask should be placed on faces"
+                    "description": "A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set isn't changed."
                 }
             ],
             "return_types": [
@@ -12288,8 +12417,108 @@
             ]
         },
         {
-            "name": "setStickerSetThumb",
-            "description": "Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only. Video thumbnails can be set only for video sticker sets only. Returns True on success.",
+            "name": "setStickerEmojiList",
+            "description": "Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns True on success.",
+            "fields": [
+                {
+                    "name": "sticker",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "File identifier of the sticker"
+                },
+                {
+                    "name": "emoji_list",
+                    "types": [
+                        "Array<string>"
+                    ],
+                    "optional": false,
+                    "description": "A JSON-serialized list of 1-20 emoji associated with the sticker"
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "setStickerKeywords",
+            "description": "Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns True on success.",
+            "fields": [
+                {
+                    "name": "sticker",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "File identifier of the sticker"
+                },
+                {
+                    "name": "keywords",
+                    "types": [
+                        "Array<string>"
+                    ],
+                    "optional": true,
+                    "description": "A JSON-serialized list of 0-20 search keywords for the sticker with total length of up to 64 characters"
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "setStickerMaskPosition",
+            "description": "Use this method to change the mask position of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns True on success.",
+            "fields": [
+                {
+                    "name": "sticker",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "File identifier of the sticker"
+                },
+                {
+                    "name": "mask_position",
+                    "types": [
+                        "MaskPosition"
+                    ],
+                    "optional": true,
+                    "description": "A JSON-serialized object with the position where the mask should be placed on faces. Omit the parameter to remove the mask position."
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "setStickerSetTitle",
+            "description": "Use this method to set the title of a created sticker set. Returns True on success.",
+            "fields": [
+                {
+                    "name": "name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Sticker set name"
+                },
+                {
+                    "name": "title",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Sticker set title, 1-64 characters"
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "setStickerSetThumbnail",
+            "description": "Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns True on success.",
             "fields": [
                 {
                     "name": "name",
@@ -12308,13 +12537,55 @@
                     "description": "User identifier of the sticker set owner"
                 },
                 {
-                    "name": "thumb",
+                    "name": "thumbnail",
                     "types": [
                         "InputFile",
                         "string"
                     ],
                     "optional": true,
-                    "description": "A PNG image with the thumbnail, must be up to 128 kilobytes in size and have width and height exactly 100px, or a TGS animation with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements, or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files ». Animated sticker set thumbnails can't be uploaded via HTTP URL."
+                    "description": "A .WEBP or .PNG image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a .TGS animation with a thumbnail up to 32 kilobytes in size (see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements), or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files ». Animated and video sticker set thumbnails can't be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail."
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "setCustomEmojiStickerSetThumbnail",
+            "description": "Use this method to set the thumbnail of a custom emoji sticker set. Returns True on success.",
+            "fields": [
+                {
+                    "name": "name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Sticker set name"
+                },
+                {
+                    "name": "custom_emoji_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Custom emoji identifier of a sticker from the sticker set; pass an empty string to drop the thumbnail and use the first sticker as the thumbnail."
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "deleteStickerSet",
+            "description": "Use this method to delete a sticker set that was created by the bot. Returns True on success.",
+            "fields": [
+                {
+                    "name": "name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Sticker set name"
                 }
             ],
             "return_types": [

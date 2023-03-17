@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "6.5.0"
+        "version": "6.6.0"
     },
     "servers": [
         {
@@ -751,7 +751,7 @@
                     "duration": {
                         "type": "integer"
                     },
-                    "thumb": {
+                    "thumbnail": {
                         "$ref": "#/components/schemas/PhotoSize"
                     },
                     "file_name": {
@@ -798,7 +798,7 @@
                     "file_size": {
                         "type": "integer"
                     },
-                    "thumb": {
+                    "thumbnail": {
                         "$ref": "#/components/schemas/PhotoSize"
                     }
                 },
@@ -817,7 +817,7 @@
                     "file_unique_id": {
                         "type": "string"
                     },
-                    "thumb": {
+                    "thumbnail": {
                         "$ref": "#/components/schemas/PhotoSize"
                     },
                     "file_name": {
@@ -857,7 +857,7 @@
                     "duration": {
                         "type": "integer"
                     },
-                    "thumb": {
+                    "thumbnail": {
                         "$ref": "#/components/schemas/PhotoSize"
                     },
                     "file_name": {
@@ -893,7 +893,7 @@
                     "duration": {
                         "type": "integer"
                     },
-                    "thumb": {
+                    "thumbnail": {
                         "$ref": "#/components/schemas/PhotoSize"
                     },
                     "file_size": {
@@ -2304,6 +2304,30 @@
                 },
                 "type": "object"
             },
+            "BotDescription": {
+                "description": "This object represents the bot's description.",
+                "required": [
+                    "description"
+                ],
+                "properties": {
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "BotShortDescription": {
+                "description": "This object represents the bot's short description.",
+                "required": [
+                    "short_description"
+                ],
+                "properties": {
+                    "short_description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "MenuButton": {
                 "description": "This object describes the bot's menu button in a private chat. It should be one of",
                 "anyOf": [
@@ -2443,7 +2467,7 @@
                     "media": {
                         "type": "string"
                     },
-                    "thumb": {
+                    "thumbnail": {
                         "anyOf": [
                             {
                                 "$ref": "#/components/schemas/InputFile"
@@ -2497,7 +2521,7 @@
                     "media": {
                         "type": "string"
                     },
-                    "thumb": {
+                    "thumbnail": {
                         "anyOf": [
                             {
                                 "$ref": "#/components/schemas/InputFile"
@@ -2548,7 +2572,7 @@
                     "media": {
                         "type": "string"
                     },
-                    "thumb": {
+                    "thumbnail": {
                         "anyOf": [
                             {
                                 "$ref": "#/components/schemas/InputFile"
@@ -2596,7 +2620,7 @@
                     "media": {
                         "type": "string"
                     },
-                    "thumb": {
+                    "thumbnail": {
                         "anyOf": [
                             {
                                 "$ref": "#/components/schemas/InputFile"
@@ -2661,7 +2685,7 @@
                     "is_video": {
                         "type": "boolean"
                     },
-                    "thumb": {
+                    "thumbnail": {
                         "$ref": "#/components/schemas/PhotoSize"
                     },
                     "emoji": {
@@ -2678,6 +2702,10 @@
                     },
                     "custom_emoji_id": {
                         "type": "string"
+                    },
+                    "needs_repainting": {
+                        "type": "boolean",
+                        "default": true
                     },
                     "file_size": {
                         "type": "integer"
@@ -2717,7 +2745,7 @@
                             "$ref": "#/components/schemas/Sticker"
                         }
                     },
-                    "thumb": {
+                    "thumbnail": {
                         "$ref": "#/components/schemas/PhotoSize"
                     }
                 },
@@ -2743,6 +2771,41 @@
                     },
                     "scale": {
                         "type": "number"
+                    }
+                },
+                "type": "object"
+            },
+            "InputSticker": {
+                "description": "This object describes a sticker to be added to a sticker set.",
+                "required": [
+                    "sticker",
+                    "emoji_list"
+                ],
+                "properties": {
+                    "sticker": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/InputFile"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    "emoji_list": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "mask_position": {
+                        "$ref": "#/components/schemas/MaskPosition"
+                    },
+                    "keywords": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
                     }
                 },
                 "type": "object"
@@ -2876,13 +2939,13 @@
                     "description": {
                         "type": "string"
                     },
-                    "thumb_url": {
+                    "thumbnail_url": {
                         "type": "string"
                     },
-                    "thumb_width": {
+                    "thumbnail_width": {
                         "type": "integer"
                     },
-                    "thumb_height": {
+                    "thumbnail_height": {
                         "type": "integer"
                     }
                 },
@@ -2894,7 +2957,7 @@
                     "type",
                     "id",
                     "photo_url",
-                    "thumb_url"
+                    "thumbnail_url"
                 ],
                 "properties": {
                     "type": {
@@ -2907,7 +2970,7 @@
                     "photo_url": {
                         "type": "string"
                     },
-                    "thumb_url": {
+                    "thumbnail_url": {
                         "type": "string"
                     },
                     "photo_width": {
@@ -2949,7 +3012,7 @@
                     "type",
                     "id",
                     "gif_url",
-                    "thumb_url"
+                    "thumbnail_url"
                 ],
                 "properties": {
                     "type": {
@@ -2971,10 +3034,10 @@
                     "gif_duration": {
                         "type": "integer"
                     },
-                    "thumb_url": {
+                    "thumbnail_url": {
                         "type": "string"
                     },
-                    "thumb_mime_type": {
+                    "thumbnail_mime_type": {
                         "type": "string",
                         "default": "image/jpeg"
                     },
@@ -3008,7 +3071,7 @@
                     "type",
                     "id",
                     "mpeg4_url",
-                    "thumb_url"
+                    "thumbnail_url"
                 ],
                 "properties": {
                     "type": {
@@ -3030,10 +3093,10 @@
                     "mpeg4_duration": {
                         "type": "integer"
                     },
-                    "thumb_url": {
+                    "thumbnail_url": {
                         "type": "string"
                     },
-                    "thumb_mime_type": {
+                    "thumbnail_mime_type": {
                         "type": "string",
                         "default": "image/jpeg"
                     },
@@ -3068,7 +3131,7 @@
                     "id",
                     "video_url",
                     "mime_type",
-                    "thumb_url",
+                    "thumbnail_url",
                     "title"
                 ],
                 "properties": {
@@ -3085,7 +3148,7 @@
                     "mime_type": {
                         "type": "string"
                     },
-                    "thumb_url": {
+                    "thumbnail_url": {
                         "type": "string"
                     },
                     "title": {
@@ -3266,13 +3329,13 @@
                     "input_message_content": {
                         "$ref": "#/components/schemas/InputMessageContent"
                     },
-                    "thumb_url": {
+                    "thumbnail_url": {
                         "type": "string"
                     },
-                    "thumb_width": {
+                    "thumbnail_width": {
                         "type": "integer"
                     },
-                    "thumb_height": {
+                    "thumbnail_height": {
                         "type": "integer"
                     }
                 },
@@ -3322,13 +3385,13 @@
                     "input_message_content": {
                         "$ref": "#/components/schemas/InputMessageContent"
                     },
-                    "thumb_url": {
+                    "thumbnail_url": {
                         "type": "string"
                     },
-                    "thumb_width": {
+                    "thumbnail_width": {
                         "type": "integer"
                     },
-                    "thumb_height": {
+                    "thumbnail_height": {
                         "type": "integer"
                     }
                 },
@@ -3382,13 +3445,13 @@
                     "input_message_content": {
                         "$ref": "#/components/schemas/InputMessageContent"
                     },
-                    "thumb_url": {
+                    "thumbnail_url": {
                         "type": "string"
                     },
-                    "thumb_width": {
+                    "thumbnail_width": {
                         "type": "integer"
                     },
-                    "thumb_height": {
+                    "thumbnail_height": {
                         "type": "integer"
                     }
                 },
@@ -3428,13 +3491,13 @@
                     "input_message_content": {
                         "$ref": "#/components/schemas/InputMessageContent"
                     },
-                    "thumb_url": {
+                    "thumbnail_url": {
                         "type": "string"
                     },
-                    "thumb_width": {
+                    "thumbnail_width": {
                         "type": "integer"
                     },
-                    "thumb_height": {
+                    "thumbnail_height": {
                         "type": "integer"
                     }
                 },
@@ -6441,7 +6504,7 @@
                                     "title": {
                                         "type": "string"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -6534,7 +6597,7 @@
                                     "title": {
                                         "type": "string"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -6627,7 +6690,7 @@
                                     "title": {
                                         "type": "string"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -6757,7 +6820,7 @@
                                             }
                                         ]
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -6844,7 +6907,7 @@
                                             }
                                         ]
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -6931,7 +6994,7 @@
                                             }
                                         ]
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -7085,7 +7148,7 @@
                                     "height": {
                                         "type": "integer"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -7184,7 +7247,7 @@
                                     "height": {
                                         "type": "integer"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -7283,7 +7346,7 @@
                                     "height": {
                                         "type": "integer"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -7440,7 +7503,7 @@
                                     "height": {
                                         "type": "integer"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -7536,7 +7599,7 @@
                                     "height": {
                                         "type": "integer"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -7632,7 +7695,7 @@
                                     "height": {
                                         "type": "integer"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -8072,7 +8135,7 @@
                                     "length": {
                                         "type": "integer"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -8150,7 +8213,7 @@
                                     "length": {
                                         "type": "integer"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -8228,7 +8291,7 @@
                                     "length": {
                                         "type": "integer"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -8783,348 +8846,6 @@
                                             "properties": {
                                                 "result": {
                                                     "$ref": "#/components/schemas/Message"
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/BadRequest"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/Forbidden"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/NotFound"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/Conflict"
-                    },
-                    "429": {
-                        "$ref": "#/components/responses/TooManyRequests"
-                    },
-                    "5XX": {
-                        "$ref": "#/components/responses/ServerError"
-                    },
-                    "default": {
-                        "$ref": "#/components/responses/UnknownError"
-                    }
-                }
-            }
-        },
-        "/editMessageLiveLocation": {
-            "description": "Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.",
-            "post": {
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "chat_id": {
-                                        "anyOf": [
-                                            {
-                                                "type": "integer"
-                                            },
-                                            {
-                                                "type": "string"
-                                            }
-                                        ]
-                                    },
-                                    "message_id": {
-                                        "type": "integer"
-                                    },
-                                    "inline_message_id": {
-                                        "type": "string"
-                                    },
-                                    "latitude": {
-                                        "type": "number"
-                                    },
-                                    "longitude": {
-                                        "type": "number"
-                                    },
-                                    "horizontal_accuracy": {
-                                        "type": "number"
-                                    },
-                                    "heading": {
-                                        "type": "integer"
-                                    },
-                                    "proximity_alert_radius": {
-                                        "type": "integer"
-                                    },
-                                    "reply_markup": {
-                                        "$ref": "#/components/schemas/InlineKeyboardMarkup"
-                                    }
-                                },
-                                "required": [
-                                    "latitude",
-                                    "longitude"
-                                ]
-                            }
-                        },
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "chat_id": {
-                                        "anyOf": [
-                                            {
-                                                "type": "integer"
-                                            },
-                                            {
-                                                "type": "string"
-                                            }
-                                        ]
-                                    },
-                                    "message_id": {
-                                        "type": "integer"
-                                    },
-                                    "inline_message_id": {
-                                        "type": "string"
-                                    },
-                                    "latitude": {
-                                        "type": "number"
-                                    },
-                                    "longitude": {
-                                        "type": "number"
-                                    },
-                                    "horizontal_accuracy": {
-                                        "type": "number"
-                                    },
-                                    "heading": {
-                                        "type": "integer"
-                                    },
-                                    "proximity_alert_radius": {
-                                        "type": "integer"
-                                    },
-                                    "reply_markup": {
-                                        "$ref": "#/components/schemas/InlineKeyboardMarkup"
-                                    }
-                                },
-                                "required": [
-                                    "latitude",
-                                    "longitude"
-                                ]
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "chat_id": {
-                                        "anyOf": [
-                                            {
-                                                "type": "integer"
-                                            },
-                                            {
-                                                "type": "string"
-                                            }
-                                        ]
-                                    },
-                                    "message_id": {
-                                        "type": "integer"
-                                    },
-                                    "inline_message_id": {
-                                        "type": "string"
-                                    },
-                                    "latitude": {
-                                        "type": "number"
-                                    },
-                                    "longitude": {
-                                        "type": "number"
-                                    },
-                                    "horizontal_accuracy": {
-                                        "type": "number"
-                                    },
-                                    "heading": {
-                                        "type": "integer"
-                                    },
-                                    "proximity_alert_radius": {
-                                        "type": "integer"
-                                    },
-                                    "reply_markup": {
-                                        "$ref": "#/components/schemas/InlineKeyboardMarkup"
-                                    }
-                                },
-                                "required": [
-                                    "latitude",
-                                    "longitude"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request was successful, the result is returned.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/Success"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "result": {
-                                                    "anyOf": [
-                                                        {
-                                                            "$ref": "#/components/schemas/Message"
-                                                        },
-                                                        {
-                                                            "type": "boolean"
-                                                        }
-                                                    ]
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/BadRequest"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "403": {
-                        "$ref": "#/components/responses/Forbidden"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/NotFound"
-                    },
-                    "409": {
-                        "$ref": "#/components/responses/Conflict"
-                    },
-                    "429": {
-                        "$ref": "#/components/responses/TooManyRequests"
-                    },
-                    "5XX": {
-                        "$ref": "#/components/responses/ServerError"
-                    },
-                    "default": {
-                        "$ref": "#/components/responses/UnknownError"
-                    }
-                }
-            }
-        },
-        "/stopMessageLiveLocation": {
-            "description": "Use this method to stop updating a live location message before live_period expires. On success, if the message is not an inline message, the edited Message is returned, otherwise True is returned.",
-            "post": {
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "chat_id": {
-                                        "anyOf": [
-                                            {
-                                                "type": "integer"
-                                            },
-                                            {
-                                                "type": "string"
-                                            }
-                                        ]
-                                    },
-                                    "message_id": {
-                                        "type": "integer"
-                                    },
-                                    "inline_message_id": {
-                                        "type": "string"
-                                    },
-                                    "reply_markup": {
-                                        "$ref": "#/components/schemas/InlineKeyboardMarkup"
-                                    }
-                                }
-                            }
-                        },
-                        "application/x-www-form-urlencoded": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "chat_id": {
-                                        "anyOf": [
-                                            {
-                                                "type": "integer"
-                                            },
-                                            {
-                                                "type": "string"
-                                            }
-                                        ]
-                                    },
-                                    "message_id": {
-                                        "type": "integer"
-                                    },
-                                    "inline_message_id": {
-                                        "type": "string"
-                                    },
-                                    "reply_markup": {
-                                        "$ref": "#/components/schemas/InlineKeyboardMarkup"
-                                    }
-                                }
-                            }
-                        },
-                        "multipart/form-data": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "chat_id": {
-                                        "anyOf": [
-                                            {
-                                                "type": "integer"
-                                            },
-                                            {
-                                                "type": "string"
-                                            }
-                                        ]
-                                    },
-                                    "message_id": {
-                                        "type": "integer"
-                                    },
-                                    "inline_message_id": {
-                                        "type": "string"
-                                    },
-                                    "reply_markup": {
-                                        "$ref": "#/components/schemas/InlineKeyboardMarkup"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request was successful, the result is returned.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/Success"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "result": {
-                                                    "anyOf": [
-                                                        {
-                                                            "$ref": "#/components/schemas/Message"
-                                                        },
-                                                        {
-                                                            "type": "boolean"
-                                                        }
-                                                    ]
                                                 }
                                             }
                                         }
@@ -14053,7 +13774,7 @@
             }
         },
         "/getChatMember": {
-            "description": "Use this method to get information about a member of a chat. The method is guaranteed to work for other users, only if the bot is an administrator in the chat. Returns a ChatMember object on success.",
+            "description": "Use this method to get information about a member of a chat. The method is only guaranteed to work for other users if the bot is an administrator in the chat. Returns a ChatMember object on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -16384,6 +16105,372 @@
                 }
             }
         },
+        "/setMyDescription": {
+            "description": "Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "language_code": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "language_code": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "language_code": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/getMyDescription": {
+            "description": "Use this method to get the current bot description for the given user language. Returns BotDescription on success.",
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "language_code": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "language_code": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "language_code": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/BotDescription"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/setMyShortDescription": {
+            "description": "Use this method to change the bot's short description, which is shown on the bot's profile page and is sent together with the link when users share the bot. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "short_description": {
+                                        "type": "string"
+                                    },
+                                    "language_code": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "short_description": {
+                                        "type": "string"
+                                    },
+                                    "language_code": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "short_description": {
+                                        "type": "string"
+                                    },
+                                    "language_code": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/getMyShortDescription": {
+            "description": "Use this method to get the current bot short description for the given user language. Returns BotShortDescription on success.",
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "language_code": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "language_code": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "language_code": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/BotShortDescription"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
         "/setChatMenuButton": {
             "description": "Use this method to change the bot's menu button in a private chat, or the default menu button. Returns True on success.",
             "post": {
@@ -16571,7 +16658,7 @@
             }
         },
         "/setMyDefaultAdministratorRights": {
-            "description": "Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are are free to modify the list before adding the bot. Returns True on success.",
+            "description": "Use this method to change the default administrator rights requested by the bot when it's added as an administrator to groups or channels. These rights will be suggested to users, but they are free to modify the list before adding the bot. Returns True on success.",
             "post": {
                 "requestBody": {
                     "content": {
@@ -17289,6 +17376,348 @@
                 }
             }
         },
+        "/editMessageLiveLocation": {
+            "description": "Use this method to edit live location messages. A location can be edited until its live_period expires or editing is explicitly disabled by a call to stopMessageLiveLocation. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_id": {
+                                        "type": "integer"
+                                    },
+                                    "inline_message_id": {
+                                        "type": "string"
+                                    },
+                                    "latitude": {
+                                        "type": "number"
+                                    },
+                                    "longitude": {
+                                        "type": "number"
+                                    },
+                                    "horizontal_accuracy": {
+                                        "type": "number"
+                                    },
+                                    "heading": {
+                                        "type": "integer"
+                                    },
+                                    "proximity_alert_radius": {
+                                        "type": "integer"
+                                    },
+                                    "reply_markup": {
+                                        "$ref": "#/components/schemas/InlineKeyboardMarkup"
+                                    }
+                                },
+                                "required": [
+                                    "latitude",
+                                    "longitude"
+                                ]
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_id": {
+                                        "type": "integer"
+                                    },
+                                    "inline_message_id": {
+                                        "type": "string"
+                                    },
+                                    "latitude": {
+                                        "type": "number"
+                                    },
+                                    "longitude": {
+                                        "type": "number"
+                                    },
+                                    "horizontal_accuracy": {
+                                        "type": "number"
+                                    },
+                                    "heading": {
+                                        "type": "integer"
+                                    },
+                                    "proximity_alert_radius": {
+                                        "type": "integer"
+                                    },
+                                    "reply_markup": {
+                                        "$ref": "#/components/schemas/InlineKeyboardMarkup"
+                                    }
+                                },
+                                "required": [
+                                    "latitude",
+                                    "longitude"
+                                ]
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_id": {
+                                        "type": "integer"
+                                    },
+                                    "inline_message_id": {
+                                        "type": "string"
+                                    },
+                                    "latitude": {
+                                        "type": "number"
+                                    },
+                                    "longitude": {
+                                        "type": "number"
+                                    },
+                                    "horizontal_accuracy": {
+                                        "type": "number"
+                                    },
+                                    "heading": {
+                                        "type": "integer"
+                                    },
+                                    "proximity_alert_radius": {
+                                        "type": "integer"
+                                    },
+                                    "reply_markup": {
+                                        "$ref": "#/components/schemas/InlineKeyboardMarkup"
+                                    }
+                                },
+                                "required": [
+                                    "latitude",
+                                    "longitude"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "anyOf": [
+                                                        {
+                                                            "$ref": "#/components/schemas/Message"
+                                                        },
+                                                        {
+                                                            "type": "boolean"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/stopMessageLiveLocation": {
+            "description": "Use this method to stop updating a live location message before live_period expires. On success, if the message is not an inline message, the edited Message is returned, otherwise True is returned.",
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_id": {
+                                        "type": "integer"
+                                    },
+                                    "inline_message_id": {
+                                        "type": "string"
+                                    },
+                                    "reply_markup": {
+                                        "$ref": "#/components/schemas/InlineKeyboardMarkup"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_id": {
+                                        "type": "integer"
+                                    },
+                                    "inline_message_id": {
+                                        "type": "string"
+                                    },
+                                    "reply_markup": {
+                                        "$ref": "#/components/schemas/InlineKeyboardMarkup"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "message_id": {
+                                        "type": "integer"
+                                    },
+                                    "inline_message_id": {
+                                        "type": "string"
+                                    },
+                                    "reply_markup": {
+                                        "$ref": "#/components/schemas/InlineKeyboardMarkup"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "anyOf": [
+                                                        {
+                                                            "$ref": "#/components/schemas/Message"
+                                                        },
+                                                        {
+                                                            "type": "boolean"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
         "/editMessageReplyMarkup": {
             "description": "Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.",
             "post": {
@@ -17737,6 +18166,9 @@
                                             }
                                         ]
                                     },
+                                    "emoji": {
+                                        "type": "string"
+                                    },
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
@@ -17799,6 +18231,9 @@
                                             }
                                         ]
                                     },
+                                    "emoji": {
+                                        "type": "string"
+                                    },
                                     "disable_notification": {
                                         "type": "boolean"
                                     },
@@ -17860,6 +18295,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "emoji": {
+                                        "type": "string"
                                     },
                                     "disable_notification": {
                                         "type": "boolean"
@@ -18151,7 +18589,7 @@
             }
         },
         "/uploadStickerFile": {
-            "description": "Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded File on success.",
+            "description": "Use this method to upload a file with a sticker for later use in the createNewStickerSet and addStickerToSet methods (the file can be used multiple times). Returns the uploaded File on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -18161,14 +18599,18 @@
                                 "type": "object",
                                 "required": [
                                     "user_id",
-                                    "png_sticker"
+                                    "sticker",
+                                    "sticker_format"
                                 ],
                                 "properties": {
                                     "user_id": {
                                         "type": "integer"
                                     },
-                                    "png_sticker": {
+                                    "sticker": {
                                         "$ref": "#/components/schemas/InputFile"
+                                    },
+                                    "sticker_format": {
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -18178,14 +18620,18 @@
                                 "type": "object",
                                 "required": [
                                     "user_id",
-                                    "png_sticker"
+                                    "sticker",
+                                    "sticker_format"
                                 ],
                                 "properties": {
                                     "user_id": {
                                         "type": "integer"
                                     },
-                                    "png_sticker": {
+                                    "sticker": {
                                         "$ref": "#/components/schemas/InputFile"
+                                    },
+                                    "sticker_format": {
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -18195,14 +18641,18 @@
                                 "type": "object",
                                 "required": [
                                     "user_id",
-                                    "png_sticker"
+                                    "sticker",
+                                    "sticker_format"
                                 ],
                                 "properties": {
                                     "user_id": {
                                         "type": "integer"
                                     },
-                                    "png_sticker": {
+                                    "sticker": {
                                         "$ref": "#/components/schemas/InputFile"
+                                    },
+                                    "sticker_format": {
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -18260,7 +18710,7 @@
             }
         },
         "/createNewStickerSet": {
-            "description": "Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Returns True on success.",
+            "description": "Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set thus created. Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -18272,7 +18722,8 @@
                                     "user_id",
                                     "name",
                                     "title",
-                                    "emojis"
+                                    "stickers",
+                                    "sticker_format"
                                 ],
                                 "properties": {
                                     "user_id": {
@@ -18284,30 +18735,20 @@
                                     "title": {
                                         "type": "string"
                                     },
-                                    "png_sticker": {
-                                        "anyOf": [
-                                            {
-                                                "$ref": "#/components/schemas/InputFile"
-                                            },
-                                            {
-                                                "type": "string"
-                                            }
-                                        ]
+                                    "stickers": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/InputSticker"
+                                        }
                                     },
-                                    "tgs_sticker": {
-                                        "$ref": "#/components/schemas/InputFile"
-                                    },
-                                    "webm_sticker": {
-                                        "$ref": "#/components/schemas/InputFile"
+                                    "sticker_format": {
+                                        "type": "string"
                                     },
                                     "sticker_type": {
                                         "type": "string"
                                     },
-                                    "emojis": {
-                                        "type": "string"
-                                    },
-                                    "mask_position": {
-                                        "$ref": "#/components/schemas/MaskPosition"
+                                    "needs_repainting": {
+                                        "type": "boolean"
                                     }
                                 }
                             }
@@ -18319,7 +18760,8 @@
                                     "user_id",
                                     "name",
                                     "title",
-                                    "emojis"
+                                    "stickers",
+                                    "sticker_format"
                                 ],
                                 "properties": {
                                     "user_id": {
@@ -18331,30 +18773,20 @@
                                     "title": {
                                         "type": "string"
                                     },
-                                    "png_sticker": {
-                                        "anyOf": [
-                                            {
-                                                "$ref": "#/components/schemas/InputFile"
-                                            },
-                                            {
-                                                "type": "string"
-                                            }
-                                        ]
+                                    "stickers": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/InputSticker"
+                                        }
                                     },
-                                    "tgs_sticker": {
-                                        "$ref": "#/components/schemas/InputFile"
-                                    },
-                                    "webm_sticker": {
-                                        "$ref": "#/components/schemas/InputFile"
+                                    "sticker_format": {
+                                        "type": "string"
                                     },
                                     "sticker_type": {
                                         "type": "string"
                                     },
-                                    "emojis": {
-                                        "type": "string"
-                                    },
-                                    "mask_position": {
-                                        "$ref": "#/components/schemas/MaskPosition"
+                                    "needs_repainting": {
+                                        "type": "boolean"
                                     }
                                 }
                             }
@@ -18366,7 +18798,8 @@
                                     "user_id",
                                     "name",
                                     "title",
-                                    "emojis"
+                                    "stickers",
+                                    "sticker_format"
                                 ],
                                 "properties": {
                                     "user_id": {
@@ -18378,30 +18811,20 @@
                                     "title": {
                                         "type": "string"
                                     },
-                                    "png_sticker": {
-                                        "anyOf": [
-                                            {
-                                                "$ref": "#/components/schemas/InputFile"
-                                            },
-                                            {
-                                                "type": "string"
-                                            }
-                                        ]
+                                    "stickers": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/InputSticker"
+                                        }
                                     },
-                                    "tgs_sticker": {
-                                        "$ref": "#/components/schemas/InputFile"
-                                    },
-                                    "webm_sticker": {
-                                        "$ref": "#/components/schemas/InputFile"
+                                    "sticker_format": {
+                                        "type": "string"
                                     },
                                     "sticker_type": {
                                         "type": "string"
                                     },
-                                    "emojis": {
-                                        "type": "string"
-                                    },
-                                    "mask_position": {
-                                        "$ref": "#/components/schemas/MaskPosition"
+                                    "needs_repainting": {
+                                        "type": "boolean"
                                     }
                                 }
                             }
@@ -18459,7 +18882,7 @@
             }
         },
         "/addStickerToSet": {
-            "description": "Use this method to add a new sticker to a set created by the bot. You must use exactly one of the fields png_sticker, tgs_sticker, or webm_sticker. Animated stickers can be added to animated sticker sets and only to them. Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.",
+            "description": "Use this method to add a new sticker to a set created by the bot. The format of the added sticker must match the format of the other stickers in the set. Emoji sticker sets can have up to 200 stickers. Animated and video sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -18470,7 +18893,7 @@
                                 "required": [
                                     "user_id",
                                     "name",
-                                    "emojis"
+                                    "sticker"
                                 ],
                                 "properties": {
                                     "user_id": {
@@ -18479,27 +18902,8 @@
                                     "name": {
                                         "type": "string"
                                     },
-                                    "png_sticker": {
-                                        "anyOf": [
-                                            {
-                                                "$ref": "#/components/schemas/InputFile"
-                                            },
-                                            {
-                                                "type": "string"
-                                            }
-                                        ]
-                                    },
-                                    "tgs_sticker": {
-                                        "$ref": "#/components/schemas/InputFile"
-                                    },
-                                    "webm_sticker": {
-                                        "$ref": "#/components/schemas/InputFile"
-                                    },
-                                    "emojis": {
-                                        "type": "string"
-                                    },
-                                    "mask_position": {
-                                        "$ref": "#/components/schemas/MaskPosition"
+                                    "sticker": {
+                                        "$ref": "#/components/schemas/InputSticker"
                                     }
                                 }
                             }
@@ -18510,7 +18914,7 @@
                                 "required": [
                                     "user_id",
                                     "name",
-                                    "emojis"
+                                    "sticker"
                                 ],
                                 "properties": {
                                     "user_id": {
@@ -18519,27 +18923,8 @@
                                     "name": {
                                         "type": "string"
                                     },
-                                    "png_sticker": {
-                                        "anyOf": [
-                                            {
-                                                "$ref": "#/components/schemas/InputFile"
-                                            },
-                                            {
-                                                "type": "string"
-                                            }
-                                        ]
-                                    },
-                                    "tgs_sticker": {
-                                        "$ref": "#/components/schemas/InputFile"
-                                    },
-                                    "webm_sticker": {
-                                        "$ref": "#/components/schemas/InputFile"
-                                    },
-                                    "emojis": {
-                                        "type": "string"
-                                    },
-                                    "mask_position": {
-                                        "$ref": "#/components/schemas/MaskPosition"
+                                    "sticker": {
+                                        "$ref": "#/components/schemas/InputSticker"
                                     }
                                 }
                             }
@@ -18550,7 +18935,7 @@
                                 "required": [
                                     "user_id",
                                     "name",
-                                    "emojis"
+                                    "sticker"
                                 ],
                                 "properties": {
                                     "user_id": {
@@ -18559,27 +18944,8 @@
                                     "name": {
                                         "type": "string"
                                     },
-                                    "png_sticker": {
-                                        "anyOf": [
-                                            {
-                                                "$ref": "#/components/schemas/InputFile"
-                                            },
-                                            {
-                                                "type": "string"
-                                            }
-                                        ]
-                                    },
-                                    "tgs_sticker": {
-                                        "$ref": "#/components/schemas/InputFile"
-                                    },
-                                    "webm_sticker": {
-                                        "$ref": "#/components/schemas/InputFile"
-                                    },
-                                    "emojis": {
-                                        "type": "string"
-                                    },
-                                    "mask_position": {
-                                        "$ref": "#/components/schemas/MaskPosition"
+                                    "sticker": {
+                                        "$ref": "#/components/schemas/InputSticker"
                                     }
                                 }
                             }
@@ -18842,8 +19208,456 @@
                 }
             }
         },
-        "/setStickerSetThumb": {
-            "description": "Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only. Video thumbnails can be set only for video sticker sets only. Returns True on success.",
+        "/setStickerEmojiList": {
+            "description": "Use this method to change the list of emoji assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "sticker",
+                                    "emoji_list"
+                                ],
+                                "properties": {
+                                    "sticker": {
+                                        "type": "string"
+                                    },
+                                    "emoji_list": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "sticker",
+                                    "emoji_list"
+                                ],
+                                "properties": {
+                                    "sticker": {
+                                        "type": "string"
+                                    },
+                                    "emoji_list": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "sticker",
+                                    "emoji_list"
+                                ],
+                                "properties": {
+                                    "sticker": {
+                                        "type": "string"
+                                    },
+                                    "emoji_list": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/setStickerKeywords": {
+            "description": "Use this method to change search keywords assigned to a regular or custom emoji sticker. The sticker must belong to a sticker set created by the bot. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "sticker"
+                                ],
+                                "properties": {
+                                    "sticker": {
+                                        "type": "string"
+                                    },
+                                    "keywords": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "sticker"
+                                ],
+                                "properties": {
+                                    "sticker": {
+                                        "type": "string"
+                                    },
+                                    "keywords": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "sticker"
+                                ],
+                                "properties": {
+                                    "sticker": {
+                                        "type": "string"
+                                    },
+                                    "keywords": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/setStickerMaskPosition": {
+            "description": "Use this method to change the mask position of a mask sticker. The sticker must belong to a sticker set that was created by the bot. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "sticker"
+                                ],
+                                "properties": {
+                                    "sticker": {
+                                        "type": "string"
+                                    },
+                                    "mask_position": {
+                                        "$ref": "#/components/schemas/MaskPosition"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "sticker"
+                                ],
+                                "properties": {
+                                    "sticker": {
+                                        "type": "string"
+                                    },
+                                    "mask_position": {
+                                        "$ref": "#/components/schemas/MaskPosition"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "sticker"
+                                ],
+                                "properties": {
+                                    "sticker": {
+                                        "type": "string"
+                                    },
+                                    "mask_position": {
+                                        "$ref": "#/components/schemas/MaskPosition"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/setStickerSetTitle": {
+            "description": "Use this method to set the title of a created sticker set. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name",
+                                    "title"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name",
+                                    "title"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name",
+                                    "title"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/setStickerSetThumbnail": {
+            "description": "Use this method to set the thumbnail of a regular or mask sticker set. The format of the thumbnail file must match the format of the stickers in the set. Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -18862,7 +19676,7 @@
                                     "user_id": {
                                         "type": "integer"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -18889,7 +19703,7 @@
                                     "user_id": {
                                         "type": "integer"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -18916,7 +19730,7 @@
                                     "user_id": {
                                         "type": "integer"
                                     },
-                                    "thumb": {
+                                    "thumbnail": {
                                         "anyOf": [
                                             {
                                                 "$ref": "#/components/schemas/InputFile"
@@ -18925,6 +19739,209 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/setCustomEmojiStickerSetThumbnail": {
+            "description": "Use this method to set the thumbnail of a custom emoji sticker set. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "custom_emoji_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "custom_emoji_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "custom_emoji_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/deleteStickerSet": {
+            "description": "Use this method to delete a sticker set that was created by the bot. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
                                     }
                                 }
                             }

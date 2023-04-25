@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
     title: 'Telegram Bot API'
     description: 'Auto-generated OpenAPI schema by TGScraper.'
-    version: 6.6.0
+    version: 6.7.0
 servers:
     -
         url: 'https://api.telegram.org/bot{token}'
@@ -856,7 +856,10 @@ components:
                     type: integer
             type: object
         WriteAccessAllowed:
-            description: 'This object represents a service message about a user allowing a bot added to the attachment menu to write messages. Currently holds no information.'
+            description: 'This object represents a service message about a user allowing a bot to write messages after adding the bot to the attachment menu or launching a Web App from a link.'
+            properties:
+                web_app_name:
+                    type: string
             type: object
         VideoChatScheduled:
             description: 'This object represents a service message about a video chat scheduled in the chat.'
@@ -968,7 +971,7 @@ components:
                     $ref: '#/components/schemas/WebAppInfo'
             type: object
         KeyboardButtonRequestUser:
-            description: 'This object defines the criteria used to request a suitable user. The identifier of the selected user will be shared with the bot when the corresponding button is pressed.'
+            description: 'This object defines the criteria used to request a suitable user. The identifier of the selected user will be shared with the bot when the corresponding button is pressed. More about requesting users »'
             required:
                 - request_id
             properties:
@@ -980,7 +983,7 @@ components:
                     type: boolean
             type: object
         KeyboardButtonRequestChat:
-            description: 'This object defines the criteria used to request a suitable chat. The identifier of the selected chat will be shared with the bot when the corresponding button is pressed.'
+            description: 'This object defines the criteria used to request a suitable chat. The identifier of the selected chat will be shared with the bot when the corresponding button is pressed. More about requesting chats »'
             required:
                 - request_id
                 - chat_is_channel
@@ -1050,6 +1053,8 @@ components:
                     type: string
                 switch_inline_query_current_chat:
                     type: string
+                switch_inline_query_chosen_chat:
+                    $ref: '#/components/schemas/SwitchInlineQueryChosenChat'
                 callback_game:
                     $ref: '#/components/schemas/CallbackGame'
                 pay:
@@ -1067,6 +1072,20 @@ components:
                 bot_username:
                     type: string
                 request_write_access:
+                    type: boolean
+            type: object
+        SwitchInlineQueryChosenChat:
+            description: 'This object represents an inline button that switches the current user to inline mode in a chosen chat, with an optional default inline query.'
+            properties:
+                query:
+                    type: string
+                allow_user_chats:
+                    type: boolean
+                allow_bot_chats:
+                    type: boolean
+                allow_group_chats:
+                    type: boolean
+                allow_channel_chats:
                     type: boolean
             type: object
         CallbackQuery:
@@ -1381,6 +1400,8 @@ components:
                     $ref: '#/components/schemas/ChatMember'
                 invite_link:
                     $ref: '#/components/schemas/ChatInviteLink'
+                via_chat_folder_invite_link:
+                    type: boolean
             type: object
         ChatJoinRequest:
             description: 'Represents a join request sent to a chat.'
@@ -1576,6 +1597,14 @@ components:
                             type: string
                 user_id:
                     type: integer
+            type: object
+        BotName:
+            description: "This object represents the bot's name."
+            required:
+                - name
+            properties:
+                name:
+                    type: string
             type: object
         BotDescription:
             description: "This object represents the bot's description."
@@ -1941,6 +1970,18 @@ components:
                     type: string
                 location:
                     $ref: '#/components/schemas/Location'
+            type: object
+        InlineQueryResultsButton:
+            description: 'This object represents a button to be shown above inline query results. You must use exactly one of the optional fields.'
+            required:
+                - text
+            properties:
+                text:
+                    type: string
+                web_app:
+                    $ref: '#/components/schemas/WebAppInfo'
+                start_parameter:
+                    type: string
             type: object
         InlineQueryResult:
             description: 'This object represents one result of an inline query. Telegram clients currently support results of the following 20 types:'
@@ -10403,6 +10444,118 @@ paths:
                     $ref: '#/components/responses/ServerError'
                 default:
                     $ref: '#/components/responses/UnknownError'
+    /setMyName:
+        description: "Use this method to change the bot's name. Returns True on success."
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                language_code:
+                                    type: string
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                language_code:
+                                    type: string
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                language_code:
+                                    type: string
+            responses:
+                200:
+                    description: 'Request was successful, the result is returned.'
+                    content:
+                        application/json:
+                            schema:
+                                allOf:
+                                    -
+                                        $ref: '#/components/schemas/Success'
+                                    -
+                                        type: object
+                                        properties:
+                                            result:
+                                                type: boolean
+                400:
+                    $ref: '#/components/responses/BadRequest'
+                401:
+                    $ref: '#/components/responses/Unauthorized'
+                403:
+                    $ref: '#/components/responses/Forbidden'
+                404:
+                    $ref: '#/components/responses/NotFound'
+                409:
+                    $ref: '#/components/responses/Conflict'
+                429:
+                    $ref: '#/components/responses/TooManyRequests'
+                5XX:
+                    $ref: '#/components/responses/ServerError'
+                default:
+                    $ref: '#/components/responses/UnknownError'
+    /getMyName:
+        description: 'Use this method to get the current bot name for the given user language. Returns BotName on success.'
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                language_code:
+                                    type: string
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                language_code:
+                                    type: string
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                language_code:
+                                    type: string
+            responses:
+                200:
+                    description: 'Request was successful, the result is returned.'
+                    content:
+                        application/json:
+                            schema:
+                                allOf:
+                                    -
+                                        $ref: '#/components/schemas/Success'
+                                    -
+                                        type: object
+                                        properties:
+                                            result:
+                                                $ref: '#/components/schemas/BotName'
+                400:
+                    $ref: '#/components/responses/BadRequest'
+                401:
+                    $ref: '#/components/responses/Unauthorized'
+                403:
+                    $ref: '#/components/responses/Forbidden'
+                404:
+                    $ref: '#/components/responses/NotFound'
+                409:
+                    $ref: '#/components/responses/Conflict'
+                429:
+                    $ref: '#/components/responses/TooManyRequests'
+                5XX:
+                    $ref: '#/components/responses/ServerError'
+                default:
+                    $ref: '#/components/responses/UnknownError'
     /setMyDescription:
         description: "Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns True on success."
         post:
@@ -12865,10 +13018,8 @@ paths:
                                     type: boolean
                                 next_offset:
                                     type: string
-                                switch_pm_text:
-                                    type: string
-                                switch_pm_parameter:
-                                    type: string
+                                button:
+                                    $ref: '#/components/schemas/InlineQueryResultsButton'
                     application/x-www-form-urlencoded:
                         schema:
                             type: object
@@ -12889,10 +13040,8 @@ paths:
                                     type: boolean
                                 next_offset:
                                     type: string
-                                switch_pm_text:
-                                    type: string
-                                switch_pm_parameter:
-                                    type: string
+                                button:
+                                    $ref: '#/components/schemas/InlineQueryResultsButton'
                     multipart/form-data:
                         schema:
                             type: object
@@ -12913,10 +13062,8 @@ paths:
                                     type: boolean
                                 next_offset:
                                     type: string
-                                switch_pm_text:
-                                    type: string
-                                switch_pm_parameter:
-                                    type: string
+                                button:
+                                    $ref: '#/components/schemas/InlineQueryResultsButton'
             responses:
                 200:
                     description: 'Request was successful, the result is returned.'

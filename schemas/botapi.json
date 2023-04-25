@@ -1,5 +1,5 @@
 {
-    "version": "6.6.0",
+    "version": "6.7.0",
     "types": [
         {
             "name": "Update",
@@ -1711,7 +1711,7 @@
                         "int"
                     ],
                     "optional": false,
-                    "description": "____simple_html_dom__voku__html_wrapper____>Value of the dice, 1-6 for “🎲”, “🎯” and “🎳” base emoji, 1-5 for “🏀” and “⚽” base emoji, 1-64 for “🎰” base emoji"
+                    "description": "Value of the dice, 1-6 for “🎲”, “🎯” and “🎳” base emoji, 1-5 for “🏀” and “⚽” base emoji, 1-64 for “🎰” base emoji"
                 }
             ],
             "extended_by": []
@@ -2194,8 +2194,17 @@
         },
         {
             "name": "WriteAccessAllowed",
-            "description": "This object represents a service message about a user allowing a bot added to the attachment menu to write messages. Currently holds no information.",
-            "fields": [],
+            "description": "This object represents a service message about a user allowing a bot to write messages after adding the bot to the attachment menu or launching a Web App from a link.",
+            "fields": [
+                {
+                    "name": "web_app_name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Name of the Web App which was launched from a link"
+                }
+            ],
             "extended_by": []
         },
         {
@@ -2449,7 +2458,7 @@
         },
         {
             "name": "KeyboardButtonRequestUser",
-            "description": "This object defines the criteria used to request a suitable user. The identifier of the selected user will be shared with the bot when the corresponding button is pressed.",
+            "description": "This object defines the criteria used to request a suitable user. The identifier of the selected user will be shared with the bot when the corresponding button is pressed. More about requesting users »",
             "fields": [
                 {
                     "name": "request_id",
@@ -2480,7 +2489,7 @@
         },
         {
             "name": "KeyboardButtonRequestChat",
-            "description": "This object defines the criteria used to request a suitable chat. The identifier of the selected chat will be shared with the bot when the corresponding button is pressed.",
+            "description": "This object defines the criteria used to request a suitable chat. The identifier of the selected chat will be shared with the bot when the corresponding button is pressed. More about requesting chats »",
             "fields": [
                 {
                     "name": "request_id",
@@ -2664,6 +2673,14 @@
                     "description": "Optional. If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options."
                 },
                 {
+                    "name": "switch_inline_query_chosen_chat",
+                    "types": [
+                        "SwitchInlineQueryChosenChat"
+                    ],
+                    "optional": true,
+                    "description": "Optional. If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field"
+                },
+                {
                     "name": "callback_game",
                     "types": [
                         "CallbackGame"
@@ -2717,6 +2734,53 @@
                     ],
                     "optional": true,
                     "description": "Optional. Pass True to request the permission for your bot to send messages to the user."
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "SwitchInlineQueryChosenChat",
+            "description": "This object represents an inline button that switches the current user to inline mode in a chosen chat, with an optional default inline query.",
+            "fields": [
+                {
+                    "name": "query",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. The default inline query to be inserted in the input field. If left empty, only the bot's username will be inserted"
+                },
+                {
+                    "name": "allow_user_chats",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if private chats with users can be chosen"
+                },
+                {
+                    "name": "allow_bot_chats",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if private chats with bots can be chosen"
+                },
+                {
+                    "name": "allow_group_chats",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if group and supergroup chats can be chosen"
+                },
+                {
+                    "name": "allow_channel_chats",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if channel chats can be chosen"
                 }
             ],
             "extended_by": []
@@ -3503,6 +3567,14 @@
                     ],
                     "optional": true,
                     "description": "Optional. Chat invite link, which was used by the user to join the chat; for joining by invite link events only."
+                },
+                {
+                    "name": "via_chat_folder_invite_link",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the user joined the chat via a chat folder invite link"
                 }
             ],
             "extended_by": []
@@ -3923,6 +3995,21 @@
                     ],
                     "optional": false,
                     "description": "Unique identifier of the target user"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "BotName",
+            "description": "This object represents the bot's name.",
+            "fields": [
+                {
+                    "name": "name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "The bot's name"
                 }
             ],
             "extended_by": []
@@ -4701,7 +4788,7 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "The added sticker. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. Animated and video stickers can't be uploaded via HTTP URL. More information on Sending Files »"
+                    "description": "The added sticker. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, upload a new one using multipart/form-data, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. Animated and video stickers can't be uploaded via HTTP URL. More information on Sending Files »"
                 },
                 {
                     "name": "emoji_list",
@@ -4781,6 +4868,37 @@
                     ],
                     "optional": true,
                     "description": "Optional. Sender location, only for bots that request user location"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "InlineQueryResultsButton",
+            "description": "This object represents a button to be shown above inline query results. You must use exactly one of the optional fields.",
+            "fields": [
+                {
+                    "name": "text",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Label text on the button"
+                },
+                {
+                    "name": "web_app",
+                    "types": [
+                        "WebAppInfo"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Description of the Web App that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method switchInlineQuery inside the Web App."
+                },
+                {
+                    "name": "start_parameter",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Deep-linking parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only A-Z, a-z, 0-9, _ and - are allowed.Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a 'Connect your YouTube account' button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities."
                 }
             ],
             "extended_by": []
@@ -8176,7 +8294,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id. The negative offset can be specified to retrieve updates starting from -offset update from the end of the updates queue. All previous updates will forgotten."
+                    "description": "Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates. By default, updates starting with the earliest unconfirmed update are returned. An update is considered confirmed as soon as getUpdates is called with an offset higher than its update_id. The negative offset can be specified to retrieve updates starting from -offset update from the end of the updates queue. All previous updates will be forgotten."
                 },
                 {
                     "name": "limit",
@@ -10077,7 +10195,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "____simple_html_dom__voku__html_wrapper____>Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”",
+                    "description": "Emoji on which the dice throw animation is based. Currently, must be one of “🎲”, “🎯”, “🏀”, “⚽”, “🎳”, or “🎰”. Dice can have values 1-6 for “🎲”, “🎯” and “🎳”, values 1-5 for “🏀” and “⚽”, and values 1-64 for “🎰”. Defaults to “🎲”",
                     "default": "🎲"
                 },
                 {
@@ -11533,6 +11651,48 @@
             ]
         },
         {
+            "name": "setMyName",
+            "description": "Use this method to change the bot's name. Returns True on success.",
+            "fields": [
+                {
+                    "name": "name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for the given language."
+                },
+                {
+                    "name": "language_code",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "A two-letter ISO 639-1 language code. If empty, the name will be shown to all users for whose language there is no dedicated name."
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "getMyName",
+            "description": "Use this method to get the current bot name for the given user language. Returns BotName on success.",
+            "fields": [
+                {
+                    "name": "language_code",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "A two-letter ISO 639-1 language code or an empty string"
+                }
+            ],
+            "return_types": [
+                "BotName"
+            ]
+        },
+        {
             "name": "setMyDescription",
             "description": "Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty. Returns True on success.",
             "fields": [
@@ -12627,7 +12787,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Pass True if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query"
+                    "description": "Pass True if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query."
                 },
                 {
                     "name": "next_offset",
@@ -12638,20 +12798,12 @@
                     "description": "Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don't support pagination. Offset length can't exceed 64 bytes."
                 },
                 {
-                    "name": "switch_pm_text",
+                    "name": "button",
                     "types": [
-                        "string"
+                        "InlineQueryResultsButton"
                     ],
                     "optional": true,
-                    "description": "If passed, clients will display a button with specified text that switches the user to a private chat with the bot and sends the bot a start message with the parameter switch_pm_parameter"
-                },
-                {
-                    "name": "switch_pm_parameter",
-                    "types": [
-                        "string"
-                    ],
-                    "optional": true,
-                    "description": "Deep-linking parameter for the /start message sent to the bot when user presses the switch button. 1-64 characters, only A-Z, a-z, 0-9, _ and - are allowed.Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a 'Connect your YouTube account' button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities."
+                    "description": "A JSON-serialized object describing a button to be shown above inline query results"
                 }
             ],
             "return_types": [

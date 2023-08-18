@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "6.7.0"
+        "version": "6.8.0"
     },
     "variable": {
         "key": "token",
@@ -3551,6 +3551,37 @@
                     ]
                 },
                 "description": "Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success."
+            }
+        },
+        {
+            "name": "unpinAllGeneralForumTopicMessages",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/unpinAllGeneralForumTopicMessages",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "unpinAllGeneralForumTopicMessages"
+                    ]
+                },
+                "description": "Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success."
             }
         },
         {

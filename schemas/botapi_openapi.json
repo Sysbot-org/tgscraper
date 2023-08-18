@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "6.7.0"
+        "version": "6.8.0"
     },
     "servers": [
         {
@@ -343,6 +343,9 @@
                     "emoji_status_custom_emoji_id": {
                         "type": "string"
                     },
+                    "emoji_status_expiration_date": {
+                        "type": "integer"
+                    },
                     "bio": {
                         "type": "string"
                     },
@@ -505,6 +508,9 @@
                     },
                     "sticker": {
                         "$ref": "#/components/schemas/Sticker"
+                    },
+                    "story": {
+                        "$ref": "#/components/schemas/Story"
                     },
                     "video": {
                         "$ref": "#/components/schemas/Video"
@@ -832,6 +838,10 @@
                 },
                 "type": "object"
             },
+            "Story": {
+                "description": "This object represents a message about a forwarded story in the chat. Currently holds no information.",
+                "type": "object"
+            },
             "Video": {
                 "description": "This object represents a video file.",
                 "required": [
@@ -989,12 +999,14 @@
                 "description": "This object represents an answer of a user in a non-anonymous poll.",
                 "required": [
                     "poll_id",
-                    "user",
                     "option_ids"
                 ],
                 "properties": {
                     "poll_id": {
                         "type": "string"
+                    },
+                    "voter_chat": {
+                        "$ref": "#/components/schemas/Chat"
                     },
                     "user": {
                         "$ref": "#/components/schemas/User"
@@ -15590,6 +15602,124 @@
         },
         "/unhideGeneralForumTopic": {
             "description": "Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/unpinAllGeneralForumTopicMessages": {
+            "description": "Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,

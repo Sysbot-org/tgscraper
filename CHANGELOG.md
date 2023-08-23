@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.7] - 2023-08-23
+### Added
+- Support for bot API 6.8.0.
+
 ## [4.0.6] - 2023-03-30
 ### Added
 - Support for bot API 6.7.0.
@@ -192,7 +196,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - The parser is now more reliable, it no longer needs to be updated at every bot API release!
 
-[Unreleased]: https://github.com/Sysbot-org/tgscraper/compare/4.0.6...HEAD
+[Unreleased]: https://github.com/Sysbot-org/tgscraper/compare/4.0.7...HEAD
+[4.0.7]: https://github.com/Sysbot-org/tgscraper/compare/4.0.6...4.0.7
 [4.0.6]: https://github.com/Sysbot-org/tgscraper/compare/4.0.5...4.0.6
 [4.0.5]: https://github.com/Sysbot-org/tgscraper/compare/4.0.4...4.0.5
 [4.0.4]: https://github.com/Sysbot-org/tgscraper/compare/4.0.3...4.0.4
@@ -208,7 +213,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [2.0.1]: https://github.com/Sysbot-org/tgscraper/compare/2.0...2.0.1
 [2.0.0]: https://github.com/Sysbot-org/tgscraper/compare/1.4...2.0
 [1.4.0]: https://github.com/Sysbot-org/tgscraper/compare/1.3...1.4
-[1.3.0]: https://github.com/Sysbot-org/tgscraper/compare/1.2.1...1.3
+[1.3.0]: https://github.com/Sysbot-org/tgscraper/compare/1.2.2...1.3
+[1.2.2]: https://github.com/Sysbot-org/tgscraper/compare/1.2.1...1.2.2
 [1.2.1]: https://github.com/Sysbot-org/tgscraper/compare/1.2...1.2.1
 [1.2.0]: https://github.com/Sysbot-org/tgscraper/compare/1.1...1.2
 [1.1.0]: https://github.com/Sysbot-org/tgscraper/compare/1.0.2...1.1

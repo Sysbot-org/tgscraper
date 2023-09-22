@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "6.8.0"
+        "version": "6.9.0"
     },
     "servers": [
         {
@@ -1269,10 +1269,16 @@
                 "type": "object"
             },
             "WriteAccessAllowed": {
-                "description": "This object represents a service message about a user allowing a bot to write messages after adding the bot to the attachment menu or launching a Web App from a link.",
+                "description": "This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess.",
                 "properties": {
+                    "from_request": {
+                        "type": "boolean"
+                    },
                     "web_app_name": {
                         "type": "string"
+                    },
+                    "from_attachment_menu": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -1776,6 +1782,15 @@
                     "can_pin_messages": {
                         "type": "boolean"
                     },
+                    "can_post_stories": {
+                        "type": "boolean"
+                    },
+                    "can_edit_stories": {
+                        "type": "boolean"
+                    },
+                    "can_delete_stories": {
+                        "type": "boolean"
+                    },
                     "can_manage_topics": {
                         "type": "boolean"
                     }
@@ -1884,6 +1899,15 @@
                         "type": "boolean"
                     },
                     "can_pin_messages": {
+                        "type": "boolean"
+                    },
+                    "can_post_stories": {
+                        "type": "boolean"
+                    },
+                    "can_edit_stories": {
+                        "type": "boolean"
+                    },
+                    "can_delete_stories": {
                         "type": "boolean"
                     },
                     "can_manage_topics": {

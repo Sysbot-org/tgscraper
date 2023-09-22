@@ -1,5 +1,5 @@
 {
-    "version": "6.8.0",
+    "version": "6.9.0",
     "types": [
         {
             "name": "Update",
@@ -395,7 +395,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. Expiration date of the emoji status of the other party in a private chat, if any. Returned only in getChat."
+                    "description": "Optional. Expiration date of the emoji status of the other party in a private chat in Unix time, if any. Returned only in getChat."
                 },
                 {
                     "name": "bio",
@@ -1026,7 +1026,7 @@
                         "WriteAccessAllowed"
                     ],
                     "optional": true,
-                    "description": "Optional. Service message: the user allowed the bot added to the attachment menu to write messages"
+                    "description": "Optional. Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess"
                 },
                 {
                     "name": "passport_data",
@@ -2224,15 +2224,31 @@
         },
         {
             "name": "WriteAccessAllowed",
-            "description": "This object represents a service message about a user allowing a bot to write messages after adding the bot to the attachment menu or launching a Web App from a link.",
+            "description": "This object represents a service message about a user allowing a bot to write messages after adding it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess.",
             "fields": [
+                {
+                    "name": "from_request",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the access was granted after the user accepted an explicit request from a Web App sent by the method requestWriteAccess"
+                },
                 {
                     "name": "web_app_name",
                     "types": [
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. Name of the Web App which was launched from a link"
+                    "description": "Optional. Name of the Web App, if the access was granted when the Web App was launched from a link"
+                },
+                {
+                    "name": "from_attachment_menu",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the access was granted when the bot was added to the attachment or side menu"
                 }
             ],
             "extended_by": []
@@ -3046,7 +3062,7 @@
                         "bool"
                     ],
                     "optional": false,
-                    "description": "True, if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege"
+                    "description": "True, if the administrator can access the chat event log, chat statistics, boost list in channels, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege"
                 },
                 {
                     "name": "can_delete_messages",
@@ -3102,7 +3118,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the administrator can post in the channel; channels only"
+                    "description": "Optional. True, if the administrator can post messages in the channel; channels only"
                 },
                 {
                     "name": "can_edit_messages",
@@ -3119,6 +3135,30 @@
                     ],
                     "optional": true,
                     "description": "Optional. True, if the user is allowed to pin messages; groups and supergroups only"
+                },
+                {
+                    "name": "can_post_stories",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the administrator can post stories in the channel; channels only"
+                },
+                {
+                    "name": "can_edit_stories",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the administrator can edit stories posted by other users; channels only"
+                },
+                {
+                    "name": "can_delete_stories",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the administrator can delete stories posted by other users"
                 },
                 {
                     "name": "can_manage_topics",
@@ -3225,7 +3265,7 @@
                         "bool"
                     ],
                     "optional": false,
-                    "description": "True, if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege"
+                    "description": "True, if the administrator can access the chat event log, chat statistics, boost list in channels, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege"
                 },
                 {
                     "name": "can_delete_messages",
@@ -3281,7 +3321,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the administrator can post in the channel; channels only"
+                    "description": "Optional. True, if the administrator can post messages in the channel; channels only"
                 },
                 {
                     "name": "can_edit_messages",
@@ -3298,6 +3338,30 @@
                     ],
                     "optional": true,
                     "description": "Optional. True, if the user is allowed to pin messages; groups and supergroups only"
+                },
+                {
+                    "name": "can_post_stories",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the administrator can post stories in the channel; channels only"
+                },
+                {
+                    "name": "can_edit_stories",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the administrator can edit stories posted by other users; channels only"
+                },
+                {
+                    "name": "can_delete_stories",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the administrator can delete stories posted by other users"
                 },
                 {
                     "name": "can_manage_topics",
@@ -3487,7 +3551,7 @@
                         "int"
                     ],
                     "optional": false,
-                    "description": "Date when restrictions will be lifted for this user; unix time. If 0, then the user is restricted forever"
+                    "description": "Date when restrictions will be lifted for this user; Unix time. If 0, then the user is restricted forever"
                 }
             ],
             "extended_by": []
@@ -3541,7 +3605,7 @@
                         "int"
                     ],
                     "optional": false,
-                    "description": "Date when restrictions will be lifted for this user; unix time. If 0, then the user is banned forever"
+                    "description": "Date when restrictions will be lifted for this user; Unix time. If 0, then the user is banned forever"
                 }
             ],
             "extended_by": []
@@ -10388,7 +10452,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Date when the user will be unbanned, unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever. Applied for supergroups and channels only."
+                    "description": "Date when the user will be unbanned; Unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever. Applied for supergroups and channels only."
                 },
                 {
                     "name": "revoke_messages",
@@ -10480,7 +10544,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever"
+                    "description": "Date when restrictions will be lifted for the user; Unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever"
                 }
             ],
             "return_types": [

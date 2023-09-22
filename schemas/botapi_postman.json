@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "6.8.0"
+        "version": "6.9.0"
     },
     "variable": {
         "key": "token",
@@ -1988,7 +1988,7 @@
                         {
                             "key": "until_date",
                             "disabled": true,
-                            "description": "Optional. Date when the user will be unbanned, unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever. Applied for supergroups and channels only.",
+                            "description": "Optional. Date when the user will be unbanned; Unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever. Applied for supergroups and channels only.",
                             "type": "text"
                         },
                         {
@@ -2092,7 +2092,7 @@
                         {
                             "key": "until_date",
                             "disabled": true,
-                            "description": "Optional. Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever",
+                            "description": "Optional. Date when restrictions will be lifted for the user; Unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever",
                             "type": "text"
                         }
                     ]

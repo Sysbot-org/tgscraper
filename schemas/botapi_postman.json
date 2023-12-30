@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "6.9.0"
+        "version": "7.0.0"
     },
     "variable": {
         "key": "token",
@@ -41,7 +41,7 @@
                         {
                             "key": "allowed_updates",
                             "disabled": true,
-                            "description": "Optional. A JSON-serialized list of the update types you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.",
+                            "description": "Optional. A JSON-serialized list of the update types you want your bot to receive. For example, specify [\"message\", \"edited_channel_post\", \"callback_query\"] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member, message_reaction, and message_reaction_count (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.",
                             "type": "text"
                         }
                     ]
@@ -97,7 +97,7 @@
                         {
                             "key": "allowed_updates",
                             "disabled": true,
-                            "description": "Optional. A JSON-serialized list of the update types you want your bot to receive. For example, specify [“message”, “edited_channel_post”, “callback_query”] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.",
+                            "description": "Optional. A JSON-serialized list of the update types you want your bot to receive. For example, specify [\"message\", \"edited_channel_post\", \"callback_query\"] to only receive updates of these types. See Update for a complete list of available update types. Specify an empty list to receive all update types except chat_member, message_reaction, and message_reaction_count (default). If not specified, the previous setting will be used.Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.",
                             "type": "text"
                         },
                         {
@@ -295,9 +295,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "disable_web_page_preview",
+                            "key": "link_preview_options",
                             "disabled": true,
-                            "description": "Optional. Disables link previews for links in this message",
+                            "description": "Optional. Link preview generation options for the message",
                             "type": "text"
                         },
                         {
@@ -313,15 +313,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -406,7 +400,68 @@
                         "forwardMessage"
                     ]
                 },
-                "description": "Use this method to forward messages of any kind. Service messages can't be forwarded. On success, the sent Message is returned."
+                "description": "Use this method to forward messages of any kind. Service messages and messages with protected content can't be forwarded. On success, the sent Message is returned."
+            }
+        },
+        {
+            "name": "forwardMessages",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                            "type": "text"
+                        },
+                        {
+                            "key": "from_chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_ids",
+                            "disabled": false,
+                            "description": "Required. Identifiers of 1-100 messages in the chat from_chat_id to forward. The identifiers must be specified in a strictly increasing order.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "disable_notification",
+                            "disabled": true,
+                            "description": "Optional. Sends the messages silently. Users will receive a notification with no sound.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the forwarded messages from forwarding and saving",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/forwardMessages",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "forwardMessages"
+                    ]
+                },
+                "description": "Use this method to forward multiple messages of any kind. If some of the specified messages can't be found or forwarded, they are skipped. Service messages and messages with protected content can't be forwarded. Album grouping is kept for forwarded messages. On success, an array of MessageId of the sent messages is returned."
             }
         },
         {
@@ -471,15 +526,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -503,7 +552,74 @@
                         "copyMessage"
                     ]
                 },
-                "description": "Use this method to copy messages of any kind. Service messages and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success."
+                "description": "Use this method to copy messages of any kind. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success."
+            }
+        },
+        {
+            "name": "copyMessages",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_thread_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier for the target message thread (topic) of the forum; for forum supergroups only",
+                            "type": "text"
+                        },
+                        {
+                            "key": "from_chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the chat where the original messages were sent (or channel username in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_ids",
+                            "disabled": false,
+                            "description": "Required. Identifiers of 1-100 messages in the chat from_chat_id to copy. The identifiers must be specified in a strictly increasing order.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "disable_notification",
+                            "disabled": true,
+                            "description": "Optional. Sends the messages silently. Users will receive a notification with no sound.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "protect_content",
+                            "disabled": true,
+                            "description": "Optional. Protects the contents of the sent messages from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
+                            "key": "remove_caption",
+                            "disabled": true,
+                            "description": "Optional. Pass True to copy the messages without their captions",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/copyMessages",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "copyMessages"
+                    ]
+                },
+                "description": "Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned."
             }
         },
         {
@@ -568,15 +684,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -683,15 +793,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -786,15 +890,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -913,15 +1011,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -1034,15 +1126,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -1131,15 +1217,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -1222,15 +1302,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -1295,15 +1369,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the messages are a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         }
                     ]
@@ -1392,15 +1460,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -1507,15 +1569,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -1598,15 +1654,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -1739,15 +1789,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -1813,15 +1857,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -1889,6 +1927,55 @@
                     ]
                 },
                 "description": "Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.\nWe only recommend using this method when a response from the bot will take a noticeable amount of time to arrive."
+            }
+        },
+        {
+            "name": "setMessageReaction",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_id",
+                            "disabled": false,
+                            "description": "Required. Identifier of the target message",
+                            "type": "text"
+                        },
+                        {
+                            "key": "reaction",
+                            "disabled": true,
+                            "description": "Optional. New list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "is_big",
+                            "disabled": true,
+                            "description": "Optional. Pass True to set the reaction with a big animation",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/setMessageReaction",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "setMessageReaction"
+                    ]
+                },
+                "description": "Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. In albums, bots must react to the first message. Returns True on success."
             }
         },
         {
@@ -2141,19 +2228,7 @@
                         {
                             "key": "can_manage_chat",
                             "disabled": true,
-                            "description": "Optional. Pass True if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege",
-                            "type": "text"
-                        },
-                        {
-                            "key": "can_post_messages",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the administrator can create channel posts, channels only",
-                            "type": "text"
-                        },
-                        {
-                            "key": "can_edit_messages",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the administrator can edit messages of other users and can pin messages, channels only",
+                            "description": "Optional. Pass True if the administrator can access the chat event log, boost list in channels, see channel members, report spam messages, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege",
                             "type": "text"
                         },
                         {
@@ -2171,7 +2246,7 @@
                         {
                             "key": "can_restrict_members",
                             "disabled": true,
-                            "description": "Optional. Pass True if the administrator can restrict, ban or unban chat members",
+                            "description": "Optional. Pass True if the administrator can restrict, ban or unban chat members, or access supergroup statistics",
                             "type": "text"
                         },
                         {
@@ -2193,9 +2268,39 @@
                             "type": "text"
                         },
                         {
+                            "key": "can_post_messages",
+                            "disabled": true,
+                            "description": "Optional. Pass True if the administrator can post messages in the channel, or access channel statistics; channels only",
+                            "type": "text"
+                        },
+                        {
+                            "key": "can_edit_messages",
+                            "disabled": true,
+                            "description": "Optional. Pass True if the administrator can edit messages of other users and can pin messages; channels only",
+                            "type": "text"
+                        },
+                        {
                             "key": "can_pin_messages",
                             "disabled": true,
                             "description": "Optional. Pass True if the administrator can pin messages, supergroups only",
+                            "type": "text"
+                        },
+                        {
+                            "key": "can_post_stories",
+                            "disabled": true,
+                            "description": "Optional. Pass True if the administrator can post stories in the channel; channels only",
+                            "type": "text"
+                        },
+                        {
+                            "key": "can_edit_stories",
+                            "disabled": true,
+                            "description": "Optional. Pass True if the administrator can edit stories posted by other users; channels only",
+                            "type": "text"
+                        },
+                        {
+                            "key": "can_delete_stories",
+                            "disabled": true,
+                            "description": "Optional. Pass True if the administrator can delete stories posted by other users; channels only",
                             "type": "text"
                         },
                         {
@@ -2952,7 +3057,7 @@
                         "getChat"
                     ]
                 },
-                "description": "Use this method to get up to date information about the chat (current name of the user for one-on-one conversations, current username of a user, group or channel, etc.). Returns a Chat object on success."
+                "description": "Use this method to get up to date information about the chat. Returns a Chat object on success."
             }
         },
         {
@@ -3640,6 +3745,43 @@
             }
         },
         {
+            "name": "getUserChatBoosts",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the chat or username of the channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "user_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier of the target user",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/getUserChatBoosts",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "getUserChatBoosts"
+                    ]
+                },
+                "description": "Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat. Returns a UserChatBoosts object."
+            }
+        },
+        {
             "name": "setMyCommands",
             "request": {
                 "method": "POST",
@@ -4144,9 +4286,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "disable_web_page_preview",
+                            "key": "link_preview_options",
                             "disabled": true,
-                            "description": "Optional. Disables link previews for links in this message",
+                            "description": "Optional. Link preview generation options for the message",
                             "type": "text"
                         },
                         {
@@ -4553,6 +4695,43 @@
             }
         },
         {
+            "name": "deleteMessages",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "chat_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_ids",
+                            "disabled": false,
+                            "description": "Required. Identifiers of 1-100 messages to delete. See deleteMessage for limitations on which messages can be deleted",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/deleteMessages",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "deleteMessages"
+                    ]
+                },
+                "description": "Use this method to delete multiple messages simultaneously. If some of the specified messages can't be found, they are skipped. Returns True on success."
+            }
+        },
+        {
             "name": "sendSticker",
             "request": {
                 "method": "POST",
@@ -4596,15 +4775,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -5430,15 +5603,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {
@@ -5777,15 +5944,9 @@
                             "type": "text"
                         },
                         {
-                            "key": "reply_to_message_id",
+                            "key": "reply_parameters",
                             "disabled": true,
-                            "description": "Optional. If the message is a reply, ID of the original message",
-                            "type": "text"
-                        },
-                        {
-                            "key": "allow_sending_without_reply",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the message should be sent even if the specified replied-to message is not found",
+                            "description": "Optional. Description of the message to reply to",
                             "type": "text"
                         },
                         {

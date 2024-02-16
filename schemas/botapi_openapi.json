@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "7.0.0"
+        "version": "7.1.0"
     },
     "servers": [
         {
@@ -410,6 +410,9 @@
                     "slow_mode_delay": {
                         "type": "integer"
                     },
+                    "unrestrict_boost_count": {
+                        "type": "integer"
+                    },
                     "message_auto_delete_time": {
                         "type": "integer"
                     },
@@ -435,6 +438,9 @@
                     "can_set_sticker_set": {
                         "type": "boolean",
                         "default": true
+                    },
+                    "custom_emoji_sticker_set_name": {
+                        "type": "string"
                     },
                     "linked_chat_id": {
                         "type": "integer"
@@ -465,6 +471,9 @@
                     "sender_chat": {
                         "$ref": "#/components/schemas/Chat"
                     },
+                    "sender_boost_count": {
+                        "type": "integer"
+                    },
                     "date": {
                         "type": "integer"
                     },
@@ -490,6 +499,9 @@
                     },
                     "quote": {
                         "$ref": "#/components/schemas/TextQuote"
+                    },
+                    "reply_to_story": {
+                        "$ref": "#/components/schemas/Story"
                     },
                     "via_bot": {
                         "$ref": "#/components/schemas/User"
@@ -649,6 +661,9 @@
                     },
                     "proximity_alert_triggered": {
                         "$ref": "#/components/schemas/ProximityAlertTriggered"
+                    },
+                    "boost_added": {
+                        "$ref": "#/components/schemas/ChatBoostAdded"
                     },
                     "forum_topic_created": {
                         "$ref": "#/components/schemas/ForumTopicCreated"
@@ -1165,7 +1180,19 @@
                 "type": "object"
             },
             "Story": {
-                "description": "This object represents a message about a forwarded story in the chat. Currently holds no information.",
+                "description": "This object represents a story.",
+                "required": [
+                    "chat",
+                    "id"
+                ],
+                "properties": {
+                    "chat": {
+                        "$ref": "#/components/schemas/Chat"
+                    },
+                    "id": {
+                        "type": "integer"
+                    }
+                },
                 "type": "object"
             },
             "Video": {
@@ -1510,6 +1537,18 @@
                 ],
                 "properties": {
                     "message_auto_delete_time": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "ChatBoostAdded": {
+                "description": "This object represents a service message about a user boosting a chat.",
+                "required": [
+                    "boost_count"
+                ],
+                "properties": {
+                    "boost_count": {
                         "type": "integer"
                     }
                 },
@@ -2216,7 +2255,10 @@
                     "can_restrict_members",
                     "can_promote_members",
                     "can_change_info",
-                    "can_invite_users"
+                    "can_invite_users",
+                    "can_post_stories",
+                    "can_edit_stories",
+                    "can_delete_stories"
                 ],
                 "properties": {
                     "is_anonymous": {
@@ -2243,15 +2285,6 @@
                     "can_invite_users": {
                         "type": "boolean"
                     },
-                    "can_post_messages": {
-                        "type": "boolean"
-                    },
-                    "can_edit_messages": {
-                        "type": "boolean"
-                    },
-                    "can_pin_messages": {
-                        "type": "boolean"
-                    },
                     "can_post_stories": {
                         "type": "boolean"
                     },
@@ -2259,6 +2292,15 @@
                         "type": "boolean"
                     },
                     "can_delete_stories": {
+                        "type": "boolean"
+                    },
+                    "can_post_messages": {
+                        "type": "boolean"
+                    },
+                    "can_edit_messages": {
+                        "type": "boolean"
+                    },
+                    "can_pin_messages": {
                         "type": "boolean"
                     },
                     "can_manage_topics": {
@@ -2360,7 +2402,10 @@
                     "can_restrict_members",
                     "can_promote_members",
                     "can_change_info",
-                    "can_invite_users"
+                    "can_invite_users",
+                    "can_post_stories",
+                    "can_edit_stories",
+                    "can_delete_stories"
                 ],
                 "properties": {
                     "status": {
@@ -2396,15 +2441,6 @@
                     "can_invite_users": {
                         "type": "boolean"
                     },
-                    "can_post_messages": {
-                        "type": "boolean"
-                    },
-                    "can_edit_messages": {
-                        "type": "boolean"
-                    },
-                    "can_pin_messages": {
-                        "type": "boolean"
-                    },
                     "can_post_stories": {
                         "type": "boolean"
                     },
@@ -2412,6 +2448,15 @@
                         "type": "boolean"
                     },
                     "can_delete_stories": {
+                        "type": "boolean"
+                    },
+                    "can_post_messages": {
+                        "type": "boolean"
+                    },
+                    "can_edit_messages": {
+                        "type": "boolean"
+                    },
+                    "can_pin_messages": {
                         "type": "boolean"
                     },
                     "can_manage_topics": {
@@ -11261,7 +11306,7 @@
             }
         },
         "/setMessageReaction": {
-            "description": "Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. In albums, bots must react to the first message. Returns True on success.",
+            "description": "Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -12130,15 +12175,6 @@
                                     "can_invite_users": {
                                         "type": "boolean"
                                     },
-                                    "can_post_messages": {
-                                        "type": "boolean"
-                                    },
-                                    "can_edit_messages": {
-                                        "type": "boolean"
-                                    },
-                                    "can_pin_messages": {
-                                        "type": "boolean"
-                                    },
                                     "can_post_stories": {
                                         "type": "boolean"
                                     },
@@ -12146,6 +12182,15 @@
                                         "type": "boolean"
                                     },
                                     "can_delete_stories": {
+                                        "type": "boolean"
+                                    },
+                                    "can_post_messages": {
+                                        "type": "boolean"
+                                    },
+                                    "can_edit_messages": {
+                                        "type": "boolean"
+                                    },
+                                    "can_pin_messages": {
                                         "type": "boolean"
                                     },
                                     "can_manage_topics": {
@@ -12199,15 +12244,6 @@
                                     "can_invite_users": {
                                         "type": "boolean"
                                     },
-                                    "can_post_messages": {
-                                        "type": "boolean"
-                                    },
-                                    "can_edit_messages": {
-                                        "type": "boolean"
-                                    },
-                                    "can_pin_messages": {
-                                        "type": "boolean"
-                                    },
                                     "can_post_stories": {
                                         "type": "boolean"
                                     },
@@ -12215,6 +12251,15 @@
                                         "type": "boolean"
                                     },
                                     "can_delete_stories": {
+                                        "type": "boolean"
+                                    },
+                                    "can_post_messages": {
+                                        "type": "boolean"
+                                    },
+                                    "can_edit_messages": {
+                                        "type": "boolean"
+                                    },
+                                    "can_pin_messages": {
                                         "type": "boolean"
                                     },
                                     "can_manage_topics": {
@@ -12268,15 +12313,6 @@
                                     "can_invite_users": {
                                         "type": "boolean"
                                     },
-                                    "can_post_messages": {
-                                        "type": "boolean"
-                                    },
-                                    "can_edit_messages": {
-                                        "type": "boolean"
-                                    },
-                                    "can_pin_messages": {
-                                        "type": "boolean"
-                                    },
                                     "can_post_stories": {
                                         "type": "boolean"
                                     },
@@ -12284,6 +12320,15 @@
                                         "type": "boolean"
                                     },
                                     "can_delete_stories": {
+                                        "type": "boolean"
+                                    },
+                                    "can_post_messages": {
+                                        "type": "boolean"
+                                    },
+                                    "can_edit_messages": {
+                                        "type": "boolean"
+                                    },
+                                    "can_pin_messages": {
                                         "type": "boolean"
                                     },
                                     "can_manage_topics": {

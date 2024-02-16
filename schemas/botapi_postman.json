@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "7.0.0"
+        "version": "7.1.0"
     },
     "variable": {
         "key": "token",
@@ -1945,7 +1945,7 @@
                         {
                             "key": "message_id",
                             "disabled": false,
-                            "description": "Required. Identifier of the target message",
+                            "description": "Required. Identifier of the target message. If the message belongs to a media group, the reaction is set to the first non-deleted message in the group instead.",
                             "type": "text"
                         },
                         {
@@ -1975,7 +1975,7 @@
                         "setMessageReaction"
                     ]
                 },
-                "description": "Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. In albums, bots must react to the first message. Returns True on success."
+                "description": "Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Returns True on success."
             }
         },
         {
@@ -2228,7 +2228,7 @@
                         {
                             "key": "can_manage_chat",
                             "disabled": true,
-                            "description": "Optional. Pass True if the administrator can access the chat event log, boost list in channels, see channel members, report spam messages, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege",
+                            "description": "Optional. Pass True if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages and ignore slow mode. Implied by any other administrator privilege.",
                             "type": "text"
                         },
                         {
@@ -2268,6 +2268,24 @@
                             "type": "text"
                         },
                         {
+                            "key": "can_post_stories",
+                            "disabled": true,
+                            "description": "Optional. Pass True if the administrator can post stories to the chat",
+                            "type": "text"
+                        },
+                        {
+                            "key": "can_edit_stories",
+                            "disabled": true,
+                            "description": "Optional. Pass True if the administrator can edit stories posted by other users",
+                            "type": "text"
+                        },
+                        {
+                            "key": "can_delete_stories",
+                            "disabled": true,
+                            "description": "Optional. Pass True if the administrator can delete stories posted by other users",
+                            "type": "text"
+                        },
+                        {
                             "key": "can_post_messages",
                             "disabled": true,
                             "description": "Optional. Pass True if the administrator can post messages in the channel, or access channel statistics; channels only",
@@ -2283,24 +2301,6 @@
                             "key": "can_pin_messages",
                             "disabled": true,
                             "description": "Optional. Pass True if the administrator can pin messages, supergroups only",
-                            "type": "text"
-                        },
-                        {
-                            "key": "can_post_stories",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the administrator can post stories in the channel; channels only",
-                            "type": "text"
-                        },
-                        {
-                            "key": "can_edit_stories",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the administrator can edit stories posted by other users; channels only",
-                            "type": "text"
-                        },
-                        {
-                            "key": "can_delete_stories",
-                            "disabled": true,
-                            "description": "Optional. Pass True if the administrator can delete stories posted by other users; channels only",
                             "type": "text"
                         },
                         {

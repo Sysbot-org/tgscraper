@@ -1,5 +1,5 @@
 {
-    "version": "7.1.0",
+    "version": "7.2.0",
     "types": [
         {
             "name": "Update",
@@ -44,6 +44,38 @@
                     ],
                     "optional": true,
                     "description": "Optional. New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot."
+                },
+                {
+                    "name": "business_connection",
+                    "types": [
+                        "BusinessConnection"
+                    ],
+                    "optional": true,
+                    "description": "Optional. The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot"
+                },
+                {
+                    "name": "business_message",
+                    "types": [
+                        "Message"
+                    ],
+                    "optional": true,
+                    "description": "Optional. New non-service message from a connected business account"
+                },
+                {
+                    "name": "edited_business_message",
+                    "types": [
+                        "Message"
+                    ],
+                    "optional": true,
+                    "description": "Optional. New version of a message from a connected business account"
+                },
+                {
+                    "name": "deleted_business_messages",
+                    "types": [
+                        "BusinessMessagesDeleted"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Messages were deleted from a connected business account"
                 },
                 {
                     "name": "message_reaction",
@@ -332,6 +364,14 @@
                     ],
                     "optional": true,
                     "description": "Optional. True, if the bot supports inline queries. Returned only in getMe."
+                },
+                {
+                    "name": "can_connect_to_business",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe."
                 }
             ],
             "extended_by": []
@@ -412,6 +452,46 @@
                     ],
                     "optional": true,
                     "description": "Optional. If non-empty, the list of all active chat usernames; for private chats, supergroups and channels. Returned only in getChat."
+                },
+                {
+                    "name": "birthdate",
+                    "types": [
+                        "Birthdate"
+                    ],
+                    "optional": true,
+                    "description": "Optional. For private chats, the date of birth of the user. Returned only in getChat."
+                },
+                {
+                    "name": "business_intro",
+                    "types": [
+                        "BusinessIntro"
+                    ],
+                    "optional": true,
+                    "description": "Optional. For private chats with business accounts, the intro of the business. Returned only in getChat."
+                },
+                {
+                    "name": "business_location",
+                    "types": [
+                        "BusinessLocation"
+                    ],
+                    "optional": true,
+                    "description": "Optional. For private chats with business accounts, the location of the business. Returned only in getChat."
+                },
+                {
+                    "name": "business_opening_hours",
+                    "types": [
+                        "BusinessOpeningHours"
+                    ],
+                    "optional": true,
+                    "description": "Optional. For private chats with business accounts, the opening hours of the business. Returned only in getChat."
+                },
+                {
+                    "name": "personal_chat",
+                    "types": [
+                        "Chat"
+                    ],
+                    "optional": true,
+                    "description": "Optional. For private chats, the personal channel of the user. Returned only in getChat."
                 },
                 {
                     "name": "available_reactions",
@@ -694,12 +774,28 @@
                     "description": "Optional. If the sender of the message boosted the chat, the number of boosts added by the user"
                 },
                 {
+                    "name": "sender_business_bot",
+                    "types": [
+                        "User"
+                    ],
+                    "optional": true,
+                    "description": "Optional. The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account."
+                },
+                {
                     "name": "date",
                     "types": [
                         "int"
                     ],
                     "optional": false,
                     "description": "Date the message was sent in Unix time. It is always a positive number, representing a valid date."
+                },
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier."
                 },
                 {
                     "name": "chat",
@@ -790,6 +886,15 @@
                     ],
                     "optional": true,
                     "description": "Optional. True, if the message can't be forwarded",
+                    "default": true
+                },
+                {
+                    "name": "is_from_offline",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message",
                     "default": true
                 },
                 {
@@ -1649,7 +1754,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. If the message to be replied to is from a different chat, unique identifier for the chat or username of the channel (in the format @channelusername)"
+                    "description": "Optional. If the message to be replied to is from a different chat, unique identifier for the chat or username of the channel (in the format @channelusername). Not supported for messages sent on behalf of a business account."
                 },
                 {
                     "name": "allow_sending_without_reply",
@@ -1657,7 +1762,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. Pass True if the message should be sent even if the specified message to be replied to is not found; can be used only for replies in the same chat and forum topic."
+                    "description": "Optional. Pass True if the message should be sent even if the specified message to be replied to is not found. Always False for replies in another chat or forum topic. Always True for messages sent on behalf of a business account."
                 },
                 {
                     "name": "quote",
@@ -2565,20 +2670,20 @@
             "description": "This object represents a point on the map.",
             "fields": [
                 {
-                    "name": "longitude",
-                    "types": [
-                        "float"
-                    ],
-                    "optional": false,
-                    "description": "Longitude as defined by sender"
-                },
-                {
                     "name": "latitude",
                     "types": [
                         "float"
                     ],
                     "optional": false,
                     "description": "Latitude as defined by sender"
+                },
+                {
+                    "name": "longitude",
+                    "types": [
+                        "float"
+                    ],
+                    "optional": false,
+                    "description": "Longitude as defined by sender"
                 },
                 {
                     "name": "horizontal_accuracy",
@@ -2841,6 +2946,53 @@
             "extended_by": []
         },
         {
+            "name": "SharedUser",
+            "description": "This object contains information about a user that was shared with the bot using a KeyboardButtonRequestUser button.",
+            "fields": [
+                {
+                    "name": "user_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Identifier of the shared user. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so 64-bit integers or double-precision float types are safe for storing these identifiers. The bot may not have access to the user and could be unable to use this identifier, unless the user is already known to the bot by some other means."
+                },
+                {
+                    "name": "first_name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. First name of the user, if the name was requested by the bot"
+                },
+                {
+                    "name": "last_name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Last name of the user, if the name was requested by the bot"
+                },
+                {
+                    "name": "username",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Username of the user, if the username was requested by the bot"
+                },
+                {
+                    "name": "photo",
+                    "types": [
+                        "Array<PhotoSize>"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Available sizes of the chat photo, if the photo was requested by the bot"
+                }
+            ],
+            "extended_by": []
+        },
+        {
             "name": "UsersShared",
             "description": "This object contains information about the users whose identifiers were shared with the bot using a KeyboardButtonRequestUsers button.",
             "fields": [
@@ -2853,19 +3005,19 @@
                     "description": "Identifier of the request"
                 },
                 {
-                    "name": "user_ids",
+                    "name": "users",
                     "types": [
-                        "Array<int>"
+                        "Array<SharedUser>"
                     ],
                     "optional": false,
-                    "description": "Identifiers of the shared users. These numbers may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting them. But they have at most 52 significant bits, so 64-bit integers or double-precision float types are safe for storing these identifiers. The bot may not have access to the users and could be unable to use these identifiers, unless the users are already known to the bot by some other means."
+                    "description": "Information about users shared with the bot."
                 }
             ],
             "extended_by": []
         },
         {
             "name": "ChatShared",
-            "description": "This object contains information about the chat whose identifier was shared with the bot using a KeyboardButtonRequestChat button.",
+            "description": "This object contains information about a chat that was shared with the bot using a KeyboardButtonRequestChat button.",
             "fields": [
                 {
                     "name": "request_id",
@@ -2882,6 +3034,30 @@
                     ],
                     "optional": false,
                     "description": "Identifier of the shared chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier. The bot may not have access to the chat and could be unable to use this identifier, unless the chat is already known to the bot by some other means."
+                },
+                {
+                    "name": "title",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Title of the chat, if the title was requested by the bot."
+                },
+                {
+                    "name": "username",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Username of the chat, if the username was requested by the bot and available."
+                },
+                {
+                    "name": "photo",
+                    "types": [
+                        "Array<PhotoSize>"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Available sizes of the chat photo, if the photo was requested by the bot"
                 }
             ],
             "extended_by": []
@@ -3422,7 +3598,7 @@
         },
         {
             "name": "KeyboardButtonRequestUsers",
-            "description": "This object defines the criteria used to request suitable users. The identifiers of the selected users will be shared with the bot when the corresponding button is pressed. More about requesting users »",
+            "description": "This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. More about requesting users »",
             "fields": [
                 {
                     "name": "request_id",
@@ -3456,13 +3632,37 @@
                     "optional": true,
                     "description": "Optional. The maximum number of users to be selected; 1-10. Defaults to 1.",
                     "default": 1
+                },
+                {
+                    "name": "request_name",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Pass True to request the users' first and last name"
+                },
+                {
+                    "name": "request_username",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Pass True to request the users' username"
+                },
+                {
+                    "name": "request_photo",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Pass True to request the users' photo"
                 }
             ],
             "extended_by": []
         },
         {
             "name": "KeyboardButtonRequestChat",
-            "description": "This object defines the criteria used to request a suitable chat. The identifier of the selected chat will be shared with the bot when the corresponding button is pressed. More about requesting chats »",
+            "description": "This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the сhat if appropriate More about requesting chats »",
             "fields": [
                 {
                     "name": "request_id",
@@ -3527,6 +3727,30 @@
                     ],
                     "optional": true,
                     "description": "Optional. Pass True to request a chat with the bot as a member. Otherwise, no additional restrictions are applied."
+                },
+                {
+                    "name": "request_title",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Pass True to request the chat's title"
+                },
+                {
+                    "name": "request_username",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Pass True to request the chat's username"
+                },
+                {
+                    "name": "request_photo",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Pass True to request the chat's photo"
                 }
             ],
             "extended_by": []
@@ -4069,7 +4293,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the administrator can post messages in the channel, or access channel statistics; channels only"
+                    "description": "Optional. True, if the administrator can post messages in the channel, or access channel statistics; for channels only"
                 },
                 {
                     "name": "can_edit_messages",
@@ -4077,7 +4301,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the administrator can edit messages of other users and can pin messages; channels only"
+                    "description": "Optional. True, if the administrator can edit messages of other users and can pin messages; for channels only"
                 },
                 {
                     "name": "can_pin_messages",
@@ -4085,7 +4309,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the user is allowed to pin messages; groups and supergroups only"
+                    "description": "Optional. True, if the user is allowed to pin messages; for groups and supergroups only"
                 },
                 {
                     "name": "can_manage_topics",
@@ -4093,7 +4317,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only"
+                    "description": "Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only"
                 }
             ],
             "extended_by": []
@@ -4335,7 +4559,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the administrator can post messages in the channel, or access channel statistics; channels only"
+                    "description": "Optional. True, if the administrator can post messages in the channel, or access channel statistics; for channels only"
                 },
                 {
                     "name": "can_edit_messages",
@@ -4343,7 +4567,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the administrator can edit messages of other users and can pin messages; channels only"
+                    "description": "Optional. True, if the administrator can edit messages of other users and can pin messages; for channels only"
                 },
                 {
                     "name": "can_pin_messages",
@@ -4351,7 +4575,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the user is allowed to pin messages; groups and supergroups only"
+                    "description": "Optional. True, if the user is allowed to pin messages; for groups and supergroups only"
                 },
                 {
                     "name": "can_manage_topics",
@@ -4359,7 +4583,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only"
+                    "description": "Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only"
                 },
                 {
                     "name": "custom_title",
@@ -4770,6 +4994,137 @@
                     ],
                     "optional": true,
                     "description": "Optional. True, if the user is allowed to create forum topics. If omitted defaults to the value of can_pin_messages"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "Birthdate",
+            "description": "",
+            "fields": [
+                {
+                    "name": "day",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Day of the user's birth; 1-31"
+                },
+                {
+                    "name": "month",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Month of the user's birth; 1-12"
+                },
+                {
+                    "name": "year",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Year of the user's birth"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "BusinessIntro",
+            "description": "",
+            "fields": [
+                {
+                    "name": "title",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Title text of the business intro"
+                },
+                {
+                    "name": "message",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Message text of the business intro"
+                },
+                {
+                    "name": "sticker",
+                    "types": [
+                        "Sticker"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Sticker of the business intro"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "BusinessLocation",
+            "description": "",
+            "fields": [
+                {
+                    "name": "address",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Address of the business"
+                },
+                {
+                    "name": "location",
+                    "types": [
+                        "Location"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Location of the business"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "BusinessOpeningHoursInterval",
+            "description": "",
+            "fields": [
+                {
+                    "name": "opening_minute",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "The minute's sequence number in a week, starting on Monday, marking the start of the time interval during which the business is open; 0 - 7  24  60"
+                },
+                {
+                    "name": "closing_minute",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "The minute's sequence number in a week, starting on Monday, marking the end of the time interval during which the business is open; 0 - 8  24  60"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "BusinessOpeningHours",
+            "description": "",
+            "fields": [
+                {
+                    "name": "time_zone_name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Unique name of the time zone for which the opening hours are defined"
+                },
+                {
+                    "name": "opening_hours",
+                    "types": [
+                        "Array<BusinessOpeningHoursInterval>"
+                    ],
+                    "optional": false,
+                    "description": "List of time intervals describing business opening hours"
                 }
             ],
             "extended_by": []
@@ -5532,6 +5887,92 @@
             "extended_by": []
         },
         {
+            "name": "BusinessConnection",
+            "description": "Describes the connection of the bot with a business account.",
+            "fields": [
+                {
+                    "name": "id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier of the business connection"
+                },
+                {
+                    "name": "user",
+                    "types": [
+                        "User"
+                    ],
+                    "optional": false,
+                    "description": "Business account user that created the business connection"
+                },
+                {
+                    "name": "user_chat_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Identifier of a private chat with the user who created the business connection. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier."
+                },
+                {
+                    "name": "date",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Date the connection was established in Unix time"
+                },
+                {
+                    "name": "can_reply",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": false,
+                    "description": "True, if the bot can act on behalf of the business account in chats that were active in the last 24 hours"
+                },
+                {
+                    "name": "is_enabled",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": false,
+                    "description": "True, if the connection is active"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "BusinessMessagesDeleted",
+            "description": "This object is received when messages are deleted from a connected business account.",
+            "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier of the business connection"
+                },
+                {
+                    "name": "chat",
+                    "types": [
+                        "Chat"
+                    ],
+                    "optional": false,
+                    "description": "Information about a chat in the business account. The bot may not have access to the chat or the corresponding user."
+                },
+                {
+                    "name": "message_ids",
+                    "types": [
+                        "Array<int>"
+                    ],
+                    "optional": false,
+                    "description": "A JSON-serialized list of identifiers of deleted messages in the chat of the business account"
+                }
+            ],
+            "extended_by": []
+        },
+        {
             "name": "ResponseParameters",
             "description": "Describes why a request was unsuccessful.",
             "fields": [
@@ -6117,22 +6558,6 @@
                     "description": "Type of stickers in the set, currently one of “regular”, “mask”, “custom_emoji”"
                 },
                 {
-                    "name": "is_animated",
-                    "types": [
-                        "bool"
-                    ],
-                    "optional": false,
-                    "description": "True, if the sticker set contains animated stickers"
-                },
-                {
-                    "name": "is_video",
-                    "types": [
-                        "bool"
-                    ],
-                    "optional": false,
-                    "description": "True, if the sticker set contains video stickers"
-                },
-                {
                     "name": "stickers",
                     "types": [
                         "Array<Sticker>"
@@ -6202,6 +6627,14 @@
                     ],
                     "optional": false,
                     "description": "The added sticker. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, upload a new one using multipart/form-data, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. Animated and video stickers can't be uploaded via HTTP URL. More information on Sending Files »"
+                },
+                {
+                    "name": "format",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Format of the added sticker, must be one of “static” for a .WEBP or .PNG image, “animated” for a .TGS animation, “video” for a WEBM video"
                 },
                 {
                     "name": "emoji_list",
@@ -9119,7 +9552,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. Base64-encoded encrypted Telegram Passport element data provided by the user, available for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying EncryptedCredentials."
+                    "description": "Optional. Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying EncryptedCredentials."
                 },
                 {
                     "name": "phone_number",
@@ -9127,7 +9560,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. User's verified phone number, available only for “phone_number” type"
+                    "description": "Optional. User's verified phone number; available only for “phone_number” type"
                 },
                 {
                     "name": "email",
@@ -9135,7 +9568,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. User's verified email address, available only for “email” type"
+                    "description": "Optional. User's verified email address; available only for “email” type"
                 },
                 {
                     "name": "files",
@@ -9143,7 +9576,7 @@
                         "Array<PassportFile>"
                     ],
                     "optional": true,
-                    "description": "Optional. Array of encrypted files with documents provided by the user, available for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying EncryptedCredentials."
+                    "description": "Optional. Array of encrypted files with documents provided by the user; available only for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying EncryptedCredentials."
                 },
                 {
                     "name": "front_side",
@@ -9151,7 +9584,7 @@
                         "PassportFile"
                     ],
                     "optional": true,
-                    "description": "Optional. Encrypted file with the front side of the document, provided by the user. Available for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying EncryptedCredentials."
+                    "description": "Optional. Encrypted file with the front side of the document, provided by the user; available only for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying EncryptedCredentials."
                 },
                 {
                     "name": "reverse_side",
@@ -9159,7 +9592,7 @@
                         "PassportFile"
                     ],
                     "optional": true,
-                    "description": "Optional. Encrypted file with the reverse side of the document, provided by the user. Available for “driver_license” and “identity_card”. The file can be decrypted and verified using the accompanying EncryptedCredentials."
+                    "description": "Optional. Encrypted file with the reverse side of the document, provided by the user; available only for “driver_license” and “identity_card”. The file can be decrypted and verified using the accompanying EncryptedCredentials."
                 },
                 {
                     "name": "selfie",
@@ -9167,7 +9600,7 @@
                         "PassportFile"
                     ],
                     "optional": true,
-                    "description": "Optional. Encrypted file with the selfie of the user holding a document, provided by the user; available for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying EncryptedCredentials."
+                    "description": "Optional. Encrypted file with the selfie of the user holding a document, provided by the user; available if requested for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying EncryptedCredentials."
                 },
                 {
                     "name": "translation",
@@ -9175,7 +9608,7 @@
                         "Array<PassportFile>"
                     ],
                     "optional": true,
-                    "description": "Optional. Array of encrypted files with translated versions of documents provided by the user. Available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying EncryptedCredentials."
+                    "description": "Optional. Array of encrypted files with translated versions of documents provided by the user; available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying EncryptedCredentials."
                 },
                 {
                     "name": "hash",
@@ -9860,6 +10293,14 @@
             "description": "Use this method to send text messages. On success, the sent Message is returned.",
             "fields": [
                 {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
+                {
                     "name": "chat_id",
                     "types": [
                         "int",
@@ -9941,7 +10382,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
                 }
             ],
             "return_types": [
@@ -10043,7 +10484,7 @@
                         "Array<int>"
                     ],
                     "optional": false,
-                    "description": "Identifiers of 1-100 messages in the chat from_chat_id to forward. The identifiers must be specified in a strictly increasing order."
+                    "description": "A JSON-serialized list of 1-100 identifiers of messages in the chat from_chat_id to forward. The identifiers must be specified in a strictly increasing order."
                 },
                 {
                     "name": "disable_notification",
@@ -10204,7 +10645,7 @@
                         "Array<int>"
                     ],
                     "optional": false,
-                    "description": "Identifiers of 1-100 messages in the chat from_chat_id to copy. The identifiers must be specified in a strictly increasing order."
+                    "description": "A JSON-serialized list of 1-100 identifiers of messages in the chat from_chat_id to copy. The identifiers must be specified in a strictly increasing order."
                 },
                 {
                     "name": "disable_notification",
@@ -10239,6 +10680,14 @@
             "name": "sendPhoto",
             "description": "Use this method to send photos. On success, the sent Message is returned.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -10330,7 +10779,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
                 }
             ],
             "return_types": [
@@ -10341,6 +10790,14 @@
             "name": "sendAudio",
             "description": "Use this method to send audio files, if you want Telegram clients to display them in the music player. Your audio must be in the .MP3 or .M4A format. On success, the sent Message is returned. Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.\nFor sending voice messages, use the sendVoice method instead.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -10457,7 +10914,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
                 }
             ],
             "return_types": [
@@ -10468,6 +10925,14 @@
             "name": "sendDocument",
             "description": "Use this method to send general files. On success, the sent Message is returned. Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -10568,7 +11033,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
                 }
             ],
             "return_types": [
@@ -10579,6 +11044,14 @@
             "name": "sendVideo",
             "description": "Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -10711,7 +11184,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
                 }
             ],
             "return_types": [
@@ -10722,6 +11195,14 @@
             "name": "sendAnimation",
             "description": "Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent Message is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -10846,7 +11327,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
                 }
             ],
             "return_types": [
@@ -10857,6 +11338,14 @@
             "name": "sendVoice",
             "description": "Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -10948,7 +11437,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
                 }
             ],
             "return_types": [
@@ -10959,6 +11448,14 @@
             "name": "sendVideoNote",
             "description": "As of v.4.0, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent Message is returned.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -11043,7 +11540,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
                 }
             ],
             "return_types": [
@@ -11054,6 +11551,14 @@
             "name": "sendMediaGroup",
             "description": "Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files can be only grouped in an album with messages of the same type. On success, an array of Messages that were sent is returned.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -11112,6 +11617,14 @@
             "name": "sendLocation",
             "description": "Use this method to send point on the map. On success, the sent Message is returned.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -11210,7 +11723,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
                 }
             ],
             "return_types": [
@@ -11221,6 +11734,14 @@
             "name": "sendVenue",
             "description": "Use this method to send information about a venue. On success, the sent Message is returned.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -11335,7 +11856,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
                 }
             ],
             "return_types": [
@@ -11346,6 +11867,14 @@
             "name": "sendContact",
             "description": "Use this method to send phone contacts. On success, the sent Message is returned.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -11428,7 +11957,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
                 }
             ],
             "return_types": [
@@ -11439,6 +11968,14 @@
             "name": "sendPoll",
             "description": "Use this method to send a native poll. On success, the sent Message is returned.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -11588,7 +12125,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
                 }
             ],
             "return_types": [
@@ -11599,6 +12136,14 @@
             "name": "sendDice",
             "description": "Use this method to send an animated emoji that will display a random value. On success, the sent Message is returned.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -11658,7 +12203,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
                 }
             ],
             "return_types": [
@@ -11669,6 +12214,14 @@
             "name": "sendChatAction",
             "description": "Use this method when you need to tell the user that something is happening on the bot's side. The status is set for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status). Returns True on success.\nWe only recommend using this method when a response from the bot will take a noticeable amount of time to arrive.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the action will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -11684,7 +12237,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Unique identifier for the target message thread; supergroups only"
+                    "description": "Unique identifier for the target message thread; for supergroups only"
                 },
                 {
                     "name": "action",
@@ -11726,7 +12279,7 @@
                         "Array<ReactionType>"
                     ],
                     "optional": true,
-                    "description": "New list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators."
+                    "description": "A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators."
                 },
                 {
                     "name": "is_big",
@@ -12033,7 +12586,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Pass True if the administrator can post messages in the channel, or access channel statistics; channels only"
+                    "description": "Pass True if the administrator can post messages in the channel, or access channel statistics; for channels only"
                 },
                 {
                     "name": "can_edit_messages",
@@ -12041,7 +12594,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Pass True if the administrator can edit messages of other users and can pin messages; channels only"
+                    "description": "Pass True if the administrator can edit messages of other users and can pin messages; for channels only"
                 },
                 {
                     "name": "can_pin_messages",
@@ -12049,7 +12602,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Pass True if the administrator can pin messages, supergroups only"
+                    "description": "Pass True if the administrator can pin messages; for supergroups only"
                 },
                 {
                     "name": "can_manage_topics",
@@ -12057,7 +12610,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Pass True if the user is allowed to create, rename, close, and reopen forum topics, supergroups only"
+                    "description": "Pass True if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only"
                 }
             ],
             "return_types": [
@@ -13094,6 +13647,23 @@
             ]
         },
         {
+            "name": "getBusinessConnection",
+            "description": "Use this method to get information about the connection of the bot with a business account. Returns a BusinessConnection object on success.",
+            "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier of the business connection"
+                }
+            ],
+            "return_types": [
+                "BusinessConnection"
+            ]
+        },
+        {
             "name": "setMyCommands",
             "description": "Use this method to change the list of the bot's commands. See this manual for more details about bot commands. Returns True on success.",
             "fields": [
@@ -13831,7 +14401,7 @@
                         "Array<int>"
                     ],
                     "optional": false,
-                    "description": "Identifiers of 1-100 messages to delete. See deleteMessage for limitations on which messages can be deleted"
+                    "description": "A JSON-serialized list of 1-100 identifiers of messages to delete. See deleteMessage for limitations on which messages can be deleted"
                 }
             ],
             "return_types": [
@@ -13842,6 +14412,14 @@
             "name": "sendSticker",
             "description": "Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers. On success, the sent Message is returned.",
             "fields": [
+                {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
                 {
                     "name": "chat_id",
                     "types": [
@@ -13866,7 +14444,7 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP or .TGS sticker using multipart/form-data. More information on Sending Files ». Video stickers can only be sent by a file_id. Animated stickers can't be sent via an HTTP URL."
+                    "description": "Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. More information on Sending Files ». Video and animated stickers can't be sent via an HTTP URL."
                 },
                 {
                     "name": "emoji",
@@ -13909,7 +14487,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account."
                 }
             ],
             "return_types": [
@@ -13943,7 +14521,7 @@
                         "Array<string>"
                     ],
                     "optional": false,
-                    "description": "List of custom emoji identifiers. At most 200 custom emoji identifiers can be specified."
+                    "description": "A JSON-serialized list of custom emoji identifiers. At most 200 custom emoji identifiers can be specified."
                 }
             ],
             "return_types": [
@@ -13952,7 +14530,7 @@
         },
         {
             "name": "uploadStickerFile",
-            "description": "Use this method to upload a file with a sticker for later use in the createNewStickerSet and addStickerToSet methods (the file can be used multiple times). Returns the uploaded File on success.",
+            "description": "Use this method to upload a file with a sticker for later use in the createNewStickerSet, addStickerToSet, or replaceStickerInSet methods (the file can be used multiple times). Returns the uploaded File on success.",
             "fields": [
                 {
                     "name": "user_id",
@@ -14020,14 +14598,6 @@
                     "description": "A JSON-serialized list of 1-50 initial stickers to be added to the sticker set"
                 },
                 {
-                    "name": "sticker_format",
-                    "types": [
-                        "string"
-                    ],
-                    "optional": false,
-                    "description": "Format of stickers in the set, must be one of “static”, “animated”, “video”"
-                },
-                {
                     "name": "sticker_type",
                     "types": [
                         "string"
@@ -14050,7 +14620,7 @@
         },
         {
             "name": "addStickerToSet",
-            "description": "Use this method to add a new sticker to a set created by the bot. The format of the added sticker must match the format of the other stickers in the set. Emoji sticker sets can have up to 200 stickers. Animated and video sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.",
+            "description": "Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns True on success.",
             "fields": [
                 {
                     "name": "user_id",
@@ -14117,6 +14687,47 @@
                     ],
                     "optional": false,
                     "description": "File identifier of the sticker"
+                }
+            ],
+            "return_types": [
+                "bool"
+            ]
+        },
+        {
+            "name": "replaceStickerInSet",
+            "description": "Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling deleteStickerFromSet, then addStickerToSet, then setStickerPositionInSet. Returns True on success.",
+            "fields": [
+                {
+                    "name": "user_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "User identifier of the sticker set owner"
+                },
+                {
+                    "name": "name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Sticker set name"
+                },
+                {
+                    "name": "old_sticker",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "File identifier of the replaced sticker"
+                },
+                {
+                    "name": "sticker",
+                    "types": [
+                        "InputSticker"
+                    ],
+                    "optional": false,
+                    "description": "A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set remains unchanged."
                 }
             ],
             "return_types": [
@@ -14251,6 +14862,14 @@
                     ],
                     "optional": true,
                     "description": "A .WEBP or .PNG image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a .TGS animation with a thumbnail up to 32 kilobytes in size (see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements), or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files ». Animated and video sticker set thumbnails can't be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail."
+                },
+                {
+                    "name": "format",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Format of the thumbnail, must be one of “static” for a .WEBP or .PNG image, “animated” for a .TGS animation, or “video” for a WEBM video"
                 }
             ],
             "return_types": [
@@ -14883,6 +15502,14 @@
             "description": "Use this method to send a game. On success, the sent Message is returned.",
             "fields": [
                 {
+                    "name": "business_connection_id",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Unique identifier of the business connection on behalf of which the message will be sent"
+                },
+                {
                     "name": "chat_id",
                     "types": [
                         "int"
@@ -14936,7 +15563,7 @@
                         "InlineKeyboardMarkup"
                     ],
                     "optional": true,
-                    "description": "A JSON-serialized object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game."
+                    "description": "A JSON-serialized object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game. Not supported for messages sent on behalf of a business account."
                 }
             ],
             "return_types": [

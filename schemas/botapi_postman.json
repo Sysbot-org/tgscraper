@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "7.1.0"
+        "version": "7.2.0"
     },
     "variable": {
         "key": "token",
@@ -265,6 +265,12 @@
                     "mode": "formdata",
                     "formdata": [
                         {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
+                        {
                             "key": "chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
@@ -321,7 +327,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account",
                             "type": "text"
                         }
                     ]
@@ -431,7 +437,7 @@
                         {
                             "key": "message_ids",
                             "disabled": false,
-                            "description": "Required. Identifiers of 1-100 messages in the chat from_chat_id to forward. The identifiers must be specified in a strictly increasing order.",
+                            "description": "Required. A JSON-serialized list of 1-100 identifiers of messages in the chat from_chat_id to forward. The identifiers must be specified in a strictly increasing order.",
                             "type": "text"
                         },
                         {
@@ -583,7 +589,7 @@
                         {
                             "key": "message_ids",
                             "disabled": false,
-                            "description": "Required. Identifiers of 1-100 messages in the chat from_chat_id to copy. The identifiers must be specified in a strictly increasing order.",
+                            "description": "Required. A JSON-serialized list of 1-100 identifiers of messages in the chat from_chat_id to copy. The identifiers must be specified in a strictly increasing order.",
                             "type": "text"
                         },
                         {
@@ -629,6 +635,12 @@
                 "body": {
                     "mode": "formdata",
                     "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
                         {
                             "key": "chat_id",
                             "disabled": false,
@@ -692,7 +704,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account",
                             "type": "text"
                         }
                     ]
@@ -720,6 +732,12 @@
                 "body": {
                     "mode": "formdata",
                     "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
                         {
                             "key": "chat_id",
                             "disabled": false,
@@ -801,7 +819,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account",
                             "type": "text"
                         }
                     ]
@@ -829,6 +847,12 @@
                 "body": {
                     "mode": "formdata",
                     "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
                         {
                             "key": "chat_id",
                             "disabled": false,
@@ -898,7 +922,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account",
                             "type": "text"
                         }
                     ]
@@ -926,6 +950,12 @@
                 "body": {
                     "mode": "formdata",
                     "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
                         {
                             "key": "chat_id",
                             "disabled": false,
@@ -1019,7 +1049,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account",
                             "type": "text"
                         }
                     ]
@@ -1047,6 +1077,12 @@
                 "body": {
                     "mode": "formdata",
                     "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
                         {
                             "key": "chat_id",
                             "disabled": false,
@@ -1134,7 +1170,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account",
                             "type": "text"
                         }
                     ]
@@ -1162,6 +1198,12 @@
                 "body": {
                     "mode": "formdata",
                     "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
                         {
                             "key": "chat_id",
                             "disabled": false,
@@ -1225,7 +1267,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account",
                             "type": "text"
                         }
                     ]
@@ -1253,6 +1295,12 @@
                 "body": {
                     "mode": "formdata",
                     "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
                         {
                             "key": "chat_id",
                             "disabled": false,
@@ -1310,7 +1358,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account",
                             "type": "text"
                         }
                     ]
@@ -1338,6 +1386,12 @@
                 "body": {
                     "mode": "formdata",
                     "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
                         {
                             "key": "chat_id",
                             "disabled": false,
@@ -1399,6 +1453,12 @@
                 "body": {
                     "mode": "formdata",
                     "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
                         {
                             "key": "chat_id",
                             "disabled": false,
@@ -1468,7 +1528,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account",
                             "type": "text"
                         }
                     ]
@@ -1496,6 +1556,12 @@
                 "body": {
                     "mode": "formdata",
                     "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
                         {
                             "key": "chat_id",
                             "disabled": false,
@@ -1577,7 +1643,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account",
                             "type": "text"
                         }
                     ]
@@ -1605,6 +1671,12 @@
                 "body": {
                     "mode": "formdata",
                     "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
                         {
                             "key": "chat_id",
                             "disabled": false,
@@ -1662,7 +1734,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account",
                             "type": "text"
                         }
                     ]
@@ -1690,6 +1762,12 @@
                 "body": {
                     "mode": "formdata",
                     "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
                         {
                             "key": "chat_id",
                             "disabled": false,
@@ -1797,7 +1875,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account",
                             "type": "text"
                         }
                     ]
@@ -1825,6 +1903,12 @@
                 "body": {
                     "mode": "formdata",
                     "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
                         {
                             "key": "chat_id",
                             "disabled": false,
@@ -1865,7 +1949,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account",
                             "type": "text"
                         }
                     ]
@@ -1894,6 +1978,12 @@
                     "mode": "formdata",
                     "formdata": [
                         {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the action will be sent",
+                            "type": "text"
+                        },
+                        {
                             "key": "chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
@@ -1902,7 +1992,7 @@
                         {
                             "key": "message_thread_id",
                             "disabled": true,
-                            "description": "Optional. Unique identifier for the target message thread; supergroups only",
+                            "description": "Optional. Unique identifier for the target message thread; for supergroups only",
                             "type": "text"
                         },
                         {
@@ -1951,7 +2041,7 @@
                         {
                             "key": "reaction",
                             "disabled": true,
-                            "description": "Optional. New list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.",
+                            "description": "Optional. A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.",
                             "type": "text"
                         },
                         {
@@ -2288,25 +2378,25 @@
                         {
                             "key": "can_post_messages",
                             "disabled": true,
-                            "description": "Optional. Pass True if the administrator can post messages in the channel, or access channel statistics; channels only",
+                            "description": "Optional. Pass True if the administrator can post messages in the channel, or access channel statistics; for channels only",
                             "type": "text"
                         },
                         {
                             "key": "can_edit_messages",
                             "disabled": true,
-                            "description": "Optional. Pass True if the administrator can edit messages of other users and can pin messages; channels only",
+                            "description": "Optional. Pass True if the administrator can edit messages of other users and can pin messages; for channels only",
                             "type": "text"
                         },
                         {
                             "key": "can_pin_messages",
                             "disabled": true,
-                            "description": "Optional. Pass True if the administrator can pin messages, supergroups only",
+                            "description": "Optional. Pass True if the administrator can pin messages; for supergroups only",
                             "type": "text"
                         },
                         {
                             "key": "can_manage_topics",
                             "disabled": true,
-                            "description": "Optional. Pass True if the user is allowed to create, rename, close, and reopen forum topics, supergroups only",
+                            "description": "Optional. Pass True if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only",
                             "type": "text"
                         }
                     ]
@@ -3782,6 +3872,37 @@
             }
         },
         {
+            "name": "getBusinessConnection",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "business_connection_id",
+                            "disabled": false,
+                            "description": "Required. Unique identifier of the business connection",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/getBusinessConnection",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "getBusinessConnection"
+                    ]
+                },
+                "description": "Use this method to get information about the connection of the bot with a business account. Returns a BusinessConnection object on success."
+            }
+        },
+        {
             "name": "setMyCommands",
             "request": {
                 "method": "POST",
@@ -4710,7 +4831,7 @@
                         {
                             "key": "message_ids",
                             "disabled": false,
-                            "description": "Required. Identifiers of 1-100 messages to delete. See deleteMessage for limitations on which messages can be deleted",
+                            "description": "Required. A JSON-serialized list of 1-100 identifiers of messages to delete. See deleteMessage for limitations on which messages can be deleted",
                             "type": "text"
                         }
                     ]
@@ -4739,6 +4860,12 @@
                     "mode": "formdata",
                     "formdata": [
                         {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
+                        {
                             "key": "chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the target chat or username of the target channel (in the format @channelusername)",
@@ -4753,7 +4880,7 @@
                         {
                             "key": "sticker",
                             "disabled": false,
-                            "description": "Required. Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP or .TGS sticker using multipart/form-data. More information on Sending Files ». Video stickers can only be sent by a file_id. Animated stickers can't be sent via an HTTP URL.",
+                            "description": "Required. Sticker to send. Pass a file_id as String to send a file that exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP sticker from the Internet, or upload a new .WEBP, .TGS, or .WEBM sticker using multipart/form-data. More information on Sending Files ». Video and animated stickers can't be sent via an HTTP URL.",
                             "type": "text"
                         },
                         {
@@ -4783,7 +4910,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.",
+                            "description": "Optional. Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account.",
                             "type": "text"
                         }
                     ]
@@ -4845,7 +4972,7 @@
                         {
                             "key": "custom_emoji_ids",
                             "disabled": false,
-                            "description": "Required. List of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.",
+                            "description": "Required. A JSON-serialized list of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.",
                             "type": "text"
                         }
                     ]
@@ -4906,7 +5033,7 @@
                         "uploadStickerFile"
                     ]
                 },
-                "description": "Use this method to upload a file with a sticker for later use in the createNewStickerSet and addStickerToSet methods (the file can be used multiple times). Returns the uploaded File on success."
+                "description": "Use this method to upload a file with a sticker for later use in the createNewStickerSet, addStickerToSet, or replaceStickerInSet methods (the file can be used multiple times). Returns the uploaded File on success."
             }
         },
         {
@@ -4938,12 +5065,6 @@
                             "key": "stickers",
                             "disabled": false,
                             "description": "Required. A JSON-serialized list of 1-50 initial stickers to be added to the sticker set",
-                            "type": "text"
-                        },
-                        {
-                            "key": "sticker_format",
-                            "disabled": false,
-                            "description": "Required. Format of stickers in the set, must be one of “static”, “animated”, “video”",
                             "type": "text"
                         },
                         {
@@ -5016,7 +5137,7 @@
                         "addStickerToSet"
                     ]
                 },
-                "description": "Use this method to add a new sticker to a set created by the bot. The format of the added sticker must match the format of the other stickers in the set. Emoji sticker sets can have up to 200 stickers. Animated and video sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success."
+                "description": "Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns True on success."
             }
         },
         {
@@ -5085,6 +5206,55 @@
                     ]
                 },
                 "description": "Use this method to delete a sticker from a set created by the bot. Returns True on success."
+            }
+        },
+        {
+            "name": "replaceStickerInSet",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "user_id",
+                            "disabled": false,
+                            "description": "Required. User identifier of the sticker set owner",
+                            "type": "text"
+                        },
+                        {
+                            "key": "name",
+                            "disabled": false,
+                            "description": "Required. Sticker set name",
+                            "type": "text"
+                        },
+                        {
+                            "key": "old_sticker",
+                            "disabled": false,
+                            "description": "Required. File identifier of the replaced sticker",
+                            "type": "text"
+                        },
+                        {
+                            "key": "sticker",
+                            "disabled": false,
+                            "description": "Required. A JSON-serialized object with information about the added sticker. If exactly the same sticker had already been added to the set, then the set remains unchanged.",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/replaceStickerInSet",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "replaceStickerInSet"
+                    ]
+                },
+                "description": "Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling deleteStickerFromSet, then addStickerToSet, then setStickerPositionInSet. Returns True on success."
             }
         },
         {
@@ -5258,6 +5428,12 @@
                             "key": "thumbnail",
                             "disabled": true,
                             "description": "Optional. A .WEBP or .PNG image with the thumbnail, must be up to 128 kilobytes in size and have a width and height of exactly 100px, or a .TGS animation with a thumbnail up to 32 kilobytes in size (see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements), or a WEBM video with the thumbnail up to 32 kilobytes in size; see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one using multipart/form-data. More information on Sending Files ». Animated and video sticker set thumbnails can't be uploaded via HTTP URL. If omitted, then the thumbnail is dropped and the first sticker is used as the thumbnail.",
+                            "type": "text"
+                        },
+                        {
+                            "key": "format",
+                            "disabled": false,
+                            "description": "Required. Format of the thumbnail, must be one of “static” for a .WEBP or .PNG image, “animated” for a .TGS animation, or “video” for a WEBM video",
                             "type": "text"
                         }
                     ]
@@ -5914,6 +6090,12 @@
                     "mode": "formdata",
                     "formdata": [
                         {
+                            "key": "business_connection_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the business connection on behalf of which the message will be sent",
+                            "type": "text"
+                        },
+                        {
                             "key": "chat_id",
                             "disabled": false,
                             "description": "Required. Unique identifier for the target chat",
@@ -5952,7 +6134,7 @@
                         {
                             "key": "reply_markup",
                             "disabled": true,
-                            "description": "Optional. A JSON-serialized object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game.",
+                            "description": "Optional. A JSON-serialized object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game. Not supported for messages sent on behalf of a business account.",
                             "type": "text"
                         }
                     ]

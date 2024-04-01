@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "7.1.0"
+        "version": "7.2.0"
     },
     "servers": [
         {
@@ -182,6 +182,18 @@
                     "edited_channel_post": {
                         "$ref": "#/components/schemas/Message"
                     },
+                    "business_connection": {
+                        "$ref": "#/components/schemas/BusinessConnection"
+                    },
+                    "business_message": {
+                        "$ref": "#/components/schemas/Message"
+                    },
+                    "edited_business_message": {
+                        "$ref": "#/components/schemas/Message"
+                    },
+                    "deleted_business_messages": {
+                        "$ref": "#/components/schemas/BusinessMessagesDeleted"
+                    },
                     "message_reaction": {
                         "$ref": "#/components/schemas/MessageReactionUpdated"
                     },
@@ -310,6 +322,9 @@
                     },
                     "supports_inline_queries": {
                         "type": "boolean"
+                    },
+                    "can_connect_to_business": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -351,6 +366,21 @@
                         "items": {
                             "type": "string"
                         }
+                    },
+                    "birthdate": {
+                        "$ref": "#/components/schemas/Birthdate"
+                    },
+                    "business_intro": {
+                        "$ref": "#/components/schemas/BusinessIntro"
+                    },
+                    "business_location": {
+                        "$ref": "#/components/schemas/BusinessLocation"
+                    },
+                    "business_opening_hours": {
+                        "$ref": "#/components/schemas/BusinessOpeningHours"
+                    },
+                    "personal_chat": {
+                        "$ref": "#/components/schemas/Chat"
                     },
                     "available_reactions": {
                         "type": "array",
@@ -474,8 +504,14 @@
                     "sender_boost_count": {
                         "type": "integer"
                     },
+                    "sender_business_bot": {
+                        "$ref": "#/components/schemas/User"
+                    },
                     "date": {
                         "type": "integer"
+                    },
+                    "business_connection_id": {
+                        "type": "string"
                     },
                     "chat": {
                         "$ref": "#/components/schemas/Chat"
@@ -510,6 +546,10 @@
                         "type": "integer"
                     },
                     "has_protected_content": {
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "is_from_offline": {
                         "type": "boolean",
                         "default": true
                     },
@@ -1437,14 +1477,14 @@
             "Location": {
                 "description": "This object represents a point on the map.",
                 "required": [
-                    "longitude",
-                    "latitude"
+                    "latitude",
+                    "longitude"
                 ],
                 "properties": {
-                    "longitude": {
+                    "latitude": {
                         "type": "number"
                     },
-                    "latitude": {
+                    "longitude": {
                         "type": "number"
                     },
                     "horizontal_accuracy": {
@@ -1601,27 +1641,54 @@
                 "description": "This object represents a service message about General forum topic unhidden in the chat. Currently holds no information.",
                 "type": "object"
             },
+            "SharedUser": {
+                "description": "This object contains information about a user that was shared with the bot using a KeyboardButtonRequestUser button.",
+                "required": [
+                    "user_id"
+                ],
+                "properties": {
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "photo": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PhotoSize"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "UsersShared": {
                 "description": "This object contains information about the users whose identifiers were shared with the bot using a KeyboardButtonRequestUsers button.",
                 "required": [
                     "request_id",
-                    "user_ids"
+                    "users"
                 ],
                 "properties": {
                     "request_id": {
                         "type": "integer"
                     },
-                    "user_ids": {
+                    "users": {
                         "type": "array",
                         "items": {
-                            "type": "integer"
+                            "$ref": "#/components/schemas/SharedUser"
                         }
                     }
                 },
                 "type": "object"
             },
             "ChatShared": {
-                "description": "This object contains information about the chat whose identifier was shared with the bot using a KeyboardButtonRequestChat button.",
+                "description": "This object contains information about a chat that was shared with the bot using a KeyboardButtonRequestChat button.",
                 "required": [
                     "request_id",
                     "chat_id"
@@ -1632,6 +1699,18 @@
                     },
                     "chat_id": {
                         "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "photo": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PhotoSize"
+                        }
                     }
                 },
                 "type": "object"
@@ -1951,7 +2030,7 @@
                 "type": "object"
             },
             "KeyboardButtonRequestUsers": {
-                "description": "This object defines the criteria used to request suitable users. The identifiers of the selected users will be shared with the bot when the corresponding button is pressed. More about requesting users »",
+                "description": "This object defines the criteria used to request suitable users. Information about the selected users will be shared with the bot when the corresponding button is pressed. More about requesting users »",
                 "required": [
                     "request_id"
                 ],
@@ -1968,12 +2047,21 @@
                     "max_quantity": {
                         "type": "integer",
                         "default": 1
+                    },
+                    "request_name": {
+                        "type": "boolean"
+                    },
+                    "request_username": {
+                        "type": "boolean"
+                    },
+                    "request_photo": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
             },
             "KeyboardButtonRequestChat": {
-                "description": "This object defines the criteria used to request a suitable chat. The identifier of the selected chat will be shared with the bot when the corresponding button is pressed. More about requesting chats »",
+                "description": "This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the сhat if appropriate More about requesting chats »",
                 "required": [
                     "request_id",
                     "chat_is_channel"
@@ -2001,6 +2089,15 @@
                         "$ref": "#/components/schemas/ChatAdministratorRights"
                     },
                     "bot_is_member": {
+                        "type": "boolean"
+                    },
+                    "request_title": {
+                        "type": "boolean"
+                    },
+                    "request_username": {
+                        "type": "boolean"
+                    },
+                    "request_photo": {
                         "type": "boolean"
                     }
                 },
@@ -2678,6 +2775,90 @@
                 },
                 "type": "object"
             },
+            "Birthdate": {
+                "description": "",
+                "required": [
+                    "day",
+                    "month"
+                ],
+                "properties": {
+                    "day": {
+                        "type": "integer"
+                    },
+                    "month": {
+                        "type": "integer"
+                    },
+                    "year": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "BusinessIntro": {
+                "description": "",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "sticker": {
+                        "$ref": "#/components/schemas/Sticker"
+                    }
+                },
+                "type": "object"
+            },
+            "BusinessLocation": {
+                "description": "",
+                "required": [
+                    "address"
+                ],
+                "properties": {
+                    "address": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "$ref": "#/components/schemas/Location"
+                    }
+                },
+                "type": "object"
+            },
+            "BusinessOpeningHoursInterval": {
+                "description": "",
+                "required": [
+                    "opening_minute",
+                    "closing_minute"
+                ],
+                "properties": {
+                    "opening_minute": {
+                        "type": "integer"
+                    },
+                    "closing_minute": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "BusinessOpeningHours": {
+                "description": "",
+                "required": [
+                    "time_zone_name",
+                    "opening_hours"
+                ],
+                "properties": {
+                    "time_zone_name": {
+                        "type": "string"
+                    },
+                    "opening_hours": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BusinessOpeningHoursInterval"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "ChatLocation": {
                 "description": "Represents a location to which a chat is connected.",
                 "required": [
@@ -3258,6 +3439,61 @@
                 },
                 "type": "object"
             },
+            "BusinessConnection": {
+                "description": "Describes the connection of the bot with a business account.",
+                "required": [
+                    "id",
+                    "user",
+                    "user_chat_id",
+                    "date",
+                    "can_reply",
+                    "is_enabled"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "user_chat_id": {
+                        "type": "integer"
+                    },
+                    "date": {
+                        "type": "integer"
+                    },
+                    "can_reply": {
+                        "type": "boolean"
+                    },
+                    "is_enabled": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "BusinessMessagesDeleted": {
+                "description": "This object is received when messages are deleted from a connected business account.",
+                "required": [
+                    "business_connection_id",
+                    "chat",
+                    "message_ids"
+                ],
+                "properties": {
+                    "business_connection_id": {
+                        "type": "string"
+                    },
+                    "chat": {
+                        "$ref": "#/components/schemas/Chat"
+                    },
+                    "message_ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "ResponseParameters": {
                 "description": "Describes why a request was unsuccessful.",
                 "properties": {
@@ -3588,8 +3824,6 @@
                     "name",
                     "title",
                     "sticker_type",
-                    "is_animated",
-                    "is_video",
                     "stickers"
                 ],
                 "properties": {
@@ -3601,12 +3835,6 @@
                     },
                     "sticker_type": {
                         "type": "string"
-                    },
-                    "is_animated": {
-                        "type": "boolean"
-                    },
-                    "is_video": {
-                        "type": "boolean"
                     },
                     "stickers": {
                         "type": "array",
@@ -3648,6 +3876,7 @@
                 "description": "This object describes a sticker to be added to a sticker set.",
                 "required": [
                     "sticker",
+                    "format",
                     "emoji_list"
                 ],
                 "properties": {
@@ -3660,6 +3889,9 @@
                                 "type": "string"
                             }
                         ]
+                    },
+                    "format": {
+                        "type": "string"
                     },
                     "emoji_list": {
                         "type": "array",
@@ -6312,11 +6544,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "text"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -6370,17 +6601,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "text"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "text"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -6434,17 +6668,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "text"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "text"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -6498,7 +6735,11 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "text"
+                                ]
                             }
                         }
                     }
@@ -7448,11 +7689,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "photo"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -7516,17 +7756,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "photo"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "photo"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -7590,17 +7833,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "photo"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "photo"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -7664,7 +7910,11 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "photo"
+                                ]
                             }
                         }
                     }
@@ -7728,11 +7978,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "audio"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -7812,17 +8061,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "audio"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "audio"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -7902,17 +8154,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "audio"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "audio"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -7992,7 +8247,11 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "audio"
+                                ]
                             }
                         }
                     }
@@ -8056,11 +8315,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "document"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -8134,17 +8392,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "document"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "document"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -8218,17 +8479,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "document"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "document"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -8302,7 +8566,11 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "document"
+                                ]
                             }
                         }
                     }
@@ -8366,11 +8634,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "video"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -8456,17 +8723,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "video"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "video"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -8552,17 +8822,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "video"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "video"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -8648,7 +8921,11 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "video"
+                                ]
                             }
                         }
                     }
@@ -8712,11 +8989,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "animation"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -8799,17 +9075,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "animation"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "animation"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -8892,17 +9171,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "animation"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "animation"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -8985,7 +9267,11 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "animation"
+                                ]
                             }
                         }
                     }
@@ -9049,11 +9335,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "voice"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -9117,17 +9402,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "voice"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "voice"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -9191,17 +9479,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "voice"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "voice"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -9265,7 +9556,11 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "voice"
+                                ]
                             }
                         }
                     }
@@ -9329,11 +9624,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "video_note"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -9398,17 +9692,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "video_note"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "video_note"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -9473,17 +9770,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "video_note"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "video_note"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -9548,7 +9848,11 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "video_note"
+                                ]
                             }
                         }
                     }
@@ -9612,11 +9916,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "media"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -9658,17 +9961,20 @@
                                     "reply_parameters": {
                                         "$ref": "#/components/schemas/ReplyParameters"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "media"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "media"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -9710,17 +10016,20 @@
                                     "reply_parameters": {
                                         "$ref": "#/components/schemas/ReplyParameters"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "media"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "media"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -9762,7 +10071,11 @@
                                     "reply_parameters": {
                                         "$ref": "#/components/schemas/ReplyParameters"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "media"
+                                ]
                             }
                         }
                     }
@@ -9829,12 +10142,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "latitude",
-                                    "longitude"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -9891,18 +10202,21 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "latitude",
+                                    "longitude"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "latitude",
-                                    "longitude"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -9959,18 +10273,21 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "latitude",
+                                    "longitude"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "latitude",
-                                    "longitude"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -10027,7 +10344,12 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "latitude",
+                                    "longitude"
+                                ]
                             }
                         }
                     }
@@ -10091,14 +10413,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "latitude",
-                                    "longitude",
-                                    "title",
-                                    "address"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -10161,20 +10479,23 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "latitude",
+                                    "longitude",
+                                    "title",
+                                    "address"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "latitude",
-                                    "longitude",
-                                    "title",
-                                    "address"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -10237,20 +10558,23 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "latitude",
+                                    "longitude",
+                                    "title",
+                                    "address"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "latitude",
-                                    "longitude",
-                                    "title",
-                                    "address"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -10313,7 +10637,14 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "latitude",
+                                    "longitude",
+                                    "title",
+                                    "address"
+                                ]
                             }
                         }
                     }
@@ -10377,12 +10708,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "phone_number",
-                                    "first_name"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -10433,18 +10762,21 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "phone_number",
+                                    "first_name"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "phone_number",
-                                    "first_name"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -10495,18 +10827,21 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "phone_number",
+                                    "first_name"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "phone_number",
-                                    "first_name"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -10557,7 +10892,12 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "phone_number",
+                                    "first_name"
+                                ]
                             }
                         }
                     }
@@ -10621,12 +10961,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "question",
-                                    "options"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -10709,18 +11047,21 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "question",
+                                    "options"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "question",
-                                    "options"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -10803,18 +11144,21 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "question",
+                                    "options"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "question",
-                                    "options"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -10897,7 +11241,12 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "question",
+                                    "options"
+                                ]
                             }
                         }
                     }
@@ -10961,10 +11310,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -11007,16 +11356,19 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -11059,16 +11411,19 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -11111,7 +11466,10 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id"
+                                ]
                             }
                         }
                     }
@@ -11175,11 +11533,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "action"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -11196,17 +11553,20 @@
                                     "action": {
                                         "type": "string"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "action"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "action"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -11223,17 +11583,20 @@
                                     "action": {
                                         "type": "string"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "action"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "action"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -11250,7 +11613,11 @@
                                     "action": {
                                         "type": "string"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "action"
+                                ]
                             }
                         }
                     }
@@ -17374,6 +17741,103 @@
                 }
             }
         },
+        "/getBusinessConnection": {
+            "description": "Use this method to get information about the connection of the bot with a business account. Returns a BusinessConnection object on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "business_connection_id"
+                                ],
+                                "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "business_connection_id"
+                                ],
+                                "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "business_connection_id"
+                                ],
+                                "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/BusinessConnection"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
         "/setMyCommands": {
             "description": "Use this method to change the list of the bot's commands. See this manual for more details about bot commands. Returns True on success.",
             "post": {
@@ -20057,11 +20521,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "sticker"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -20113,17 +20576,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "sticker"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "sticker"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -20175,17 +20641,20 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "sticker"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "sticker"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -20237,7 +20706,11 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "sticker"
+                                ]
                             }
                         }
                     }
@@ -20499,7 +20972,7 @@
             }
         },
         "/uploadStickerFile": {
-            "description": "Use this method to upload a file with a sticker for later use in the createNewStickerSet and addStickerToSet methods (the file can be used multiple times). Returns the uploaded File on success.",
+            "description": "Use this method to upload a file with a sticker for later use in the createNewStickerSet, addStickerToSet, or replaceStickerInSet methods (the file can be used multiple times). Returns the uploaded File on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -20632,8 +21105,7 @@
                                     "user_id",
                                     "name",
                                     "title",
-                                    "stickers",
-                                    "sticker_format"
+                                    "stickers"
                                 ],
                                 "properties": {
                                     "user_id": {
@@ -20650,9 +21122,6 @@
                                         "items": {
                                             "$ref": "#/components/schemas/InputSticker"
                                         }
-                                    },
-                                    "sticker_format": {
-                                        "type": "string"
                                     },
                                     "sticker_type": {
                                         "type": "string"
@@ -20670,8 +21139,7 @@
                                     "user_id",
                                     "name",
                                     "title",
-                                    "stickers",
-                                    "sticker_format"
+                                    "stickers"
                                 ],
                                 "properties": {
                                     "user_id": {
@@ -20688,9 +21156,6 @@
                                         "items": {
                                             "$ref": "#/components/schemas/InputSticker"
                                         }
-                                    },
-                                    "sticker_format": {
-                                        "type": "string"
                                     },
                                     "sticker_type": {
                                         "type": "string"
@@ -20708,8 +21173,7 @@
                                     "user_id",
                                     "name",
                                     "title",
-                                    "stickers",
-                                    "sticker_format"
+                                    "stickers"
                                 ],
                                 "properties": {
                                     "user_id": {
@@ -20726,9 +21190,6 @@
                                         "items": {
                                             "$ref": "#/components/schemas/InputSticker"
                                         }
-                                    },
-                                    "sticker_format": {
-                                        "type": "string"
                                     },
                                     "sticker_type": {
                                         "type": "string"
@@ -20792,7 +21253,7 @@
             }
         },
         "/addStickerToSet": {
-            "description": "Use this method to add a new sticker to a set created by the bot. The format of the added sticker must match the format of the other stickers in the set. Emoji sticker sets can have up to 200 stickers. Animated and video sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers. Returns True on success.",
+            "description": "Use this method to add a new sticker to a set created by the bot. Emoji sticker sets can have up to 200 stickers. Other sticker sets can have up to 120 stickers. Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -21062,6 +21523,139 @@
                                 "properties": {
                                     "sticker": {
                                         "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/replaceStickerInSet": {
+            "description": "Use this method to replace an existing sticker in a sticker set with a new one. The method is equivalent to calling deleteStickerFromSet, then addStickerToSet, then setStickerPositionInSet. Returns True on success.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "user_id",
+                                    "name",
+                                    "old_sticker",
+                                    "sticker"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "old_sticker": {
+                                        "type": "string"
+                                    },
+                                    "sticker": {
+                                        "$ref": "#/components/schemas/InputSticker"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "user_id",
+                                    "name",
+                                    "old_sticker",
+                                    "sticker"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "old_sticker": {
+                                        "type": "string"
+                                    },
+                                    "sticker": {
+                                        "$ref": "#/components/schemas/InputSticker"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "user_id",
+                                    "name",
+                                    "old_sticker",
+                                    "sticker"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "old_sticker": {
+                                        "type": "string"
+                                    },
+                                    "sticker": {
+                                        "$ref": "#/components/schemas/InputSticker"
                                     }
                                 }
                             }
@@ -21577,7 +22171,8 @@
                                 "type": "object",
                                 "required": [
                                     "name",
-                                    "user_id"
+                                    "user_id",
+                                    "format"
                                 ],
                                 "properties": {
                                     "name": {
@@ -21595,6 +22190,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "format": {
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -21604,7 +22202,8 @@
                                 "type": "object",
                                 "required": [
                                     "name",
-                                    "user_id"
+                                    "user_id",
+                                    "format"
                                 ],
                                 "properties": {
                                     "name": {
@@ -21622,6 +22221,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "format": {
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -21631,7 +22233,8 @@
                                 "type": "object",
                                 "required": [
                                     "name",
-                                    "user_id"
+                                    "user_id",
+                                    "format"
                                 ],
                                 "properties": {
                                     "name": {
@@ -21649,6 +22252,9 @@
                                                 "type": "string"
                                             }
                                         ]
+                                    },
+                                    "format": {
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -23244,11 +23850,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "game_short_name"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "type": "integer"
                                     },
@@ -23270,17 +23875,20 @@
                                     "reply_markup": {
                                         "$ref": "#/components/schemas/InlineKeyboardMarkup"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "game_short_name"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "game_short_name"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "type": "integer"
                                     },
@@ -23302,17 +23910,20 @@
                                     "reply_markup": {
                                         "$ref": "#/components/schemas/InlineKeyboardMarkup"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "game_short_name"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "game_short_name"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "type": "integer"
                                     },
@@ -23334,7 +23945,11 @@
                                     "reply_markup": {
                                         "$ref": "#/components/schemas/InlineKeyboardMarkup"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "game_short_name"
+                                ]
                             }
                         }
                     }

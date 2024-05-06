@@ -1,5 +1,5 @@
 {
-    "version": "7.2.0",
+    "version": "7.3.0",
     "types": [
         {
             "name": "Update",
@@ -394,7 +394,71 @@
                         "string"
                     ],
                     "optional": false,
-                    "description": "Type of chat, can be either “private”, “group”, “supergroup” or “channel”"
+                    "description": "Type of the chat, can be either “private”, “group”, “supergroup” or “channel”"
+                },
+                {
+                    "name": "title",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Title, for supergroups, channels and group chats"
+                },
+                {
+                    "name": "username",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Username, for private chats, supergroups and channels if available"
+                },
+                {
+                    "name": "first_name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. First name of the other party in a private chat"
+                },
+                {
+                    "name": "last_name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Last name of the other party in a private chat"
+                },
+                {
+                    "name": "is_forum",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the supergroup chat is a forum (has topics enabled)",
+                    "default": true
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "ChatFullInfo",
+            "description": "This object contains full information about a chat.",
+            "fields": [
+                {
+                    "name": "id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier."
+                },
+                {
+                    "name": "type",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Type of the chat, can be either “private”, “group”, “supergroup” or “channel”"
                 },
                 {
                     "name": "title",
@@ -438,12 +502,28 @@
                     "default": true
                 },
                 {
+                    "name": "accent_color_id",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See accent colors for more details."
+                },
+                {
+                    "name": "max_reaction_count",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "The maximum number of reactions that can be set on a message in the chat"
+                },
+                {
                     "name": "photo",
                     "types": [
                         "ChatPhoto"
                     ],
                     "optional": true,
-                    "description": "Optional. Chat photo. Returned only in getChat."
+                    "description": "Optional. Chat photo"
                 },
                 {
                     "name": "active_usernames",
@@ -451,7 +531,7 @@
                         "Array<string>"
                     ],
                     "optional": true,
-                    "description": "Optional. If non-empty, the list of all active chat usernames; for private chats, supergroups and channels. Returned only in getChat."
+                    "description": "Optional. If non-empty, the list of all active chat usernames; for private chats, supergroups and channels"
                 },
                 {
                     "name": "birthdate",
@@ -459,7 +539,7 @@
                         "Birthdate"
                     ],
                     "optional": true,
-                    "description": "Optional. For private chats, the date of birth of the user. Returned only in getChat."
+                    "description": "Optional. For private chats, the date of birth of the user"
                 },
                 {
                     "name": "business_intro",
@@ -467,7 +547,7 @@
                         "BusinessIntro"
                     ],
                     "optional": true,
-                    "description": "Optional. For private chats with business accounts, the intro of the business. Returned only in getChat."
+                    "description": "Optional. For private chats with business accounts, the intro of the business"
                 },
                 {
                     "name": "business_location",
@@ -475,7 +555,7 @@
                         "BusinessLocation"
                     ],
                     "optional": true,
-                    "description": "Optional. For private chats with business accounts, the location of the business. Returned only in getChat."
+                    "description": "Optional. For private chats with business accounts, the location of the business"
                 },
                 {
                     "name": "business_opening_hours",
@@ -483,7 +563,7 @@
                         "BusinessOpeningHours"
                     ],
                     "optional": true,
-                    "description": "Optional. For private chats with business accounts, the opening hours of the business. Returned only in getChat."
+                    "description": "Optional. For private chats with business accounts, the opening hours of the business"
                 },
                 {
                     "name": "personal_chat",
@@ -491,7 +571,7 @@
                         "Chat"
                     ],
                     "optional": true,
-                    "description": "Optional. For private chats, the personal channel of the user. Returned only in getChat."
+                    "description": "Optional. For private chats, the personal channel of the user"
                 },
                 {
                     "name": "available_reactions",
@@ -499,15 +579,7 @@
                         "Array<ReactionType>"
                     ],
                     "optional": true,
-                    "description": "Optional. List of available reactions allowed in the chat. If omitted, then all emoji reactions are allowed. Returned only in getChat."
-                },
-                {
-                    "name": "accent_color_id",
-                    "types": [
-                        "int"
-                    ],
-                    "optional": true,
-                    "description": "Optional. Identifier of the accent color for the chat name and backgrounds of the chat photo, reply header, and link preview. See accent colors for more details. Returned only in getChat. Always returned in getChat."
+                    "description": "Optional. List of available reactions allowed in the chat. If omitted, then all emoji reactions are allowed."
                 },
                 {
                     "name": "background_custom_emoji_id",
@@ -515,7 +587,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. Custom emoji identifier of emoji chosen by the chat for the reply header and link preview background. Returned only in getChat."
+                    "description": "Optional. Custom emoji identifier of the emoji chosen by the chat for the reply header and link preview background"
                 },
                 {
                     "name": "profile_accent_color_id",
@@ -523,7 +595,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. Identifier of the accent color for the chat's profile background. See profile accent colors for more details. Returned only in getChat."
+                    "description": "Optional. Identifier of the accent color for the chat's profile background. See profile accent colors for more details."
                 },
                 {
                     "name": "profile_background_custom_emoji_id",
@@ -531,7 +603,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. Custom emoji identifier of the emoji chosen by the chat for its profile background. Returned only in getChat."
+                    "description": "Optional. Custom emoji identifier of the emoji chosen by the chat for its profile background"
                 },
                 {
                     "name": "emoji_status_custom_emoji_id",
@@ -539,7 +611,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. Custom emoji identifier of the emoji status of the chat or the other party in a private chat. Returned only in getChat."
+                    "description": "Optional. Custom emoji identifier of the emoji status of the chat or the other party in a private chat"
                 },
                 {
                     "name": "emoji_status_expiration_date",
@@ -547,7 +619,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any. Returned only in getChat."
+                    "description": "Optional. Expiration date of the emoji status of the chat or the other party in a private chat, in Unix time, if any"
                 },
                 {
                     "name": "bio",
@@ -555,7 +627,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. Bio of the other party in a private chat. Returned only in getChat."
+                    "description": "Optional. Bio of the other party in a private chat"
                 },
                 {
                     "name": "has_private_forwards",
@@ -563,7 +635,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if privacy settings of the other party in the private chat allows to use tg://user?id=<user_id> links only in chats with the user. Returned only in getChat.",
+                    "description": "Optional. True, if privacy settings of the other party in the private chat allows to use tg://user?id=<user_id> links only in chats with the user",
                     "default": true
                 },
                 {
@@ -572,7 +644,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the privacy settings of the other party restrict sending voice and video note messages in the private chat. Returned only in getChat.",
+                    "description": "Optional. True, if the privacy settings of the other party restrict sending voice and video note messages in the private chat",
                     "default": true
                 },
                 {
@@ -581,7 +653,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if users need to join the supergroup before they can send messages. Returned only in getChat.",
+                    "description": "Optional. True, if users need to join the supergroup before they can send messages",
                     "default": true
                 },
                 {
@@ -590,7 +662,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if all users directly joining the supergroup need to be approved by supergroup administrators. Returned only in getChat.",
+                    "description": "Optional. True, if all users directly joining the supergroup need to be approved by supergroup administrators",
                     "default": true
                 },
                 {
@@ -599,7 +671,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. Description, for groups, supergroups and channel chats. Returned only in getChat."
+                    "description": "Optional. Description, for groups, supergroups and channel chats"
                 },
                 {
                     "name": "invite_link",
@@ -607,7 +679,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. Primary invite link, for groups, supergroups and channel chats. Returned only in getChat."
+                    "description": "Optional. Primary invite link, for groups, supergroups and channel chats"
                 },
                 {
                     "name": "pinned_message",
@@ -615,7 +687,7 @@
                         "Message"
                     ],
                     "optional": true,
-                    "description": "Optional. The most recent pinned message (by sending date). Returned only in getChat."
+                    "description": "Optional. The most recent pinned message (by sending date)"
                 },
                 {
                     "name": "permissions",
@@ -623,7 +695,7 @@
                         "ChatPermissions"
                     ],
                     "optional": true,
-                    "description": "Optional. Default chat member permissions, for groups and supergroups. Returned only in getChat."
+                    "description": "Optional. Default chat member permissions, for groups and supergroups"
                 },
                 {
                     "name": "slow_mode_delay",
@@ -631,7 +703,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds. Returned only in getChat."
+                    "description": "Optional. For supergroups, the minimum allowed delay between consecutive messages sent by each unprivileged user; in seconds"
                 },
                 {
                     "name": "unrestrict_boost_count",
@@ -639,7 +711,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions. Returned only in getChat."
+                    "description": "Optional. For supergroups, the minimum number of boosts that a non-administrator user needs to add in order to ignore slow mode and chat permissions"
                 },
                 {
                     "name": "message_auto_delete_time",
@@ -647,7 +719,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. The time after which all messages sent to the chat will be automatically deleted; in seconds. Returned only in getChat."
+                    "description": "Optional. The time after which all messages sent to the chat will be automatically deleted; in seconds"
                 },
                 {
                     "name": "has_aggressive_anti_spam_enabled",
@@ -655,7 +727,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators. Returned only in getChat.",
+                    "description": "Optional. True, if aggressive anti-spam checks are enabled in the supergroup. The field is only available to chat administrators.",
                     "default": true
                 },
                 {
@@ -664,7 +736,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if non-administrators can only get the list of bots and administrators in the chat. Returned only in getChat.",
+                    "description": "Optional. True, if non-administrators can only get the list of bots and administrators in the chat",
                     "default": true
                 },
                 {
@@ -673,7 +745,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if messages from the chat can't be forwarded to other chats. Returned only in getChat.",
+                    "description": "Optional. True, if messages from the chat can't be forwarded to other chats",
                     "default": true
                 },
                 {
@@ -682,7 +754,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if new chat members will have access to old messages; available only to chat administrators. Returned only in getChat.",
+                    "description": "Optional. True, if new chat members will have access to old messages; available only to chat administrators",
                     "default": true
                 },
                 {
@@ -691,7 +763,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. For supergroups, name of group sticker set. Returned only in getChat."
+                    "description": "Optional. For supergroups, name of the group sticker set"
                 },
                 {
                     "name": "can_set_sticker_set",
@@ -699,7 +771,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. True, if the bot can change the group sticker set. Returned only in getChat.",
+                    "description": "Optional. True, if the bot can change the group sticker set",
                     "default": true
                 },
                 {
@@ -708,7 +780,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. For supergroups, the name of the group's custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group. Returned only in getChat."
+                    "description": "Optional. For supergroups, the name of the group's custom emoji sticker set. Custom emoji from this set can be used by all users and bots in the group."
                 },
                 {
                     "name": "linked_chat_id",
@@ -716,7 +788,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier. Returned only in getChat."
+                    "description": "Optional. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier."
                 },
                 {
                     "name": "location",
@@ -724,7 +796,7 @@
                         "ChatLocation"
                     ],
                     "optional": true,
-                    "description": "Optional. For supergroups, the location to which the supergroup is connected. Returned only in getChat."
+                    "description": "Optional. For supergroups, the location to which the supergroup is connected"
                 }
             ],
             "extended_by": []
@@ -1253,6 +1325,14 @@
                     ],
                     "optional": true,
                     "description": "Optional. Service message: user boosted the chat"
+                },
+                {
+                    "name": "chat_background_set",
+                    "types": [
+                        "ChatBackground"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Service message: chat background set"
                 },
                 {
                     "name": "forum_topic_created",
@@ -2505,12 +2585,51 @@
                     "description": "Option text, 1-100 characters"
                 },
                 {
+                    "name": "text_entities",
+                    "types": [
+                        "Array<MessageEntity>"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Special entities that appear in the option text. Currently, only custom emoji entities are allowed in poll option texts"
+                },
+                {
                     "name": "voter_count",
                     "types": [
                         "int"
                     ],
                     "optional": false,
                     "description": "Number of users that voted for this option"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "InputPollOption",
+            "description": "This object contains information about one answer option in a poll to send.",
+            "fields": [
+                {
+                    "name": "text",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Option text, 1-100 characters"
+                },
+                {
+                    "name": "text_parse_mode",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Mode for parsing entities in the text. See formatting options for more details. Currently, only custom emoji entities are allowed"
+                },
+                {
+                    "name": "text_entities",
+                    "types": [
+                        "Array<MessageEntity>"
+                    ],
+                    "optional": true,
+                    "description": "Optional. A JSON-serialized list of special entities that appear in the poll option text. It can be specified instead of text_parse_mode"
                 }
             ],
             "extended_by": []
@@ -2573,6 +2692,14 @@
                     ],
                     "optional": false,
                     "description": "Poll question, 1-300 characters"
+                },
+                {
+                    "name": "question_entities",
+                    "types": [
+                        "Array<MessageEntity>"
+                    ],
+                    "optional": true,
+                    "description": "Optional. Special entities that appear in the question. Currently, only custom emoji entities are allowed in poll questions"
                 },
                 {
                     "name": "options",
@@ -2868,6 +2995,287 @@
             "extended_by": []
         },
         {
+            "name": "BackgroundFill",
+            "description": "This object describes the way a background is filled based on the selected colors. Currently, it can be one of",
+            "fields": [],
+            "extended_by": [
+                "BackgroundFillSolid",
+                "BackgroundFillGradient",
+                "BackgroundFillFreeformGradient"
+            ]
+        },
+        {
+            "name": "BackgroundFillSolid",
+            "description": "The background is filled using the selected color.",
+            "fields": [
+                {
+                    "name": "type",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Type of the background fill, always “solid”"
+                },
+                {
+                    "name": "color",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "The color of the background fill in the RGB24 format"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "BackgroundFillGradient",
+            "description": "The background is a gradient fill.",
+            "fields": [
+                {
+                    "name": "type",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Type of the background fill, always “gradient”"
+                },
+                {
+                    "name": "top_color",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Top color of the gradient in the RGB24 format"
+                },
+                {
+                    "name": "bottom_color",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Bottom color of the gradient in the RGB24 format"
+                },
+                {
+                    "name": "rotation_angle",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Clockwise rotation angle of the background fill in degrees; 0-359"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "BackgroundFillFreeformGradient",
+            "description": "The background is a freeform gradient that rotates after every message in the chat.",
+            "fields": [
+                {
+                    "name": "type",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Type of the background fill, always “freeform_gradient”"
+                },
+                {
+                    "name": "colors",
+                    "types": [
+                        "Array<int>"
+                    ],
+                    "optional": false,
+                    "description": "A list of the 3 or 4 base colors that are used to generate the freeform gradient in the RGB24 format"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "BackgroundType",
+            "description": "This object describes the type of a background. Currently, it can be one of",
+            "fields": [],
+            "extended_by": [
+                "BackgroundTypeFill",
+                "BackgroundTypeWallpaper",
+                "BackgroundTypePattern",
+                "BackgroundTypeChatTheme"
+            ]
+        },
+        {
+            "name": "BackgroundTypeFill",
+            "description": "The background is automatically filled based on the selected colors.",
+            "fields": [
+                {
+                    "name": "type",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Type of the background, always “fill”"
+                },
+                {
+                    "name": "fill",
+                    "types": [
+                        "BackgroundFill"
+                    ],
+                    "optional": false,
+                    "description": "The background fill"
+                },
+                {
+                    "name": "dark_theme_dimming",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Dimming of the background in dark themes, as a percentage; 0-100"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "BackgroundTypeWallpaper",
+            "description": "The background is a wallpaper in the JPEG format.",
+            "fields": [
+                {
+                    "name": "type",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Type of the background, always “wallpaper”"
+                },
+                {
+                    "name": "document",
+                    "types": [
+                        "Document"
+                    ],
+                    "optional": false,
+                    "description": "Document with the wallpaper"
+                },
+                {
+                    "name": "dark_theme_dimming",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Dimming of the background in dark themes, as a percentage; 0-100"
+                },
+                {
+                    "name": "is_blurred",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the wallpaper is downscaled to fit in a 450x450 square and then box-blurred with radius 12",
+                    "default": true
+                },
+                {
+                    "name": "is_moving",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the background moves slightly when the device is tilted",
+                    "default": true
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "BackgroundTypePattern",
+            "description": "The background is a PNG or TGV (gzipped subset of SVG with MIME type “application/x-tgwallpattern”) pattern to be combined with the background fill chosen by the user.",
+            "fields": [
+                {
+                    "name": "type",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Type of the background, always “pattern”"
+                },
+                {
+                    "name": "document",
+                    "types": [
+                        "Document"
+                    ],
+                    "optional": false,
+                    "description": "Document with the pattern"
+                },
+                {
+                    "name": "fill",
+                    "types": [
+                        "BackgroundFill"
+                    ],
+                    "optional": false,
+                    "description": "The background fill that is combined with the pattern"
+                },
+                {
+                    "name": "intensity",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": false,
+                    "description": "Intensity of the pattern when it is shown above the filled background; 0-100"
+                },
+                {
+                    "name": "is_inverted",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the background fill must be applied only to the pattern itself. All other pixels are black in this case. For dark themes only",
+                    "default": true
+                },
+                {
+                    "name": "is_moving",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the background moves slightly when the device is tilted",
+                    "default": true
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "BackgroundTypeChatTheme",
+            "description": "The background is taken directly from a built-in chat theme.",
+            "fields": [
+                {
+                    "name": "type",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Type of the background, always “chat_theme”"
+                },
+                {
+                    "name": "theme_name",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": false,
+                    "description": "Name of the chat theme, which is usually an emoji"
+                }
+            ],
+            "extended_by": []
+        },
+        {
+            "name": "ChatBackground",
+            "description": "This object represents a chat background.",
+            "fields": [
+                {
+                    "name": "type",
+                    "types": [
+                        "BackgroundType"
+                    ],
+                    "optional": false,
+                    "description": "Type of the background"
+                }
+            ],
+            "extended_by": []
+        },
+        {
             "name": "ForumTopicCreated",
             "description": "This object represents a service message about a new forum topic created in the chat.",
             "fields": [
@@ -2947,7 +3355,7 @@
         },
         {
             "name": "SharedUser",
-            "description": "This object contains information about a user that was shared with the bot using a KeyboardButtonRequestUser button.",
+            "description": "This object contains information about a user that was shared with the bot using a KeyboardButtonRequestUsers button.",
             "fields": [
                 {
                     "name": "user_id",
@@ -3477,7 +3885,7 @@
         },
         {
             "name": "ReplyKeyboardMarkup",
-            "description": "This object represents a custom keyboard with reply options (see Introduction to bots for details and examples).",
+            "description": "This object represents a custom keyboard with reply options (see Introduction to bots for details and examples). Not supported in channels and for messages sent on behalf of a Telegram Business account.",
             "fields": [
                 {
                     "name": "keyboard",
@@ -3639,7 +4047,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. Pass True to request the users' first and last name"
+                    "description": "Optional. Pass True to request the users' first and last names"
                 },
                 {
                     "name": "request_username",
@@ -3647,7 +4055,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. Pass True to request the users' username"
+                    "description": "Optional. Pass True to request the users' usernames"
                 },
                 {
                     "name": "request_photo",
@@ -3655,14 +4063,14 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Optional. Pass True to request the users' photo"
+                    "description": "Optional. Pass True to request the users' photos"
                 }
             ],
             "extended_by": []
         },
         {
             "name": "KeyboardButtonRequestChat",
-            "description": "This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the сhat if appropriate More about requesting chats »",
+            "description": "This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if appropriate. More about requesting chats ».",
             "fields": [
                 {
                     "name": "request_id",
@@ -3772,7 +4180,7 @@
         },
         {
             "name": "ReplyKeyboardRemove",
-            "description": "Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see ReplyKeyboardMarkup).",
+            "description": "Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see ReplyKeyboardMarkup). Not supported in channels and for messages sent on behalf of a Telegram Business account.",
             "fields": [
                 {
                     "name": "remove_keyboard",
@@ -3835,7 +4243,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes"
+                    "description": "Optional. Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes. Not supported for messages sent on behalf of a Telegram Business account."
                 },
                 {
                     "name": "web_app",
@@ -3843,7 +4251,7 @@
                         "WebAppInfo"
                     ],
                     "optional": true,
-                    "description": "Optional. Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot."
+                    "description": "Optional. Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account."
                 },
                 {
                     "name": "login_url",
@@ -3859,7 +4267,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted."
+                    "description": "Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent on behalf of a Telegram Business account."
                 },
                 {
                     "name": "switch_inline_query_current_chat",
@@ -3867,7 +4275,7 @@
                         "string"
                     ],
                     "optional": true,
-                    "description": "Optional. If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options."
+                    "description": "Optional. If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent on behalf of a Telegram Business account."
                 },
                 {
                     "name": "switch_inline_query_chosen_chat",
@@ -3875,7 +4283,7 @@
                         "SwitchInlineQueryChosenChat"
                     ],
                     "optional": true,
-                    "description": "Optional. If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field"
+                    "description": "Optional. If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent on behalf of a Telegram Business account."
                 },
                 {
                     "name": "callback_game",
@@ -4047,7 +4455,7 @@
         },
         {
             "name": "ForceReply",
-            "description": "Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.",
+            "description": "Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode. Not supported in channels and for messages sent on behalf of a Telegram Business account.",
             "fields": [
                 {
                     "name": "force_reply",
@@ -4277,7 +4685,7 @@
                         "bool"
                     ],
                     "optional": false,
-                    "description": "True, if the administrator can edit stories posted by other users"
+                    "description": "True, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat's story archive"
                 },
                 {
                     "name": "can_delete_stories",
@@ -4373,6 +4781,14 @@
                     ],
                     "optional": true,
                     "description": "Optional. Chat invite link, which was used by the user to join the chat; for joining by invite link events only."
+                },
+                {
+                    "name": "via_join_request",
+                    "types": [
+                        "bool"
+                    ],
+                    "optional": true,
+                    "description": "Optional. True, if the user joined the chat after sending a direct join request and being approved by an administrator"
                 },
                 {
                     "name": "via_chat_folder_invite_link",
@@ -4543,7 +4959,7 @@
                         "bool"
                     ],
                     "optional": false,
-                    "description": "True, if the administrator can edit stories posted by other users"
+                    "description": "True, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat's story archive"
                 },
                 {
                     "name": "can_delete_stories",
@@ -5000,7 +5416,7 @@
         },
         {
             "name": "Birthdate",
-            "description": "",
+            "description": "Describes the birthdate of a user.",
             "fields": [
                 {
                     "name": "day",
@@ -5031,7 +5447,7 @@
         },
         {
             "name": "BusinessIntro",
-            "description": "",
+            "description": "Contains information about the start page settings of a Telegram Business account.",
             "fields": [
                 {
                     "name": "title",
@@ -5062,7 +5478,7 @@
         },
         {
             "name": "BusinessLocation",
-            "description": "",
+            "description": "Contains information about the location of a Telegram Business account.",
             "fields": [
                 {
                     "name": "address",
@@ -5085,7 +5501,7 @@
         },
         {
             "name": "BusinessOpeningHoursInterval",
-            "description": "",
+            "description": "Describes an interval of time during which a business is open.",
             "fields": [
                 {
                     "name": "opening_minute",
@@ -5093,7 +5509,7 @@
                         "int"
                     ],
                     "optional": false,
-                    "description": "The minute's sequence number in a week, starting on Monday, marking the start of the time interval during which the business is open; 0 - 7  24  60"
+                    "description": "The minute's sequence number in a week, starting on Monday, marking the start of the time interval during which the business is open; 0 - 7 * 24 * 60"
                 },
                 {
                     "name": "closing_minute",
@@ -5101,14 +5517,14 @@
                         "int"
                     ],
                     "optional": false,
-                    "description": "The minute's sequence number in a week, starting on Monday, marking the end of the time interval during which the business is open; 0 - 8  24  60"
+                    "description": "The minute's sequence number in a week, starting on Monday, marking the end of the time interval during which the business is open; 0 - 8 * 24 * 60"
                 }
             ],
             "extended_by": []
         },
         {
             "name": "BusinessOpeningHours",
-            "description": "",
+            "description": "Describes the opening hours of a business.",
             "fields": [
                 {
                     "name": "time_zone_name",
@@ -5967,7 +6383,7 @@
                         "Array<int>"
                     ],
                     "optional": false,
-                    "description": "A JSON-serialized list of identifiers of deleted messages in the chat of the business account"
+                    "description": "The list of identifiers of deleted messages in the chat of the business account"
                 }
             ],
             "extended_by": []
@@ -7717,7 +8133,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. Period in seconds for which the location can be updated, should be between 60 and 86400."
+                    "description": "Optional. Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely."
                 },
                 {
                     "name": "heading",
@@ -8751,7 +9167,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Optional. Period in seconds for which the location can be updated, should be between 60 and 86400."
+                    "description": "Optional. Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely."
                 },
                 {
                     "name": "heading",
@@ -10382,7 +10798,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -10602,7 +11018,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -10779,7 +11195,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -10914,7 +11330,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -11033,7 +11449,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -11184,7 +11600,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -11327,7 +11743,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -11336,7 +11752,7 @@
         },
         {
             "name": "sendVoice",
-            "description": "Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.",
+            "description": "Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.",
             "fields": [
                 {
                     "name": "business_connection_id",
@@ -11437,7 +11853,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -11540,7 +11956,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -11672,7 +12088,7 @@
                         "int"
                     ],
                     "optional": true,
-                    "description": "Period in seconds for which the location will be updated (see Live Locations, should be between 60 and 86400."
+                    "description": "Period in seconds during which the location will be updated (see Live Locations, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely."
                 },
                 {
                     "name": "heading",
@@ -11723,7 +12139,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -11856,7 +12272,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -11957,7 +12373,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -12002,12 +12418,28 @@
                     "description": "Poll question, 1-300 characters"
                 },
                 {
+                    "name": "question_parse_mode",
+                    "types": [
+                        "string"
+                    ],
+                    "optional": true,
+                    "description": "Mode for parsing entities in the question. See formatting options for more details. Currently, only custom emoji entities are allowed"
+                },
+                {
+                    "name": "question_entities",
+                    "types": [
+                        "Array<MessageEntity>"
+                    ],
+                    "optional": true,
+                    "description": "A JSON-serialized list of special entities that appear in the poll question. It can be specified instead of question_parse_mode"
+                },
+                {
                     "name": "options",
                     "types": [
-                        "Array<string>"
+                        "Array<InputPollOption>"
                     ],
                     "optional": false,
-                    "description": "A JSON-serialized list of answer options, 2-10 strings 1-100 characters each"
+                    "description": "A JSON-serialized list of 2-10 answer options"
                 },
                 {
                     "name": "is_anonymous",
@@ -12066,7 +12498,7 @@
                         "Array<MessageEntity>"
                     ],
                     "optional": true,
-                    "description": "A JSON-serialized list of special entities that appear in the poll explanation, which can be specified instead of parse_mode"
+                    "description": "A JSON-serialized list of special entities that appear in the poll explanation. It can be specified instead of explanation_parse_mode"
                 },
                 {
                     "name": "open_period",
@@ -12125,7 +12557,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -12203,7 +12635,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account"
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -12570,7 +13002,7 @@
                         "bool"
                     ],
                     "optional": true,
-                    "description": "Pass True if the administrator can edit stories posted by other users"
+                    "description": "Pass True if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat's story archive"
                 },
                 {
                     "name": "can_delete_stories",
@@ -13135,7 +13567,7 @@
         },
         {
             "name": "getChat",
-            "description": "Use this method to get up to date information about the chat. Returns a Chat object on success.",
+            "description": "Use this method to get up-to-date information about the chat. Returns a ChatFullInfo object on success.",
             "fields": [
                 {
                     "name": "chat_id",
@@ -13148,7 +13580,7 @@
                 }
             ],
             "return_types": [
-                "Chat"
+                "ChatFullInfo"
             ]
         },
         {
@@ -14199,6 +14631,14 @@
                     "description": "Longitude of new location"
                 },
                 {
+                    "name": "live_period",
+                    "types": [
+                        "int"
+                    ],
+                    "optional": true,
+                    "description": "New period in seconds during which the location can be updated, starting from the message send date. If 0x7FFFFFFF is specified, then the location can be updated forever. Otherwise, the new value must not exceed the current live_period by more than a day, and the live location expiration date must remain within the next 90 days. If not specified, then live_period remains unchanged"
+                },
+                {
                     "name": "horizontal_accuracy",
                     "types": [
                         "float"
@@ -14487,7 +14927,7 @@
                         "ForceReply"
                     ],
                     "optional": true,
-                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user. Not supported for messages sent on behalf of a business account."
+                    "description": "Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user"
                 }
             ],
             "return_types": [
@@ -15563,7 +16003,7 @@
                         "InlineKeyboardMarkup"
                     ],
                     "optional": true,
-                    "description": "A JSON-serialized object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game. Not supported for messages sent on behalf of a business account."
+                    "description": "A JSON-serialized object for an inline keyboard. If empty, one 'Play game_title' button will be shown. If not empty, the first button must launch the game."
                 }
             ],
             "return_types": [

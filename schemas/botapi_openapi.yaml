@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
     title: 'Telegram Bot API'
     description: 'Auto-generated OpenAPI schema by TGScraper.'
-    version: 7.2.0
+    version: 7.3.0
 servers:
     -
         url: 'https://api.telegram.org/bot{token}'
@@ -236,6 +236,34 @@ components:
                 is_forum:
                     type: boolean
                     default: true
+            type: object
+        ChatFullInfo:
+            description: 'This object contains full information about a chat.'
+            required:
+                - id
+                - type
+                - accent_color_id
+                - max_reaction_count
+            properties:
+                id:
+                    type: integer
+                type:
+                    type: string
+                title:
+                    type: string
+                username:
+                    type: string
+                first_name:
+                    type: string
+                last_name:
+                    type: string
+                is_forum:
+                    type: boolean
+                    default: true
+                accent_color_id:
+                    type: integer
+                max_reaction_count:
+                    type: integer
                 photo:
                     $ref: '#/components/schemas/ChatPhoto'
                 active_usernames:
@@ -256,8 +284,6 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/ReactionType'
-                accent_color_id:
-                    type: integer
                 background_custom_emoji_id:
                     type: string
                 profile_accent_color_id:
@@ -474,6 +500,8 @@ components:
                     $ref: '#/components/schemas/ProximityAlertTriggered'
                 boost_added:
                     $ref: '#/components/schemas/ChatBoostAdded'
+                chat_background_set:
+                    $ref: '#/components/schemas/ChatBackground'
                 forum_topic_created:
                     $ref: '#/components/schemas/ForumTopicCreated'
                 forum_topic_edited:
@@ -937,8 +965,26 @@ components:
             properties:
                 text:
                     type: string
+                text_entities:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/MessageEntity'
                 voter_count:
                     type: integer
+            type: object
+        InputPollOption:
+            description: 'This object contains information about one answer option in a poll to send.'
+            required:
+                - text
+            properties:
+                text:
+                    type: string
+                text_parse_mode:
+                    type: string
+                text_entities:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/MessageEntity'
             type: object
         PollAnswer:
             description: 'This object represents an answer of a user in a non-anonymous poll.'
@@ -973,6 +1019,10 @@ components:
                     type: string
                 question:
                     type: string
+                question_entities:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/MessageEntity'
                 options:
                     type: array
                     items:
@@ -1082,6 +1132,143 @@ components:
                 boost_count:
                     type: integer
             type: object
+        BackgroundFill:
+            description: 'This object describes the way a background is filled based on the selected colors. Currently, it can be one of'
+            anyOf:
+                -
+                    $ref: '#/components/schemas/BackgroundFillSolid'
+                -
+                    $ref: '#/components/schemas/BackgroundFillGradient'
+                -
+                    $ref: '#/components/schemas/BackgroundFillFreeformGradient'
+        BackgroundFillSolid:
+            description: 'The background is filled using the selected color.'
+            required:
+                - type
+                - color
+            properties:
+                type:
+                    type: string
+                color:
+                    type: integer
+            type: object
+        BackgroundFillGradient:
+            description: 'The background is a gradient fill.'
+            required:
+                - type
+                - top_color
+                - bottom_color
+                - rotation_angle
+            properties:
+                type:
+                    type: string
+                top_color:
+                    type: integer
+                bottom_color:
+                    type: integer
+                rotation_angle:
+                    type: integer
+            type: object
+        BackgroundFillFreeformGradient:
+            description: 'The background is a freeform gradient that rotates after every message in the chat.'
+            required:
+                - type
+                - colors
+            properties:
+                type:
+                    type: string
+                colors:
+                    type: array
+                    items:
+                        type: integer
+            type: object
+        BackgroundType:
+            description: 'This object describes the type of a background. Currently, it can be one of'
+            anyOf:
+                -
+                    $ref: '#/components/schemas/BackgroundTypeFill'
+                -
+                    $ref: '#/components/schemas/BackgroundTypeWallpaper'
+                -
+                    $ref: '#/components/schemas/BackgroundTypePattern'
+                -
+                    $ref: '#/components/schemas/BackgroundTypeChatTheme'
+        BackgroundTypeFill:
+            description: 'The background is automatically filled based on the selected colors.'
+            required:
+                - type
+                - fill
+                - dark_theme_dimming
+            properties:
+                type:
+                    type: string
+                fill:
+                    $ref: '#/components/schemas/BackgroundFill'
+                dark_theme_dimming:
+                    type: integer
+            type: object
+        BackgroundTypeWallpaper:
+            description: 'The background is a wallpaper in the JPEG format.'
+            required:
+                - type
+                - document
+                - dark_theme_dimming
+            properties:
+                type:
+                    type: string
+                document:
+                    $ref: '#/components/schemas/Document'
+                dark_theme_dimming:
+                    type: integer
+                is_blurred:
+                    type: boolean
+                    default: true
+                is_moving:
+                    type: boolean
+                    default: true
+            type: object
+        BackgroundTypePattern:
+            description: 'The background is a PNG or TGV (gzipped subset of SVG with MIME type “application/x-tgwallpattern”) pattern to be combined with the background fill chosen by the user.'
+            required:
+                - type
+                - document
+                - fill
+                - intensity
+            properties:
+                type:
+                    type: string
+                document:
+                    $ref: '#/components/schemas/Document'
+                fill:
+                    $ref: '#/components/schemas/BackgroundFill'
+                intensity:
+                    type: integer
+                is_inverted:
+                    type: boolean
+                    default: true
+                is_moving:
+                    type: boolean
+                    default: true
+            type: object
+        BackgroundTypeChatTheme:
+            description: 'The background is taken directly from a built-in chat theme.'
+            required:
+                - type
+                - theme_name
+            properties:
+                type:
+                    type: string
+                theme_name:
+                    type: string
+            type: object
+        ChatBackground:
+            description: 'This object represents a chat background.'
+            required:
+                - type
+            properties:
+                type:
+                    $ref: '#/components/schemas/BackgroundType'
+            type: object
         ForumTopicCreated:
             description: 'This object represents a service message about a new forum topic created in the chat.'
             required:
@@ -1116,7 +1303,7 @@ components:
             description: 'This object represents a service message about General forum topic unhidden in the chat. Currently holds no information.'
             type: object
         SharedUser:
-            description: 'This object contains information about a user that was shared with the bot using a KeyboardButtonRequestUser button.'
+            description: 'This object contains information about a user that was shared with the bot using a KeyboardButtonRequestUsers button.'
             required:
                 - user_id
             properties:
@@ -1338,7 +1525,7 @@ components:
                     type: string
             type: object
         ReplyKeyboardMarkup:
-            description: 'This object represents a custom keyboard with reply options (see Introduction to bots for details and examples).'
+            description: 'This object represents a custom keyboard with reply options (see Introduction to bots for details and examples). Not supported in channels and for messages sent on behalf of a Telegram Business account.'
             required:
                 - keyboard
             properties:
@@ -1401,7 +1588,7 @@ components:
                     type: boolean
             type: object
         KeyboardButtonRequestChat:
-            description: 'This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the сhat if appropriate More about requesting chats »'
+            description: 'This object defines the criteria used to request a suitable chat. Information about the selected chat will be shared with the bot when the corresponding button is pressed. The bot will be granted requested rights in the chat if appropriate. More about requesting chats ».'
             required:
                 - request_id
                 - chat_is_channel
@@ -1436,7 +1623,7 @@ components:
                     type: string
             type: object
         ReplyKeyboardRemove:
-            description: 'Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see ReplyKeyboardMarkup).'
+            description: 'Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a button (see ReplyKeyboardMarkup). Not supported in channels and for messages sent on behalf of a Telegram Business account.'
             required:
                 - remove_keyboard
             properties:
@@ -1535,7 +1722,7 @@ components:
                     type: string
             type: object
         ForceReply:
-            description: "Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode."
+            description: "Upon receiving a message with this object, Telegram clients will display a reply interface to the user (act as if the user has selected the bot's message and tapped 'Reply'). This can be extremely useful if you want to create user-friendly step-by-step interfaces without having to sacrifice privacy mode. Not supported in channels and for messages sent on behalf of a Telegram Business account."
             required:
                 - force_reply
             properties:
@@ -1659,6 +1846,8 @@ components:
                     $ref: '#/components/schemas/ChatMember'
                 invite_link:
                     $ref: '#/components/schemas/ChatInviteLink'
+                via_join_request:
+                    type: boolean
                 via_chat_folder_invite_link:
                     type: boolean
             type: object
@@ -1899,7 +2088,7 @@ components:
                     type: boolean
             type: object
         Birthdate:
-            description: ''
+            description: 'Describes the birthdate of a user.'
             required:
                 - day
                 - month
@@ -1912,7 +2101,7 @@ components:
                     type: integer
             type: object
         BusinessIntro:
-            description: ''
+            description: 'Contains information about the start page settings of a Telegram Business account.'
             properties:
                 title:
                     type: string
@@ -1922,7 +2111,7 @@ components:
                     $ref: '#/components/schemas/Sticker'
             type: object
         BusinessLocation:
-            description: ''
+            description: 'Contains information about the location of a Telegram Business account.'
             required:
                 - address
             properties:
@@ -1932,7 +2121,7 @@ components:
                     $ref: '#/components/schemas/Location'
             type: object
         BusinessOpeningHoursInterval:
-            description: ''
+            description: 'Describes an interval of time during which a business is open.'
             required:
                 - opening_minute
                 - closing_minute
@@ -1943,7 +2132,7 @@ components:
                     type: integer
             type: object
         BusinessOpeningHours:
-            description: ''
+            description: 'Describes the opening hours of a business.'
             required:
                 - time_zone_name
                 - opening_hours
@@ -6218,7 +6407,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /sendVoice:
-        description: 'Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.'
+        description: 'Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message. For this to work, your audio must be in an .OGG file encoded with OPUS, or in .MP3 format, or in .M4A format (other formats may be sent as Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.'
         post:
             requestBody:
                 required: true
@@ -7276,10 +7465,16 @@ paths:
                                     type: integer
                                 question:
                                     type: string
+                                question_parse_mode:
+                                    type: string
+                                question_entities:
+                                    type: array
+                                    items:
+                                        $ref: '#/components/schemas/MessageEntity'
                                 options:
                                     type: array
                                     items:
-                                        type: string
+                                        $ref: '#/components/schemas/InputPollOption'
                                 is_anonymous:
                                     type: boolean
                                     default: true
@@ -7340,10 +7535,16 @@ paths:
                                     type: integer
                                 question:
                                     type: string
+                                question_parse_mode:
+                                    type: string
+                                question_entities:
+                                    type: array
+                                    items:
+                                        $ref: '#/components/schemas/MessageEntity'
                                 options:
                                     type: array
                                     items:
-                                        type: string
+                                        $ref: '#/components/schemas/InputPollOption'
                                 is_anonymous:
                                     type: boolean
                                     default: true
@@ -7404,10 +7605,16 @@ paths:
                                     type: integer
                                 question:
                                     type: string
+                                question_parse_mode:
+                                    type: string
+                                question_entities:
+                                    type: array
+                                    items:
+                                        $ref: '#/components/schemas/MessageEntity'
                                 options:
                                     type: array
                                     items:
-                                        type: string
+                                        $ref: '#/components/schemas/InputPollOption'
                                 is_anonymous:
                                     type: boolean
                                     default: true
@@ -9880,7 +10087,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /getChat:
-        description: 'Use this method to get up to date information about the chat. Returns a Chat object on success.'
+        description: 'Use this method to get up-to-date information about the chat. Returns a ChatFullInfo object on success.'
         post:
             requestBody:
                 required: true
@@ -9934,7 +10141,7 @@ paths:
                                         type: object
                                         properties:
                                             result:
-                                                $ref: '#/components/schemas/Chat'
+                                                $ref: '#/components/schemas/ChatFullInfo'
                 400:
                     $ref: '#/components/responses/BadRequest'
                 401:
@@ -12682,6 +12889,8 @@ paths:
                                     type: number
                                 longitude:
                                     type: number
+                                live_period:
+                                    type: integer
                                 horizontal_accuracy:
                                     type: number
                                 heading:
@@ -12711,6 +12920,8 @@ paths:
                                     type: number
                                 longitude:
                                     type: number
+                                live_period:
+                                    type: integer
                                 horizontal_accuracy:
                                     type: number
                                 heading:
@@ -12740,6 +12951,8 @@ paths:
                                     type: number
                                 longitude:
                                     type: number
+                                live_period:
+                                    type: integer
                                 horizontal_accuracy:
                                     type: number
                                 heading:

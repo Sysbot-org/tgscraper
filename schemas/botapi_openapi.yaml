@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
     title: 'Telegram Bot API'
     description: 'Auto-generated OpenAPI schema by TGScraper.'
-    version: 7.3.0
+    version: 7.4.0
 servers:
     -
         url: 'https://api.telegram.org/bot{token}'
@@ -409,6 +409,8 @@ components:
                         $ref: '#/components/schemas/MessageEntity'
                 link_preview_options:
                     $ref: '#/components/schemas/LinkPreviewOptions'
+                effect_id:
+                    type: string
                 animation:
                     $ref: '#/components/schemas/Animation'
                 audio:
@@ -435,6 +437,9 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MessageEntity'
+                show_caption_above_media:
+                    type: boolean
+                    default: true
                 has_media_spoiler:
                     type: boolean
                     default: true
@@ -1547,7 +1552,7 @@ components:
                     type: boolean
             type: object
         KeyboardButton:
-            description: 'This object represents one button of the reply keyboard. For simple text buttons, String can be used instead of this object to specify the button text. The optional fields web_app, request_users, request_chat, request_contact, request_location, and request_poll are mutually exclusive.'
+            description: 'This object represents one button of the reply keyboard. At most one of the optional fields must be used to specify type of the button. For simple text buttons, String can be used instead of this object to specify the button text.'
             required:
                 - text
             properties:
@@ -1646,7 +1651,7 @@ components:
                             $ref: '#/components/schemas/InlineKeyboardButton'
             type: object
         InlineKeyboardButton:
-            description: 'This object represents one button of an inline keyboard. You must use exactly one of the optional fields.'
+            description: 'This object represents one button of an inline keyboard. Exactly one of the optional fields must be used to specify type of the button.'
             required:
                 - text
             properties:
@@ -2620,6 +2625,8 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MessageEntity'
+                show_caption_above_media:
+                    type: boolean
                 has_spoiler:
                     type: boolean
             type: object
@@ -2648,6 +2655,8 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MessageEntity'
+                show_caption_above_media:
+                    type: boolean
                 width:
                     type: integer
                 height:
@@ -2684,6 +2693,8 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MessageEntity'
+                show_caption_above_media:
+                    type: boolean
                 width:
                     type: integer
                 height:
@@ -3004,6 +3015,8 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MessageEntity'
+                show_caption_above_media:
+                    type: boolean
                 reply_markup:
                     $ref: '#/components/schemas/InlineKeyboardMarkup'
                 input_message_content:
@@ -3045,6 +3058,8 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MessageEntity'
+                show_caption_above_media:
+                    type: boolean
                 reply_markup:
                     $ref: '#/components/schemas/InlineKeyboardMarkup'
                 input_message_content:
@@ -3086,6 +3101,8 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MessageEntity'
+                show_caption_above_media:
+                    type: boolean
                 reply_markup:
                     $ref: '#/components/schemas/InlineKeyboardMarkup'
                 input_message_content:
@@ -3122,6 +3139,8 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MessageEntity'
+                show_caption_above_media:
+                    type: boolean
                 video_width:
                     type: integer
                 video_height:
@@ -3398,6 +3417,8 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MessageEntity'
+                show_caption_above_media:
+                    type: boolean
                 reply_markup:
                     $ref: '#/components/schemas/InlineKeyboardMarkup'
                 input_message_content:
@@ -3427,6 +3448,8 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MessageEntity'
+                show_caption_above_media:
+                    type: boolean
                 reply_markup:
                     $ref: '#/components/schemas/InlineKeyboardMarkup'
                 input_message_content:
@@ -3456,6 +3479,8 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MessageEntity'
+                show_caption_above_media:
+                    type: boolean
                 reply_markup:
                     $ref: '#/components/schemas/InlineKeyboardMarkup'
                 input_message_content:
@@ -3539,6 +3564,8 @@ components:
                     type: array
                     items:
                         $ref: '#/components/schemas/MessageEntity'
+                show_caption_above_media:
+                    type: boolean
                 reply_markup:
                     $ref: '#/components/schemas/InlineKeyboardMarkup'
                 input_message_content:
@@ -3695,7 +3722,6 @@ components:
                 - title
                 - description
                 - payload
-                - provider_token
                 - currency
                 - prices
             properties:
@@ -4672,6 +4698,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -4715,6 +4743,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -4758,6 +4788,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -5089,6 +5121,8 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 disable_notification:
                                     type: boolean
                                 protect_content:
@@ -5137,6 +5171,8 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 disable_notification:
                                     type: boolean
                                 protect_content:
@@ -5185,6 +5221,8 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 disable_notification:
                                     type: boolean
                                 protect_content:
@@ -5399,12 +5437,16 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 has_spoiler:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -5448,12 +5490,16 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 has_spoiler:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -5497,12 +5543,16 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 has_spoiler:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -5598,6 +5648,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -5657,6 +5709,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -5716,6 +5770,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -5807,6 +5863,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -5862,6 +5920,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -5917,6 +5977,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6008,6 +6070,8 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 has_spoiler:
                                     type: boolean
                                 supports_streaming:
@@ -6016,6 +6080,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6071,6 +6137,8 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 has_spoiler:
                                     type: boolean
                                 supports_streaming:
@@ -6079,6 +6147,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6134,6 +6204,8 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 has_spoiler:
                                     type: boolean
                                 supports_streaming:
@@ -6142,6 +6214,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6233,12 +6307,16 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 has_spoiler:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6294,12 +6372,16 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 has_spoiler:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6355,12 +6437,16 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 has_spoiler:
                                     type: boolean
                                 disable_notification:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6446,6 +6532,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6495,6 +6583,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6544,6 +6634,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6629,6 +6721,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6678,6 +6772,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6727,6 +6823,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6808,6 +6906,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                             required:
@@ -6843,6 +6943,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                             required:
@@ -6878,6 +6980,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                             required:
@@ -6951,6 +7055,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -6997,6 +7103,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -7043,6 +7151,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -7129,6 +7239,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -7181,6 +7293,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -7233,6 +7347,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -7313,6 +7429,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -7355,6 +7473,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -7397,6 +7517,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -7503,6 +7625,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -7573,6 +7697,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -7643,6 +7769,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -7716,6 +7844,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -7751,6 +7881,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -7786,6 +7918,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -12681,6 +12815,8 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 reply_markup:
                                     $ref: '#/components/schemas/InlineKeyboardMarkup'
                     application/x-www-form-urlencoded:
@@ -12705,6 +12841,8 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 reply_markup:
                                     $ref: '#/components/schemas/InlineKeyboardMarkup'
                     multipart/form-data:
@@ -12729,6 +12867,8 @@ paths:
                                     type: array
                                     items:
                                         $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
                                 reply_markup:
                                     $ref: '#/components/schemas/InlineKeyboardMarkup'
             responses:
@@ -13459,6 +13599,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -13500,6 +13642,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -13541,6 +13685,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -14880,7 +15026,6 @@ paths:
                                 - title
                                 - description
                                 - payload
-                                - provider_token
                                 - currency
                                 - prices
                             properties:
@@ -14942,6 +15087,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -14954,7 +15101,6 @@ paths:
                                 - title
                                 - description
                                 - payload
-                                - provider_token
                                 - currency
                                 - prices
                             properties:
@@ -15016,6 +15162,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -15028,7 +15176,6 @@ paths:
                                 - title
                                 - description
                                 - payload
-                                - provider_token
                                 - currency
                                 - prices
                             properties:
@@ -15090,6 +15237,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -15137,7 +15286,6 @@ paths:
                                 - title
                                 - description
                                 - payload
-                                - provider_token
                                 - currency
                                 - prices
                             properties:
@@ -15192,7 +15340,6 @@ paths:
                                 - title
                                 - description
                                 - payload
-                                - provider_token
                                 - currency
                                 - prices
                             properties:
@@ -15247,7 +15394,6 @@ paths:
                                 - title
                                 - description
                                 - payload
-                                - provider_token
                                 - currency
                                 - prices
                             properties:
@@ -15487,6 +15633,75 @@ paths:
                     $ref: '#/components/responses/ServerError'
                 default:
                     $ref: '#/components/responses/UnknownError'
+    /refundStarPayment:
+        description: 'Refunds a successful payment in Telegram Stars. Returns True on success.'
+        post:
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            required:
+                                - user_id
+                                - telegram_payment_charge_id
+                            properties:
+                                user_id:
+                                    type: integer
+                                telegram_payment_charge_id:
+                                    type: string
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            required:
+                                - user_id
+                                - telegram_payment_charge_id
+                            properties:
+                                user_id:
+                                    type: integer
+                                telegram_payment_charge_id:
+                                    type: string
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            required:
+                                - user_id
+                                - telegram_payment_charge_id
+                            properties:
+                                user_id:
+                                    type: integer
+                                telegram_payment_charge_id:
+                                    type: string
+            responses:
+                200:
+                    description: 'Request was successful, the result is returned.'
+                    content:
+                        application/json:
+                            schema:
+                                allOf:
+                                    -
+                                        $ref: '#/components/schemas/Success'
+                                    -
+                                        type: object
+                                        properties:
+                                            result:
+                                                type: boolean
+                400:
+                    $ref: '#/components/responses/BadRequest'
+                401:
+                    $ref: '#/components/responses/Unauthorized'
+                403:
+                    $ref: '#/components/responses/Forbidden'
+                404:
+                    $ref: '#/components/responses/NotFound'
+                409:
+                    $ref: '#/components/responses/Conflict'
+                429:
+                    $ref: '#/components/responses/TooManyRequests'
+                5XX:
+                    $ref: '#/components/responses/ServerError'
+                default:
+                    $ref: '#/components/responses/UnknownError'
     /setPassportDataErrors:
         description: "Informs a user that some of the Telegram Passport elements they provided contains errors. The user will not be able to re-submit their Passport to you until the errors are fixed (the contents of the field for which you returned the error must change). Returns True on success.\nUse this if the data submitted by the user doesn't satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues."
         post:
@@ -15584,6 +15799,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -15607,6 +15824,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:
@@ -15630,6 +15849,8 @@ paths:
                                     type: boolean
                                 protect_content:
                                     type: boolean
+                                message_effect_id:
+                                    type: string
                                 reply_parameters:
                                     $ref: '#/components/schemas/ReplyParameters'
                                 reply_markup:

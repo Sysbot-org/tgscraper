@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "7.3.0"
+        "version": "7.4.0"
     },
     "variable": {
         "key": "token",
@@ -319,6 +319,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_parameters",
                             "disabled": true,
                             "description": "Optional. Description of the message to reply to",
@@ -520,6 +526,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "show_caption_above_media",
+                            "disabled": true,
+                            "description": "Optional. Pass True, if the caption must be shown above the message media. Ignored if a new caption isn't specified.",
+                            "type": "text"
+                        },
+                        {
                             "key": "disable_notification",
                             "disabled": true,
                             "description": "Optional. Sends the message silently. Users will receive a notification with no sound.",
@@ -678,6 +690,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "show_caption_above_media",
+                            "disabled": true,
+                            "description": "Optional. Pass True, if the caption must be shown above the message media",
+                            "type": "text"
+                        },
+                        {
                             "key": "has_spoiler",
                             "disabled": true,
                             "description": "Optional. Pass True if the photo needs to be covered with a spoiler animation",
@@ -693,6 +711,12 @@
                             "key": "protect_content",
                             "disabled": true,
                             "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
                             "type": "text"
                         },
                         {
@@ -811,6 +835,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_parameters",
                             "disabled": true,
                             "description": "Optional. Description of the message to reply to",
@@ -911,6 +941,12 @@
                             "key": "protect_content",
                             "disabled": true,
                             "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
                             "type": "text"
                         },
                         {
@@ -1017,6 +1053,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "show_caption_above_media",
+                            "disabled": true,
+                            "description": "Optional. Pass True, if the caption must be shown above the message media",
+                            "type": "text"
+                        },
+                        {
                             "key": "has_spoiler",
                             "disabled": true,
                             "description": "Optional. Pass True if the video needs to be covered with a spoiler animation",
@@ -1038,6 +1080,12 @@
                             "key": "protect_content",
                             "disabled": true,
                             "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
                             "type": "text"
                         },
                         {
@@ -1144,6 +1192,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "show_caption_above_media",
+                            "disabled": true,
+                            "description": "Optional. Pass True, if the caption must be shown above the message media",
+                            "type": "text"
+                        },
+                        {
                             "key": "has_spoiler",
                             "disabled": true,
                             "description": "Optional. Pass True if the animation needs to be covered with a spoiler animation",
@@ -1159,6 +1213,12 @@
                             "key": "protect_content",
                             "disabled": true,
                             "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
                             "type": "text"
                         },
                         {
@@ -1259,6 +1319,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_parameters",
                             "disabled": true,
                             "description": "Optional. Description of the message to reply to",
@@ -1350,6 +1416,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_parameters",
                             "disabled": true,
                             "description": "Optional. Description of the message to reply to",
@@ -1420,6 +1492,12 @@
                             "key": "protect_content",
                             "disabled": true,
                             "description": "Optional. Protects the contents of the sent messages from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
                             "type": "text"
                         },
                         {
@@ -1517,6 +1595,12 @@
                             "key": "protect_content",
                             "disabled": true,
                             "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
                             "type": "text"
                         },
                         {
@@ -1635,6 +1719,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_parameters",
                             "disabled": true,
                             "description": "Optional. Description of the message to reply to",
@@ -1723,6 +1813,12 @@
                             "key": "protect_content",
                             "disabled": true,
                             "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
                             "type": "text"
                         },
                         {
@@ -1879,6 +1975,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_parameters",
                             "disabled": true,
                             "description": "Optional. Description of the message to reply to",
@@ -1950,6 +2052,12 @@
                             "key": "protect_content",
                             "disabled": true,
                             "description": "Optional. Protects the contents of the sent message from forwarding",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
                             "type": "text"
                         },
                         {
@@ -4492,6 +4600,12 @@
                             "type": "text"
                         },
                         {
+                            "key": "show_caption_above_media",
+                            "disabled": true,
+                            "description": "Optional. Pass True, if the caption must be shown above the message media. Supported only for animation, photo and video messages.",
+                            "type": "text"
+                        },
+                        {
                             "key": "reply_markup",
                             "disabled": true,
                             "description": "Optional. A JSON-serialized object for an inline keyboard.",
@@ -4917,6 +5031,12 @@
                             "key": "protect_content",
                             "disabled": true,
                             "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
                             "type": "text"
                         },
                         {
@@ -5678,26 +5798,26 @@
                         },
                         {
                             "key": "provider_token",
-                            "disabled": false,
-                            "description": "Required. Payment provider token, obtained via @BotFather",
+                            "disabled": true,
+                            "description": "Optional. Payment provider token, obtained via @BotFather. Pass an empty string for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "currency",
                             "disabled": false,
-                            "description": "Required. Three-letter ISO 4217 currency code, see more on currencies",
+                            "description": "Required. Three-letter ISO 4217 currency code, see more on currencies. Pass “XTR” for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "prices",
                             "disabled": false,
-                            "description": "Required. Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)",
+                            "description": "Required. Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "max_tip_amount",
                             "disabled": true,
-                            "description": "Optional. The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0",
+                            "description": "Optional. The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
@@ -5745,43 +5865,43 @@
                         {
                             "key": "need_name",
                             "disabled": true,
-                            "description": "Optional. Pass True if you require the user's full name to complete the order",
+                            "description": "Optional. Pass True if you require the user's full name to complete the order. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "need_phone_number",
                             "disabled": true,
-                            "description": "Optional. Pass True if you require the user's phone number to complete the order",
+                            "description": "Optional. Pass True if you require the user's phone number to complete the order. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "need_email",
                             "disabled": true,
-                            "description": "Optional. Pass True if you require the user's email address to complete the order",
+                            "description": "Optional. Pass True if you require the user's email address to complete the order. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "need_shipping_address",
                             "disabled": true,
-                            "description": "Optional. Pass True if you require the user's shipping address to complete the order",
+                            "description": "Optional. Pass True if you require the user's shipping address to complete the order. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "send_phone_number_to_provider",
                             "disabled": true,
-                            "description": "Optional. Pass True if the user's phone number should be sent to provider",
+                            "description": "Optional. Pass True if the user's phone number should be sent to the provider. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "send_email_to_provider",
                             "disabled": true,
-                            "description": "Optional. Pass True if the user's email address should be sent to provider",
+                            "description": "Optional. Pass True if the user's email address should be sent to the provider. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "is_flexible",
                             "disabled": true,
-                            "description": "Optional. Pass True if the final price depends on the shipping method",
+                            "description": "Optional. Pass True if the final price depends on the shipping method. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
@@ -5794,6 +5914,12 @@
                             "key": "protect_content",
                             "disabled": true,
                             "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
                             "type": "text"
                         },
                         {
@@ -5853,26 +5979,26 @@
                         },
                         {
                             "key": "provider_token",
-                            "disabled": false,
-                            "description": "Required. Payment provider token, obtained via BotFather",
+                            "disabled": true,
+                            "description": "Optional. Payment provider token, obtained via @BotFather. Pass an empty string for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "currency",
                             "disabled": false,
-                            "description": "Required. Three-letter ISO 4217 currency code, see more on currencies",
+                            "description": "Required. Three-letter ISO 4217 currency code, see more on currencies. Pass “XTR” for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "prices",
                             "disabled": false,
-                            "description": "Required. Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)",
+                            "description": "Required. Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.). Must contain exactly one item for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "max_tip_amount",
                             "disabled": true,
-                            "description": "Optional. The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0",
+                            "description": "Optional. The maximum accepted amount for tips in the smallest units of the currency (integer, not float/double). For example, for a maximum tip of US$ 1.45 pass max_tip_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0. Not supported for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
@@ -5914,43 +6040,43 @@
                         {
                             "key": "need_name",
                             "disabled": true,
-                            "description": "Optional. Pass True if you require the user's full name to complete the order",
+                            "description": "Optional. Pass True if you require the user's full name to complete the order. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "need_phone_number",
                             "disabled": true,
-                            "description": "Optional. Pass True if you require the user's phone number to complete the order",
+                            "description": "Optional. Pass True if you require the user's phone number to complete the order. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "need_email",
                             "disabled": true,
-                            "description": "Optional. Pass True if you require the user's email address to complete the order",
+                            "description": "Optional. Pass True if you require the user's email address to complete the order. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "need_shipping_address",
                             "disabled": true,
-                            "description": "Optional. Pass True if you require the user's shipping address to complete the order",
+                            "description": "Optional. Pass True if you require the user's shipping address to complete the order. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "send_phone_number_to_provider",
                             "disabled": true,
-                            "description": "Optional. Pass True if the user's phone number should be sent to the provider",
+                            "description": "Optional. Pass True if the user's phone number should be sent to the provider. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "send_email_to_provider",
                             "disabled": true,
-                            "description": "Optional. Pass True if the user's email address should be sent to the provider",
+                            "description": "Optional. Pass True if the user's email address should be sent to the provider. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         },
                         {
                             "key": "is_flexible",
                             "disabled": true,
-                            "description": "Optional. Pass True if the final price depends on the shipping method",
+                            "description": "Optional. Pass True if the final price depends on the shipping method. Ignored for payments in Telegram Stars.",
                             "type": "text"
                         }
                     ]
@@ -6064,6 +6190,43 @@
             }
         },
         {
+            "name": "refundStarPayment",
+            "request": {
+                "method": "POST",
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "user_id",
+                            "disabled": false,
+                            "description": "Required. Identifier of the user whose payment will be refunded",
+                            "type": "text"
+                        },
+                        {
+                            "key": "telegram_payment_charge_id",
+                            "disabled": false,
+                            "description": "Required. Telegram payment identifier",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "https://api.telegram.org/bot{{token}}/refundStarPayment",
+                    "protocol": "https",
+                    "host": [
+                        "api",
+                        "telegram",
+                        "org"
+                    ],
+                    "path": [
+                        "bot{{token}}",
+                        "refundStarPayment"
+                    ]
+                },
+                "description": "Refunds a successful payment in Telegram Stars. Returns True on success."
+            }
+        },
+        {
             "name": "setPassportDataErrors",
             "request": {
                 "method": "POST",
@@ -6141,6 +6304,12 @@
                             "key": "protect_content",
                             "disabled": true,
                             "description": "Optional. Protects the contents of the sent message from forwarding and saving",
+                            "type": "text"
+                        },
+                        {
+                            "key": "message_effect_id",
+                            "disabled": true,
+                            "description": "Optional. Unique identifier of the message effect to be added to the message; for private chats only",
                             "type": "text"
                         },
                         {

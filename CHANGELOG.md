@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.9] - 2024-07-02
+### Added
+- Support for bot API from 7.1.0 to 7.6.0.
+
+### Changed
+- Updated dependencies to their latest available version.
+
 ## [4.0.8] - 2024-01-05
 ### Added
 - Support for bot API 6.9.0 and 7.0.0.
@@ -200,7 +207,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - The parser is now more reliable, it no longer needs to be updated at every bot API release!
 
-[Unreleased]: https://github.com/Sysbot-org/tgscraper/compare/4.0.8...HEAD
+[Unreleased]: https://github.com/Sysbot-org/tgscraper/compare/4.0.9...HEAD
+[4.0.9]: https://github.com/Sysbot-org/tgscraper/compare/4.0.8...4.0.9
 [4.0.8]: https://github.com/Sysbot-org/tgscraper/compare/4.0.7...4.0.8
 [4.0.7]: https://github.com/Sysbot-org/tgscraper/compare/4.0.6...4.0.7
 [4.0.6]: https://github.com/Sysbot-org/tgscraper/compare/4.0.5...4.0.6

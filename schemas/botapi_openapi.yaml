@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
     title: 'Telegram Bot API'
     description: 'Auto-generated OpenAPI schema by TGScraper.'
-    version: 7.4.0
+    version: 7.6.0
 servers:
     -
         url: 'https://api.telegram.org/bot{token}'
@@ -316,6 +316,9 @@ components:
                     $ref: '#/components/schemas/Message'
                 permissions:
                     $ref: '#/components/schemas/ChatPermissions'
+                can_send_paid_media:
+                    type: boolean
+                    default: true
                 slow_mode_delay:
                     type: integer
                 unrestrict_boost_count:
@@ -417,6 +420,8 @@ components:
                     $ref: '#/components/schemas/Audio'
                 document:
                     $ref: '#/components/schemas/Document'
+                paid_media:
+                    $ref: '#/components/schemas/PaidMediaInfo'
                 photo:
                     type: array
                     items:
@@ -628,6 +633,8 @@ components:
                     $ref: '#/components/schemas/Audio'
                 document:
                     $ref: '#/components/schemas/Document'
+                paid_media:
+                    $ref: '#/components/schemas/PaidMediaInfo'
                 photo:
                     type: array
                     items:
@@ -934,6 +941,66 @@ components:
                 file_size:
                     type: integer
             type: object
+        PaidMediaInfo:
+            description: 'Describes the paid media added to a message.'
+            required:
+                - star_count
+                - paid_media
+            properties:
+                star_count:
+                    type: integer
+                paid_media:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/PaidMedia'
+            type: object
+        PaidMedia:
+            description: 'This object describes paid media. Currently, it can be one of'
+            anyOf:
+                -
+                    $ref: '#/components/schemas/PaidMediaPreview'
+                -
+                    $ref: '#/components/schemas/PaidMediaPhoto'
+                -
+                    $ref: '#/components/schemas/PaidMediaVideo'
+        PaidMediaPreview:
+            description: "The paid media isn't available before the payment."
+            required:
+                - type
+            properties:
+                type:
+                    type: string
+                width:
+                    type: integer
+                height:
+                    type: integer
+                duration:
+                    type: integer
+            type: object
+        PaidMediaPhoto:
+            description: 'The paid media is a photo.'
+            required:
+                - type
+                - photo
+            properties:
+                type:
+                    type: string
+                photo:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/PhotoSize'
+            type: object
+        PaidMediaVideo:
+            description: 'The paid media is a video.'
+            required:
+                - type
+                - video
+            properties:
+                type:
+                    type: string
+                video:
+                    $ref: '#/components/schemas/Video'
+            type: object
         Contact:
             description: 'This object represents a phone contact.'
             required:
@@ -978,7 +1045,7 @@ components:
                     type: integer
             type: object
         InputPollOption:
-            description: 'This object contains information about one answer option in a poll to send.'
+            description: 'This object contains information about one answer option in a poll to be sent.'
             required:
                 - text
             properties:
@@ -2767,6 +2834,51 @@ components:
         InputFile:
             description: 'This object represents the contents of a file to be uploaded. Must be posted using multipart/form-data in the usual way that files are uploaded via the browser.'
             type: object
+        InputPaidMedia:
+            description: 'This object describes the paid media to be sent. Currently, it can be one of'
+            anyOf:
+                -
+                    $ref: '#/components/schemas/InputPaidMediaPhoto'
+                -
+                    $ref: '#/components/schemas/InputPaidMediaVideo'
+        InputPaidMediaPhoto:
+            description: 'The paid media to send is a photo.'
+            required:
+                - type
+                - media
+            properties:
+                type:
+                    type: string
+                    default: photo
+                media:
+                    type: string
+            type: object
+        InputPaidMediaVideo:
+            description: 'The paid media to send is a video.'
+            required:
+                - type
+                - media
+            properties:
+                type:
+                    type: string
+                    default: video
+                media:
+                    type: string
+                thumbnail:
+                    anyOf:
+                        -
+                            $ref: '#/components/schemas/InputFile'
+                        -
+                            type: string
+                width:
+                    type: integer
+                height:
+                    type: integer
+                duration:
+                    type: integer
+                supports_streaming:
+                    type: boolean
+            type: object
         Sticker:
             description: 'This object represents a sticker.'
             required:
@@ -3941,6 +4053,123 @@ components:
                 order_info:
                     $ref: '#/components/schemas/OrderInfo'
             type: object
+        RevenueWithdrawalState:
+            description: 'This object describes the state of a revenue withdrawal operation. Currently, it can be one of'
+            anyOf:
+                -
+                    $ref: '#/components/schemas/RevenueWithdrawalStatePending'
+                -
+                    $ref: '#/components/schemas/RevenueWithdrawalStateSucceeded'
+                -
+                    $ref: '#/components/schemas/RevenueWithdrawalStateFailed'
+        RevenueWithdrawalStatePending:
+            description: 'The withdrawal is in progress.'
+            required:
+                - type
+            properties:
+                type:
+                    type: string
+            type: object
+        RevenueWithdrawalStateSucceeded:
+            description: 'The withdrawal succeeded.'
+            required:
+                - type
+                - date
+                - url
+            properties:
+                type:
+                    type: string
+                date:
+                    type: integer
+                url:
+                    type: string
+            type: object
+        RevenueWithdrawalStateFailed:
+            description: 'The withdrawal failed and the transaction was refunded.'
+            required:
+                - type
+            properties:
+                type:
+                    type: string
+            type: object
+        TransactionPartner:
+            description: 'This object describes the source of a transaction, or its recipient for outgoing transactions. Currently, it can be one of'
+            anyOf:
+                -
+                    $ref: '#/components/schemas/TransactionPartnerUser'
+                -
+                    $ref: '#/components/schemas/TransactionPartnerFragment'
+                -
+                    $ref: '#/components/schemas/TransactionPartnerTelegramAds'
+                -
+                    $ref: '#/components/schemas/TransactionPartnerOther'
+        TransactionPartnerUser:
+            description: 'Describes a transaction with a user.'
+            required:
+                - type
+                - user
+            properties:
+                type:
+                    type: string
+                user:
+                    $ref: '#/components/schemas/User'
+                invoice_payload:
+                    type: string
+            type: object
+        TransactionPartnerFragment:
+            description: 'Describes a withdrawal transaction with Fragment.'
+            required:
+                - type
+            properties:
+                type:
+                    type: string
+                withdrawal_state:
+                    $ref: '#/components/schemas/RevenueWithdrawalState'
+            type: object
+        TransactionPartnerTelegramAds:
+            description: 'Describes a withdrawal transaction to the Telegram Ads platform.'
+            required:
+                - type
+            properties:
+                type:
+                    type: string
+            type: object
+        TransactionPartnerOther:
+            description: 'Describes a transaction with an unknown source or recipient.'
+            required:
+                - type
+            properties:
+                type:
+                    type: string
+            type: object
+        StarTransaction:
+            description: 'Describes a Telegram Star transaction.'
+            required:
+                - id
+                - amount
+                - date
+            properties:
+                id:
+                    type: string
+                amount:
+                    type: integer
+                date:
+                    type: integer
+                source:
+                    $ref: '#/components/schemas/TransactionPartner'
+                receiver:
+                    $ref: '#/components/schemas/TransactionPartner'
+            type: object
+        StarTransactions:
+            description: 'Contains a list of Telegram Star transactions.'
+            required:
+                - transactions
+            properties:
+                transactions:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/StarTransaction'
+            type: object
         PassportData:
             description: 'Describes Telegram Passport data shared with the bot by the user.'
             required:
@@ -5084,7 +5313,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /copyMessage:
-        description: "Use this method to copy messages of any kind. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success."
+        description: "Use this method to copy messages of any kind. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the original message. Returns the MessageId of the sent message on success."
         post:
             requestBody:
                 required: true
@@ -5270,7 +5499,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /copyMessages:
-        description: "Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned."
+        description: "Use this method to copy messages of any kind. If some of the specified messages can't be found or copied, they are skipped. Service messages, paid media messages, giveaway messages, giveaway winners messages, and invoice messages can't be copied. A quiz poll can be copied only if the value of the field correct_option_id is known to the bot. The method is analogous to the method forwardMessages, but the copied messages don't have a link to the original message. Album grouping is kept for copied messages. On success, an array of MessageId of the sent messages is returned."
         post:
             requestBody:
                 required: true
@@ -6840,6 +7069,180 @@ paths:
                             required:
                                 - chat_id
                                 - video_note
+            responses:
+                200:
+                    description: 'Request was successful, the result is returned.'
+                    content:
+                        application/json:
+                            schema:
+                                allOf:
+                                    -
+                                        $ref: '#/components/schemas/Success'
+                                    -
+                                        type: object
+                                        properties:
+                                            result:
+                                                $ref: '#/components/schemas/Message'
+                400:
+                    $ref: '#/components/responses/BadRequest'
+                401:
+                    $ref: '#/components/responses/Unauthorized'
+                403:
+                    $ref: '#/components/responses/Forbidden'
+                404:
+                    $ref: '#/components/responses/NotFound'
+                409:
+                    $ref: '#/components/responses/Conflict'
+                429:
+                    $ref: '#/components/responses/TooManyRequests'
+                5XX:
+                    $ref: '#/components/responses/ServerError'
+                default:
+                    $ref: '#/components/responses/UnknownError'
+    /sendPaidMedia:
+        description: 'Use this method to send paid media to channel chats. On success, the sent Message is returned.'
+        post:
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            required:
+                                - chat_id
+                                - star_count
+                                - media
+                            properties:
+                                chat_id:
+                                    anyOf:
+                                        -
+                                            type: integer
+                                        -
+                                            type: string
+                                star_count:
+                                    type: integer
+                                media:
+                                    type: array
+                                    items:
+                                        $ref: '#/components/schemas/InputPaidMedia'
+                                caption:
+                                    type: string
+                                parse_mode:
+                                    type: string
+                                caption_entities:
+                                    type: array
+                                    items:
+                                        $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
+                                disable_notification:
+                                    type: boolean
+                                protect_content:
+                                    type: boolean
+                                reply_parameters:
+                                    $ref: '#/components/schemas/ReplyParameters'
+                                reply_markup:
+                                    anyOf:
+                                        -
+                                            $ref: '#/components/schemas/InlineKeyboardMarkup'
+                                        -
+                                            $ref: '#/components/schemas/ReplyKeyboardMarkup'
+                                        -
+                                            $ref: '#/components/schemas/ReplyKeyboardRemove'
+                                        -
+                                            $ref: '#/components/schemas/ForceReply'
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            required:
+                                - chat_id
+                                - star_count
+                                - media
+                            properties:
+                                chat_id:
+                                    anyOf:
+                                        -
+                                            type: integer
+                                        -
+                                            type: string
+                                star_count:
+                                    type: integer
+                                media:
+                                    type: array
+                                    items:
+                                        $ref: '#/components/schemas/InputPaidMedia'
+                                caption:
+                                    type: string
+                                parse_mode:
+                                    type: string
+                                caption_entities:
+                                    type: array
+                                    items:
+                                        $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
+                                disable_notification:
+                                    type: boolean
+                                protect_content:
+                                    type: boolean
+                                reply_parameters:
+                                    $ref: '#/components/schemas/ReplyParameters'
+                                reply_markup:
+                                    anyOf:
+                                        -
+                                            $ref: '#/components/schemas/InlineKeyboardMarkup'
+                                        -
+                                            $ref: '#/components/schemas/ReplyKeyboardMarkup'
+                                        -
+                                            $ref: '#/components/schemas/ReplyKeyboardRemove'
+                                        -
+                                            $ref: '#/components/schemas/ForceReply'
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            required:
+                                - chat_id
+                                - star_count
+                                - media
+                            properties:
+                                chat_id:
+                                    anyOf:
+                                        -
+                                            type: integer
+                                        -
+                                            type: string
+                                star_count:
+                                    type: integer
+                                media:
+                                    type: array
+                                    items:
+                                        $ref: '#/components/schemas/InputPaidMedia'
+                                caption:
+                                    type: string
+                                parse_mode:
+                                    type: string
+                                caption_entities:
+                                    type: array
+                                    items:
+                                        $ref: '#/components/schemas/MessageEntity'
+                                show_caption_above_media:
+                                    type: boolean
+                                disable_notification:
+                                    type: boolean
+                                protect_content:
+                                    type: boolean
+                                reply_parameters:
+                                    $ref: '#/components/schemas/ReplyParameters'
+                                reply_markup:
+                                    anyOf:
+                                        -
+                                            $ref: '#/components/schemas/InlineKeyboardMarkup'
+                                        -
+                                            $ref: '#/components/schemas/ReplyKeyboardMarkup'
+                                        -
+                                            $ref: '#/components/schemas/ReplyKeyboardRemove'
+                                        -
+                                            $ref: '#/components/schemas/ForceReply'
             responses:
                 200:
                     description: 'Request was successful, the result is returned.'
@@ -12665,7 +13068,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /editMessageText:
-        description: 'Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.'
+        description: 'Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.'
         post:
             requestBody:
                 required: true
@@ -12674,6 +13077,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -12702,6 +13107,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -12730,6 +13137,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -12789,7 +13198,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /editMessageCaption:
-        description: 'Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.'
+        description: 'Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.'
         post:
             requestBody:
                 content:
@@ -12797,6 +13206,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -12823,6 +13234,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -12849,6 +13262,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -12906,7 +13321,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /editMessageMedia:
-        description: "Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned."
+        description: "Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent."
         post:
             requestBody:
                 required: true
@@ -12915,6 +13330,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -12935,6 +13352,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -12955,6 +13374,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -13015,6 +13436,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -13046,6 +13469,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -13077,6 +13502,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -13147,6 +13574,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -13163,6 +13592,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -13179,6 +13610,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -13226,7 +13659,7 @@ paths:
                 default:
                     $ref: '#/components/responses/UnknownError'
     /editMessageReplyMarkup:
-        description: 'Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned.'
+        description: 'Use this method to edit only the reply markup of messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.'
         post:
             requestBody:
                 content:
@@ -13234,6 +13667,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -13250,6 +13685,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -13266,6 +13703,8 @@ paths:
                         schema:
                             type: object
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -13321,10 +13760,9 @@ paths:
                     application/json:
                         schema:
                             type: object
-                            required:
-                                - chat_id
-                                - message_id
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -13335,13 +13773,15 @@ paths:
                                     type: integer
                                 reply_markup:
                                     $ref: '#/components/schemas/InlineKeyboardMarkup'
+                            required:
+                                - chat_id
+                                - message_id
                     application/x-www-form-urlencoded:
                         schema:
                             type: object
-                            required:
-                                - chat_id
-                                - message_id
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -13352,13 +13792,15 @@ paths:
                                     type: integer
                                 reply_markup:
                                     $ref: '#/components/schemas/InlineKeyboardMarkup'
+                            required:
+                                - chat_id
+                                - message_id
                     multipart/form-data:
                         schema:
                             type: object
-                            required:
-                                - chat_id
-                                - message_id
                             properties:
+                                business_connection_id:
+                                    type: string
                                 chat_id:
                                     anyOf:
                                         -
@@ -13369,6 +13811,9 @@ paths:
                                     type: integer
                                 reply_markup:
                                     $ref: '#/components/schemas/InlineKeyboardMarkup'
+                            required:
+                                - chat_id
+                                - message_id
             responses:
                 200:
                     description: 'Request was successful, the result is returned.'
@@ -15617,6 +16062,68 @@ paths:
                                         properties:
                                             result:
                                                 type: boolean
+                400:
+                    $ref: '#/components/responses/BadRequest'
+                401:
+                    $ref: '#/components/responses/Unauthorized'
+                403:
+                    $ref: '#/components/responses/Forbidden'
+                404:
+                    $ref: '#/components/responses/NotFound'
+                409:
+                    $ref: '#/components/responses/Conflict'
+                429:
+                    $ref: '#/components/responses/TooManyRequests'
+                5XX:
+                    $ref: '#/components/responses/ServerError'
+                default:
+                    $ref: '#/components/responses/UnknownError'
+    /getStarTransactions:
+        description: "Returns the bot's Telegram Star transactions in chronological order. On success, returns a StarTransactions object."
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                offset:
+                                    type: integer
+                                limit:
+                                    type: integer
+                                    default: 100
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                offset:
+                                    type: integer
+                                limit:
+                                    type: integer
+                                    default: 100
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                offset:
+                                    type: integer
+                                limit:
+                                    type: integer
+                                    default: 100
+            responses:
+                200:
+                    description: 'Request was successful, the result is returned.'
+                    content:
+                        application/json:
+                            schema:
+                                allOf:
+                                    -
+                                        $ref: '#/components/schemas/Success'
+                                    -
+                                        type: object
+                                        properties:
+                                            result:
+                                                $ref: '#/components/schemas/StarTransactions'
                 400:
                     $ref: '#/components/responses/BadRequest'
                 401:

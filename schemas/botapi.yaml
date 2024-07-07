@@ -1,4 +1,4 @@
-version: 7.6.0
+version: 7.7.0
 types:
     -
         name: Update
@@ -983,6 +983,12 @@ types:
                     - SuccessfulPayment
                 optional: true
                 description: 'Optional. Message is a service message about a successful payment, information about the payment. More about payments »'
+            -
+                name: refunded_payment
+                types:
+                    - RefundedPayment
+                optional: true
+                description: 'Optional. Message is a service message about a refunded payment, information about the payment. More about payments »'
             -
                 name: users_shared
                 types:
@@ -7595,6 +7601,41 @@ types:
                     - string
                 optional: false
                 description: 'Provider payment identifier'
+        extended_by: {  }
+    -
+        name: RefundedPayment
+        description: 'This object contains basic information about a refunded payment.'
+        fields:
+            -
+                name: currency
+                types:
+                    - string
+                optional: false
+                description: 'Three-letter ISO 4217 currency code, or “XTR” for payments in Telegram Stars. Currently, always “XTR”'
+            -
+                name: total_amount
+                types:
+                    - int
+                optional: false
+                description: 'Total refunded price in the smallest units of the currency (integer, not float/double). For example, for a price of US$ 1.45, total_amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).'
+            -
+                name: invoice_payload
+                types:
+                    - string
+                optional: false
+                description: 'Bot-specified invoice payload'
+            -
+                name: telegram_payment_charge_id
+                types:
+                    - string
+                optional: false
+                description: 'Telegram payment identifier'
+            -
+                name: provider_payment_charge_id
+                types:
+                    - string
+                optional: true
+                description: 'Optional. Provider payment identifier'
         extended_by: {  }
     -
         name: ShippingQuery

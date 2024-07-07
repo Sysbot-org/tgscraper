@@ -3,7 +3,7 @@
         "name": "Telegram Bot API",
         "description": "Auto-generated Postman collection by TGScraper.",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-        "version": "7.6.0"
+        "version": "7.7.0"
     },
     "variable": {
         "key": "token",

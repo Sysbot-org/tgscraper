@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "7.6.0"
+        "version": "7.7.0"
     },
     "servers": [
         {
@@ -734,6 +734,9 @@
                     },
                     "successful_payment": {
                         "$ref": "#/components/schemas/SuccessfulPayment"
+                    },
+                    "refunded_payment": {
+                        "$ref": "#/components/schemas/RefundedPayment"
                     },
                     "users_shared": {
                         "$ref": "#/components/schemas/UsersShared"
@@ -5841,6 +5844,33 @@
                     },
                     "order_info": {
                         "$ref": "#/components/schemas/OrderInfo"
+                    },
+                    "telegram_payment_charge_id": {
+                        "type": "string"
+                    },
+                    "provider_payment_charge_id": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "RefundedPayment": {
+                "description": "This object contains basic information about a refunded payment.",
+                "required": [
+                    "currency",
+                    "total_amount",
+                    "invoice_payload",
+                    "telegram_payment_charge_id"
+                ],
+                "properties": {
+                    "currency": {
+                        "type": "string"
+                    },
+                    "total_amount": {
+                        "type": "integer"
+                    },
+                    "invoice_payload": {
+                        "type": "string"
                     },
                     "telegram_payment_charge_id": {
                         "type": "string"

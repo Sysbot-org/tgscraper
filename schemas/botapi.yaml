@@ -1,4 +1,4 @@
-version: 7.7.0
+version: 7.9.0
 types:
     -
         name: Update
@@ -280,6 +280,12 @@ types:
                     - bool
                 optional: true
                 description: 'Optional. True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe.'
+            -
+                name: has_main_web_app
+                types:
+                    - bool
+                optional: true
+                description: 'Optional. True, if the bot has a main Web App. Returned only in getMe.'
         extended_by: {  }
     -
         name: Chat
@@ -630,13 +636,13 @@ types:
                 types:
                     - User
                 optional: true
-                description: 'Optional. Sender of the message; empty for messages sent to channels. For backward compatibility, the field contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.'
+                description: 'Optional. Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats'
             -
                 name: sender_chat
                 types:
                     - Chat
                 optional: true
-                description: 'Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.'
+                description: "Optional. Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel's discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field from contains a fake sender user in non-channel chats."
             -
                 name: sender_boost_count
                 types:
@@ -3573,6 +3579,18 @@ types:
                     - int
                 optional: true
                 description: 'Optional. Number of pending join requests created using this link'
+            -
+                name: subscription_period
+                types:
+                    - int
+                optional: true
+                description: 'Optional. The number of seconds the subscription will be active for before the next payment'
+            -
+                name: subscription_price
+                types:
+                    - int
+                optional: true
+                description: 'Optional. The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat using the link'
         extended_by: {  }
     -
         name: ChatAdministratorRights
@@ -3897,6 +3915,12 @@ types:
                     - User
                 optional: false
                 description: 'Information about the user'
+            -
+                name: until_date
+                types:
+                    - int
+                optional: true
+                description: "Optional. Date when the user's subscription will expire; Unix time"
         extended_by: {  }
     -
         name: ChatMemberRestricted
@@ -4302,6 +4326,7 @@ types:
         extended_by:
             - ReactionTypeEmoji
             - ReactionTypeCustomEmoji
+            - ReactionTypePaid
     -
         name: ReactionTypeEmoji
         description: 'The reaction is based on an emoji.'
@@ -4335,6 +4360,17 @@ types:
                     - string
                 optional: false
                 description: 'Custom emoji identifier'
+        extended_by: {  }
+    -
+        name: ReactionTypePaid
+        description: 'The reaction is paid.'
+        fields:
+            -
+                name: type
+                types:
+                    - string
+                optional: false
+                description: 'Type of the reaction, always “paid”'
         extended_by: {  }
     -
         name: ReactionCount
@@ -7797,6 +7833,12 @@ types:
                     - string
                 optional: true
                 description: 'Optional. Bot-specified invoice payload'
+            -
+                name: paid_media
+                types:
+                    - Array<PaidMedia>
+                optional: true
+                description: 'Optional. Information about the paid media bought by the user'
         extended_by: {  }
     -
         name: TransactionPartnerFragment
@@ -9517,15 +9559,21 @@ methods:
             - Message
     -
         name: sendPaidMedia
-        description: 'Use this method to send paid media to channel chats. On success, the sent Message is returned.'
+        description: 'Use this method to send paid media. On success, the sent Message is returned.'
         fields:
+            -
+                name: business_connection_id
+                types:
+                    - string
+                optional: true
+                description: 'Unique identifier of the business connection on behalf of which the message will be sent'
             -
                 name: chat_id
                 types:
                     - int
                     - string
                 optional: false
-                description: 'Unique identifier for the target chat or username of the target channel (in the format @channelusername)'
+                description: "Unique identifier for the target chat or username of the target channel (in the format @channelusername). If the chat is a channel, all Telegram Star proceeds from this media will be credited to the chat's balance. Otherwise, they will be credited to the bot's balance."
             -
                 name: star_count
                 types:
@@ -10171,7 +10219,7 @@ methods:
             - bool
     -
         name: setMessageReaction
-        description: "Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Returns True on success."
+        description: "Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success."
         fields:
             -
                 name: chat_id
@@ -10191,7 +10239,7 @@ methods:
                 types:
                     - Array<ReactionType>
                 optional: true
-                description: 'A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators.'
+                description: "A JSON-serialized list of reaction types to set on the message. Currently, as non-premium users, bots can set up to one reaction per message. A custom emoji reaction can be used if it is either already present on the message or explicitly allowed by chat administrators. Paid reactions can't be used by bots."
             -
                 name: is_big
                 types:
@@ -10621,6 +10669,62 @@ methods:
         return_types:
             - ChatInviteLink
     -
+        name: createChatSubscriptionInviteLink
+        description: 'Use this method to create a subscription invite link for a channel chat. The bot must have the can_invite_users administrator rights. The link can be edited using the method editChatSubscriptionInviteLink or revoked using the method revokeChatInviteLink. Returns the new invite link as a ChatInviteLink object.'
+        fields:
+            -
+                name: chat_id
+                types:
+                    - int
+                    - string
+                optional: false
+                description: 'Unique identifier for the target channel chat or username of the target channel (in the format @channelusername)'
+            -
+                name: name
+                types:
+                    - string
+                optional: true
+                description: 'Invite link name; 0-32 characters'
+            -
+                name: subscription_period
+                types:
+                    - int
+                optional: false
+                description: 'The number of seconds the subscription will be active for before the next payment. Currently, it must always be 2592000 (30 days).'
+            -
+                name: subscription_price
+                types:
+                    - int
+                optional: false
+                description: 'The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat; 1-2500'
+        return_types:
+            - ChatInviteLink
+    -
+        name: editChatSubscriptionInviteLink
+        description: 'Use this method to edit a subscription invite link created by the bot. The bot must have the can_invite_users administrator rights. Returns the edited invite link as a ChatInviteLink object.'
+        fields:
+            -
+                name: chat_id
+                types:
+                    - int
+                    - string
+                optional: false
+                description: 'Unique identifier for the target chat or username of the target channel (in the format @channelusername)'
+            -
+                name: invite_link
+                types:
+                    - string
+                optional: false
+                description: 'The invite link to edit'
+            -
+                name: name
+                types:
+                    - string
+                optional: true
+                description: 'Invite link name; 0-32 characters'
+        return_types:
+            - ChatInviteLink
+    -
         name: revokeChatInviteLink
         description: 'Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object.'
         fields:
@@ -10752,6 +10856,12 @@ methods:
         description: "Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success."
         fields:
             -
+                name: business_connection_id
+                types:
+                    - string
+                optional: true
+                description: 'Unique identifier of the business connection on behalf of which the message will be pinned'
+            -
                 name: chat_id
                 types:
                     - int
@@ -10777,6 +10887,12 @@ methods:
         description: "Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success."
         fields:
             -
+                name: business_connection_id
+                types:
+                    - string
+                optional: true
+                description: 'Unique identifier of the business connection on behalf of which the message will be unpinned'
+            -
                 name: chat_id
                 types:
                     - int
@@ -10788,7 +10904,7 @@ methods:
                 types:
                     - int
                 optional: true
-                description: 'Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.'
+                description: 'Identifier of the message to unpin. Required if business_connection_id is specified. If not specified, the most recent pinned message (by sending date) will be unpinned.'
         return_types:
             - bool
     -
@@ -10946,7 +11062,7 @@ methods:
             - ForumTopic
     -
         name: editForumTopic
-        description: 'Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.'
+        description: 'Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.'
         fields:
             -
                 name: chat_id
@@ -11053,7 +11169,7 @@ methods:
             - bool
     -
         name: editGeneralForumTopic
-        description: "Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success."
+        description: "Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success."
         fields:
             -
                 name: chat_id

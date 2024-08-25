@@ -3,7 +3,7 @@
     "info": {
         "title": "Telegram Bot API",
         "description": "Auto-generated OpenAPI schema by TGScraper.",
-        "version": "7.7.0"
+        "version": "7.9.0"
     },
     "servers": [
         {
@@ -324,6 +324,9 @@
                         "type": "boolean"
                     },
                     "can_connect_to_business": {
+                        "type": "boolean"
+                    },
+                    "has_main_web_app": {
                         "type": "boolean"
                     }
                 },
@@ -2718,6 +2721,12 @@
                     },
                     "pending_join_request_count": {
                         "type": "integer"
+                    },
+                    "subscription_period": {
+                        "type": "integer"
+                    },
+                    "subscription_price": {
+                        "type": "integer"
                     }
                 },
                 "type": "object"
@@ -2960,6 +2969,9 @@
                     },
                     "user": {
                         "$ref": "#/components/schemas/User"
+                    },
+                    "until_date": {
+                        "type": "integer"
                     }
                 },
                 "type": "object"
@@ -3266,6 +3278,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/ReactionTypeCustomEmoji"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ReactionTypePaid"
                     }
                 ]
             },
@@ -3296,6 +3311,18 @@
                         "type": "string"
                     },
                     "custom_emoji_id": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ReactionTypePaid": {
+                "description": "The reaction is paid.",
+                "required": [
+                    "type"
+                ],
+                "properties": {
+                    "type": {
                         "type": "string"
                     }
                 },
@@ -6029,6 +6056,12 @@
                     },
                     "invoice_payload": {
                         "type": "string"
+                    },
+                    "paid_media": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PaidMedia"
+                        }
                     }
                 },
                 "type": "object"
@@ -10699,7 +10732,7 @@
             }
         },
         "/sendPaidMedia": {
-            "description": "Use this method to send paid media to channel chats. On success, the sent Message is returned.",
+            "description": "Use this method to send paid media. On success, the sent Message is returned.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -10707,12 +10740,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "star_count",
-                                    "media"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -10772,18 +10803,21 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "star_count",
+                                    "media"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "star_count",
-                                    "media"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -10843,18 +10877,21 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "star_count",
+                                    "media"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "star_count",
-                                    "media"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -10914,7 +10951,12 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "star_count",
+                                    "media"
+                                ]
                             }
                         }
                     }
@@ -12816,7 +12858,7 @@
             }
         },
         "/setMessageReaction": {
-            "description": "Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Returns True on success.",
+            "description": "Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically forwarded messages from a channel to its discussion group have the same available reactions as messages in the channel. Bots can't use paid reactions. Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -14878,6 +14920,296 @@
                 }
             }
         },
+        "/createChatSubscriptionInviteLink": {
+            "description": "Use this method to create a subscription invite link for a channel chat. The bot must have the can_invite_users administrator rights. The link can be edited using the method editChatSubscriptionInviteLink or revoked using the method revokeChatInviteLink. Returns the new invite link as a ChatInviteLink object.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "subscription_period",
+                                    "subscription_price"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "subscription_period": {
+                                        "type": "integer"
+                                    },
+                                    "subscription_price": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "subscription_period",
+                                    "subscription_price"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "subscription_period": {
+                                        "type": "integer"
+                                    },
+                                    "subscription_price": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "subscription_period",
+                                    "subscription_price"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "subscription_period": {
+                                        "type": "integer"
+                                    },
+                                    "subscription_price": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/ChatInviteLink"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
+        "/editChatSubscriptionInviteLink": {
+            "description": "Use this method to edit a subscription invite link created by the bot. The bot must have the can_invite_users administrator rights. Returns the edited invite link as a ChatInviteLink object.",
+            "post": {
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "invite_link"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "invite_link": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "invite_link"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "invite_link": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "chat_id",
+                                    "invite_link"
+                                ],
+                                "properties": {
+                                    "chat_id": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
+                                            },
+                                            {
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "invite_link": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request was successful, the result is returned.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Success"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "result": {
+                                                    "$ref": "#/components/schemas/ChatInviteLink"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/Forbidden"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/Conflict"
+                    },
+                    "429": {
+                        "$ref": "#/components/responses/TooManyRequests"
+                    },
+                    "5XX": {
+                        "$ref": "#/components/responses/ServerError"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/UnknownError"
+                    }
+                }
+            }
+        },
         "/revokeChatInviteLink": {
             "description": "Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is automatically generated. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns the revoked invite link as ChatInviteLink object.",
             "post": {
@@ -15782,11 +16114,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "message_id"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -15803,17 +16134,20 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "message_id"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "message_id"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -15830,17 +16164,20 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "message_id"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id",
-                                    "message_id"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -15857,7 +16194,11 @@
                                     "disable_notification": {
                                         "type": "boolean"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id",
+                                    "message_id"
+                                ]
                             }
                         }
                     }
@@ -15921,10 +16262,10 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -15938,16 +16279,19 @@
                                     "message_id": {
                                         "type": "integer"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id"
+                                ]
                             }
                         },
                         "application/x-www-form-urlencoded": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -15961,16 +16305,19 @@
                                     "message_id": {
                                         "type": "integer"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id"
+                                ]
                             }
                         },
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
-                                "required": [
-                                    "chat_id"
-                                ],
                                 "properties": {
+                                    "business_connection_id": {
+                                        "type": "string"
+                                    },
                                     "chat_id": {
                                         "anyOf": [
                                             {
@@ -15984,7 +16331,10 @@
                                     "message_id": {
                                         "type": "integer"
                                     }
-                                }
+                                },
+                                "required": [
+                                    "chat_id"
+                                ]
                             }
                         }
                     }
@@ -17234,7 +17584,7 @@
             }
         },
         "/editForumTopic": {
-            "description": "Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.",
+            "description": "Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,
@@ -17902,7 +18252,7 @@
             }
         },
         "/editGeneralForumTopic": {
-            "description": "Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights. Returns True on success.",
+            "description": "Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns True on success.",
             "post": {
                 "requestBody": {
                     "required": true,
